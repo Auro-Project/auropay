@@ -78,12 +78,12 @@ class _HomeScreenState extends State<HomeScreen> {
                             fontWeight: FontWeight.w400,
                           ),
                         ),
-                        SizedBox(height: height * 0.02),
+                        SizedBox(height: height * 0.005),
                         Text(
                           "₹2,500.00",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 20,
+                            fontSize: 32,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
