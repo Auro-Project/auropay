@@ -1,5 +1,6 @@
-import 'package:auropay/view/pages/ConfirmAccountScreen.dart';
+
 import 'package:flutter/material.dart';
+import 'ConfirmAccountScreen.dart';
 
 class SignUpScreen extends StatelessWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -14,7 +15,7 @@ class SignUpScreen extends StatelessWidget {
             const Padding(
               padding: EdgeInsets.all(70.0),
               child: Text(
-                'Sign in',
+                'Sign Up',
                 style: TextStyle(
                   fontSize: 20,
                   fontFamily: 'SF-Pro-Display',

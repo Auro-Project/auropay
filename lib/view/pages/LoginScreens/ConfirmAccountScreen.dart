@@ -1,5 +1,5 @@
-import 'package:auropay/view/pages/SuccessAccountScreen.dart';
 import 'package:flutter/material.dart';
+import 'SuccessAccountScreen.dart';
 
 class ConfirmAccountScreen extends StatelessWidget {
   const ConfirmAccountScreen({Key? key}) : super(key: key);

@@ -1,9 +1,9 @@
-import 'package:auropay/view/pages/AccountScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen1.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
-
-import '../../view/pages/LoginScreen.dart';
+import 'view/pages/LoginScreens/LoginScreen.dart';
 import '../../view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -46,7 +46,9 @@ class MyApp extends StatelessWidget {
         '/send': (context) => const SendScreen(),
         '/progress': (context) => const ProgressScreen(),
         '/success': (context) => const SuccessScreen(),
-        '/account': (context) => const AccountScreen(),      },
+        '/account': (context) => const AccountScreen(),
+        '/qrscreen': (context) => const QRCodeScreen(),
+      },
     );
   }
 }

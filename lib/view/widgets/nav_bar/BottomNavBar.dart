@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -101,7 +102,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     child: FloatingActionButton(
                       backgroundColor: Colors.transparent,
                       elevation: 0.1,
-                      onPressed: () {},
+                      onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
                         color: const Color(0xF2FFFFFF),

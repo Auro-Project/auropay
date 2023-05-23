@@ -1,5 +1,5 @@
+import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
 import 'package:flutter/material.dart';
-import 'LoginScreen.dart';
 import 'SignUpScreen.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -106,7 +106,7 @@ class AccountScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text("Sign in",
+                    child: const Text("Sign up",
                       style: TextStyle(
                         color: Colors.white,
                         fontSize: 18.0,
