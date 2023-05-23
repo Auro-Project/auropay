@@ -1,3 +1,6 @@
+import 'package:auropay/view/pages/Send/ProgressScreen.dart';
+import 'package:auropay/view/pages/Send/SendScreen.dart';
+import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -36,6 +39,9 @@ class MyApp extends StatelessWidget {
         '/transactions': (context) => const TransactionScreen(),
         '/analytics': (context) => const AnalyticsScreen(),
         '/more': (context) => const MoreScreen(),
+        '/send': (context) => const SendScreen(),
+        '/progress': (context) => const ProgressScreen(),
+        '/success': (context) => const SuccessScreen(),
       },
     );
   }
