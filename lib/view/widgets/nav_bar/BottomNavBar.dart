@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -16,6 +18,7 @@ class BottomNavBar extends StatefulWidget {
 }
 
 class _BottomNavBarState extends State<BottomNavBar> {
+
   SizedBox _buildNavItem(int index, String iconPath) {
     return SizedBox(
       width: 42,
@@ -67,9 +70,18 @@ class _BottomNavBarState extends State<BottomNavBar> {
             height: 100,
             child: Stack(
               children: [
-                CustomPaint(
-                  size: Size(size.width, 120),
-                  painter: RPSCustomPainter(),
+                ClipPath(
+                  clipper: RPSCustomShapeClipper(),
+                  child: BackdropFilter(
+                    filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
+                    child: Container(
+                      width: size.width,
+                      height: 120,
+                      decoration: BoxDecoration(
+                        color: Color(0xFFFFFFFF).withOpacity(0.025),
+                      ),
+                    ),
+                  ),
                 ),
                 Center(
                   heightFactor: 0.2,
@@ -187,8 +199,9 @@ class RPSCustomPainter extends CustomPainter {
         0);
     path_0.close();
 
-    Paint paint0Fill = Paint()..style = PaintingStyle.fill;
-    paint0Fill.color = const Color(0xff333337).withOpacity(0.55);
+    Paint paint0Fill = Paint()
+      ..style = PaintingStyle.fill
+      ..color = Colors.transparent;
     canvas.drawPath(path_0, paint0Fill);
   }
 
@@ -197,3 +210,106 @@ class RPSCustomPainter extends CustomPainter {
     return true;
   }
 }
+
+class RPSCustomShapeClipper extends CustomClipper<Path> {
+  @override
+  Path getClip(Size size) {
+    Path path = Path();
+
+    path.moveTo(size.width * 0.3024224, 0);
+    path.lineTo(size.width * 0.1628499, 0);
+    path.cubicTo(
+      size.width * 0.1058471,
+      0,
+      size.width * 0.07734555,
+      0,
+      size.width * 0.05557354,
+      size.height * 0.05011195,
+    );
+    path.cubicTo(
+      size.width * 0.03642214,
+      size.height * 0.09419161,
+      size.width * 0.02085158,
+      size.height * 0.1645276,
+      size.width * 0.01109349,
+      size.height * 0.2510391,
+    );
+    path.cubicTo(
+      0,
+      size.height * 0.3493885,
+      0,
+      size.height * 0.4781368,
+      0,
+      size.height * 0.7356322,
+    );
+    path.lineTo(0, size.height);
+    path.lineTo(size.width, size.height);
+    path.lineTo(size.width, size.height * 0.7356322);
+    path.cubicTo(
+      size.width,
+      size.height * 0.4781368,
+      size.width,
+      size.height * 0.3493885,
+      size.width * 0.9889059,
+      size.height * 0.2510391,
+    );
+    path.cubicTo(
+      size.width * 0.9791476,
+      size.height * 0.1645276,
+      size.width * 0.9635776,
+      size.height * 0.09419161,
+      size.width * 0.9444275,
+      size.height * 0.05011195,
+    );
+    path.cubicTo(
+      size.width * 0.9226539,
+      0,
+      size.width * 0.8941527,
+      0,
+      size.width * 0.8371501,
+      0,
+    );
+    path.lineTo(size.width * 0.6868779, 0);
+    path.cubicTo(
+      size.width * 0.6417150,
+      size.height * 0.01737149,
+      size.width * 0.6212188,
+      size.height * 0.1510437,
+      size.width * 0.6006590,
+      size.height * 0.2851069,
+    );
+    path.cubicTo(
+      size.width * 0.5784809,
+      size.height * 0.4297437,
+      size.width * 0.5562316,
+      size.height * 0.5748356,
+      size.width * 0.5028677,
+      size.height * 0.5748356,
+    );
+    path.cubicTo(
+      size.width * 0.4520916,
+      size.height * 0.5748356,
+      size.width * 0.4303944,
+      size.height * 0.4434874,
+      size.width * 0.4077099,
+      size.height * 0.3061563,
+    );
+    path.cubicTo(
+      size.width * 0.3844504,
+      size.height * 0.1653632,
+      size.width * 0.3601552,
+      size.height * 0.01828126,
+      size.width * 0.3024224,
+      0,
+    );
+    path.close();
+
+    return path;
+  }
+
+  @override
+  bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
+    return true;
+  }
+}
+
