@@ -1,3 +1,6 @@
+import 'package:auropay/view/pages/Send/ProgressScreen.dart';
+import 'package:auropay/view/pages/Send/SendScreen.dart';
+import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
