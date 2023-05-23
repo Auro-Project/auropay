@@ -37,7 +37,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
               padding: const EdgeInsets.symmetric(horizontal: 80),
               child: CustomButton(
                 onTap: () {
-                  Navigator.pushNamed(context, '/login');
+                  Navigator.pushNamed(context, '/account');
                 },
               ),
             ),

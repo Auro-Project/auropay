@@ -1,4 +1,10 @@
-import 'package:auropay/view/pages/onBoardScreen.dart';
+import 'package:auropay/view/pages/AccountScreen.dart';
+import 'package:auropay/view/pages/Send/ProgressScreen.dart';
+import 'package:auropay/view/pages/Send/SendScreen.dart';
+import 'package:auropay/view/pages/Send/SuccessScreen.dart';
+
+import '../../view/pages/LoginScreen.dart';
+import '../../view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../view/pages/AnalyticsScreen.dart';
@@ -32,11 +38,15 @@ class MyApp extends StatelessWidget {
       home: const SplashScreen(),
       routes: {
         '/onBoarding': (context) => const OnBoardingScreen(),
+        '/login': (context) => const LoginScreen(),
         '/home': (context) => const HomeScreen(),
         '/transactions': (context) => const TransactionScreen(),
         '/analytics': (context) => const AnalyticsScreen(),
         '/more': (context) => const MoreScreen(),
-      },
+        '/send': (context) => const SendScreen(),
+        '/progress': (context) => const ProgressScreen(),
+        '/success': (context) => const SuccessScreen(),
+        '/account': (context) => const AccountScreen(),      },
     );
   }
 }

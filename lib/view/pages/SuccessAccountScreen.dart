@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import 'HomeScreen.dart';
-
 class SuccessAccountScreen extends StatelessWidget {
   const SuccessAccountScreen({Key? key}) : super(key: key);
 
@@ -47,12 +45,7 @@ class SuccessAccountScreen extends StatelessWidget {
                 ),
               ),
               child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const HomeScreen()),
-                  );
-                },
+                onPressed: ()=> Navigator.pushReplacementNamed(context, '/home'),
                 style: ElevatedButton.styleFrom(
                   foregroundColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
