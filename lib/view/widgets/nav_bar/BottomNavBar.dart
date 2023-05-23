@@ -1,6 +1,3 @@
-import 'dart:ui';
-
-import 'package:auropay/view/pages/QR%20Code/QRCodeScreen1.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 

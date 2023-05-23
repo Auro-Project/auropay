@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import '../../view/pages/AnalyticsScreen.dart';
 import '../../view/pages/MoreScreen.dart';
 import '../widgets/nav_bar/BottomNavBar.dart';
@@ -276,7 +275,6 @@ class _HomeScreenState extends State<HomeScreen> {
       bottomNavigationBar: BottomNavBar(
         currentIndex: _currentIndex,
         onTap: (index) => setState(() => _currentIndex = index),
-
       ),
       body: IndexedStack(
         index: _currentIndex,
