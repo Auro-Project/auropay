@@ -1,7 +1,3 @@
-import 'package:auropay/view/pages/Send/HelpScreen.dart';
-import 'package:auropay/view/pages/Send/ProgressScreen.dart';
-import 'package:auropay/view/pages/Send/SendScreen.dart';
-import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -33,7 +29,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AuroPay',
-      home: const HelpScreen(),
+      home: const SplashScreen(),
       routes: {
         '/onBoarding': (context) => const OnBoardingScreen(),
         '/login': (context) => const LoginScreen(),

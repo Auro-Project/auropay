@@ -26,12 +26,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(height: height *0.08),
                 //create top status bar with avatar with name and notificatin button on right corner
-                const SizedBox(
+                SizedBox(
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                       Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 30,
@@ -46,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                       Padding(
+                      const Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.notifications,
@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
                             Padding(
-                              padding: EdgeInsets.only(left: 20),
+                              padding: const EdgeInsets.only(left: 20),
                               child: SvgPicture.asset(
                                 "assets/images/icons/Logo.svg",
                                 height: 55,
