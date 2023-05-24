@@ -1,6 +1,63 @@
 import 'package:flutter/material.dart';
+import 'package:auropay/view/pages/DesignCardScreen.dart';
 
+import 'PaymentHistoryScreen.dart';
 class MoreScreen extends StatelessWidget {
+  void _showLogoutBottomSheet(BuildContext context) {
+    showModalBottomSheet(
+      context: context,
+      builder: (BuildContext context)
+      {
+        return Container(
+          color: Color(0xFF262627),
+
+          child: Padding(
+            padding: EdgeInsets.all(16.0),
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                ColorFiltered(
+                  colorFilter: ColorFilter.mode(Colors.blue, BlendMode.srcIn),
+                  child: Image.asset(
+                    '/Users/kartik/AndroidStudioProjects/auropay/assets/images/logout.png',
+                    width: 80,
+                    height: 80,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                Text(
+                  'Are you sure you want to logout?',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontWeight: FontWeight.bold,
+                    color: Colors.white,
+                  ),
+                ),
+                SizedBox(height: 16.0),
+                ElevatedButton(
+                  onPressed: () {
+                    // Implement your logout logic here
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                  child: Text('Logout'),
+                ),
+                SizedBox(height: 8.0),
+                TextButton(
+                  onPressed: () {
+                    Navigator.pop(context); // Close the bottom sheet
+                  },
+                  child: Text('Cancel',
+                      style: TextStyle(color: Colors.white),
+                  ),
+
+                ),
+              ],
+            ),
+          ),
+        );
+      },
+    );
+  }
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -56,6 +113,25 @@ class MoreScreen extends StatelessWidget {
             },
           ),
           Divider(),
+          Card(
+            color: Colors.black,
+            child: ListTile(
+              leading: Icon(Icons.credit_card, color: Colors.white),
+
+              title: Text(
+                'Design Card',
+                style: TextStyle(color: Colors.white),
+              ),
+              onTap: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => DesignCardScreen()),
+                );
+               // navigate to the card
+                  },
+            ),
+          ),
+          Divider(),
           ListTile(
             title: Text('Help'),
             textColor: Colors.white,
@@ -66,10 +142,27 @@ class MoreScreen extends StatelessWidget {
           ),
           Divider(),
           ListTile(
+            title: Text('payment history'),
+            textColor: Colors.white,
+            leading: Icon(Icons.help, color: Colors.white),
+            onTap: () {
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => PaymentHistoryPage()),
+              );
+            },
+          ),
+          Divider(),
+          ListTile(
             title: Text('Settings'),
             textColor: Colors.white,
             leading: Icon(Icons.settings, color: Colors.white),
             onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SettingsScreen()),
+              );
+
               // Navigate to the settings screen
             },
           ),
@@ -95,6 +188,7 @@ class MoreScreen extends StatelessWidget {
             ),
             leading: Icon(Icons.logout, color: Colors.white),
             onTap: () {
+              _showLogoutBottomSheet(context);
               // Implement the logic to log out the user
             },
           ),
@@ -417,4 +511,237 @@ class ProfileScreen extends StatelessWidget {
       ),
     );
   }
+}
+
+
+
+class SettingsScreen extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Settings'),
+        backgroundColor: Colors.black,
+        actions: [
+          IconButton(
+            icon: Icon(Icons.more_vert),
+            onPressed: () {
+              // Handle the button press
+            },
+          ),
+        ],
+      ),
+      backgroundColor: Colors.black,
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text(
+              'Notifications',
+
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            onTap: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => NotificationScreen()),
+              );
+              // Implement logic for notifications settings
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Language',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            onTap: () {
+              // Implement logic for language settings
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Privacy and Policy',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            onTap: () {
+              // Implement logic for privacy and policy settings
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Offers',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            onTap: () {
+              // Implement logic for offers settings
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Screenshot Protection',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            trailing: Switch(
+              value: false, // Set the value based on the screenshot protection status
+              onChanged: (value) {
+                // Implement the logic to toggle screenshot protection
+              },
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Vibration',
+              style: TextStyle(fontWeight: FontWeight.bold),
+            ),
+            textColor: Colors.white,
+            trailing: Switch(
+              value: false, // Set the value based on the vibration status
+              onChanged: (value) {
+                // Implement the logic to toggle vibration
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+
+class NotificationScreen extends StatefulWidget {
+  @override
+  _NotificationScreenState createState() => _NotificationScreenState();
+}
+
+class _NotificationScreenState extends State<NotificationScreen> {
+  bool pushNotificationEnabled = false;
+  bool smsNotificationEnabled = false;
+  bool emailNotificationEnabled = false;
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: Text('Notifications'),
+        backgroundColor: Colors.black,
+      ),
+      backgroundColor: Colors.black,
+      body: ListView(
+        children: [
+          ListTile(
+            title: Text(
+              'Push Notification',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            leading: Icon(Icons.notifications, color: Colors.white),
+            trailing: Switch(
+              value: pushNotificationEnabled,
+              onChanged: (value) {
+                setState(() {
+                  pushNotificationEnabled = value;
+                });
+              },
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Manage Notification',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            leading: Icon(Icons.notifications_active, color: Colors.white),
+            onTap: () {
+              // Implement logic for managing notifications
+            },
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'SMS Notification',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            leading: Icon(Icons.sms, color: Colors.white),
+            trailing: Switch(
+              value: smsNotificationEnabled,
+              onChanged: (value) {
+                setState(() {
+                  smsNotificationEnabled = value;
+                });
+              },
+            ),
+          ),
+          Divider(),
+          ListTile(
+            title: Text(
+              'Email Notification',
+              style: TextStyle(fontWeight: FontWeight.bold, color: Colors.white),
+            ),
+            leading: Icon(Icons.email, color: Colors.white),
+            trailing: Switch(
+              value: emailNotificationEnabled,
+              onChanged: (value) {
+                setState(() {
+                  emailNotificationEnabled = value;
+                });
+              },
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+}
+void _showLogoutBottomSheet(BuildContext context) {
+  showModalBottomSheet(
+    context: context,
+    builder: (BuildContext context) {
+      return Container(
+        color: Colors.white,
+        child: Padding(
+          padding: EdgeInsets.all(16.0),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Image.asset(
+                'assets/logout_logo.png',
+                width: 80,
+                height: 80,
+              ),
+              SizedBox(height: 16.0),
+              Text(
+                'Are you sure you want to logout?',
+                style: TextStyle(
+                  fontSize: 18,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+              SizedBox(height: 16.0),
+              ElevatedButton(
+                onPressed: () {
+                  // Implement your logout logic here
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                child: Text('Logout'),
+              ),
+              SizedBox(height: 8.0),
+              TextButton(
+                onPressed: () {
+                  Navigator.pop(context); // Close the bottom sheet
+                },
+                child: Text('Cancel'),
+              ),
+            ],
+          ),
+        ),
+      );
+    },
+  );
 }
