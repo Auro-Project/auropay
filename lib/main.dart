@@ -1,3 +1,10 @@
+import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen1.dart';
+import 'package:auropay/view/pages/Send/HelpScreen.dart';
+import 'package:auropay/view/pages/Send/ProgressScreen.dart';
+import 'package:auropay/view/pages/Send/SendScreen.dart';
+import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
