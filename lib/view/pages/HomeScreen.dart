@@ -269,7 +269,7 @@ class _HomeScreenState extends State<HomeScreen> {
       _homepage( context),
       const AnalyticsScreen(),
       const TransactionScreen(),
-      const MoreScreen(),
+      MoreScreen(),
     ];
     return Scaffold(
       extendBody: true,
