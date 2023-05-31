@@ -1,9 +1,24 @@
-
 import 'package:flutter/material.dart';
 import 'ConfirmAccountScreen.dart';
 
-class SignUpScreen extends StatelessWidget {
+class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  TextEditingController nameController = TextEditingController();
+  TextEditingController phoneNumberController = TextEditingController();
+  String countryCode = '+1'; // Default country code
+
+  @override
+  void dispose() {
+    nameController.dispose();
+    phoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -12,17 +27,30 @@ class SignUpScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(70.0),
-              child: Text(
-                'Sign Up',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.all(70.0),
+                  child: Text(
+                    'Sign Up',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'SF-Pro-Display',
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -47,7 +75,14 @@ class SignUpScreen extends StatelessWidget {
                     color: Colors.grey,
                     borderRadius: BorderRadius.circular(8),
                   ),
-                  // Add widgets for name input
+                  child: TextField(
+                    controller: nameController,
+                    style: const TextStyle(color: Colors.black),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
+                  ),
                 ),
                 const SizedBox(height: 10),
                 Column(
@@ -66,7 +101,6 @@ class SignUpScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 10),
-
                     Row(
                       children: [
                         Container(
@@ -76,7 +110,34 @@ class SignUpScreen extends StatelessWidget {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          // Add widgets for country code input
+                          child: Center(
+                            child: DropdownButton<String>(
+                              value: countryCode,
+                              dropdownColor: Colors.grey,
+                              elevation: 0,
+                              underline: const SizedBox(),
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  countryCode = newValue!;
+                                });
+                              },
+                              items: <String>[
+                                '+1',
+                                '+91',
+                                '+44',
+                                '+86',
+                                // Add more country codes as needed
+                              ].map<DropdownMenuItem<String>>((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(
+                                    value,
+                                    style: const TextStyle(color: Colors.black),
+                                  ),
+                                );
+                              }).toList(),
+                            ),
+                          ),
                         ),
                         const SizedBox(width: 10),
                         Container(
@@ -86,7 +147,15 @@ class SignUpScreen extends StatelessWidget {
                             color: Colors.grey,
                             borderRadius: BorderRadius.circular(8),
                           ),
-                          // Add widgets for phone number input
+                          child: TextField(
+                            controller: phoneNumberController,
+                            keyboardType: TextInputType.phone,
+                            style: const TextStyle(color: Colors.black),
+                            decoration: const InputDecoration(
+                              border: InputBorder.none,
+                              contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                            ),
+                          ),
                         ),
                       ],
                     ),
@@ -113,9 +182,19 @@ class SignUpScreen extends StatelessWidget {
                       ),
                       child: ElevatedButton(
                         onPressed: () {
+                          String name = nameController.text;
+                          String phoneNumber = phoneNumberController.text;
+                          // Process the user's input here
+                          // For example, pass the data to the next screen
                           Navigator.push(
                             context,
-                            MaterialPageRoute(builder: (context) => const ConfirmAccountScreen()),
+                            MaterialPageRoute(
+                              builder: (context) => ConfirmAccountScreen(
+                                name: name,
+                                phoneNumber: phoneNumber,
+                                countryCode: countryCode,
+                              ),
+                            ),
                           );
                         },
                         style: ElevatedButton.styleFrom(
@@ -126,11 +205,13 @@ class SignUpScreen extends StatelessWidget {
                             borderRadius: BorderRadius.circular(30),
                           ),
                         ),
-                        child: const Text('Sign Up',
+                        child: const Text(
+                          'Sign Up',
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 17.0,
-                          ),),
+                          ),
+                        ),
                       ),
                     ),
                   ],
@@ -143,4 +224,3 @@ class SignUpScreen extends StatelessWidget {
     );
   }
 }
-

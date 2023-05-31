@@ -116,9 +116,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                     children: [
                       _buildNavItem(0, 'assets/images/icons/Home.svg'),
-                      _buildNavItem(1, 'assets/images/icons/Payments.svg'),
+                      _buildNavItem(1, 'assets/images/icons/Analytics.svg'),
                       Container(width: size.width * 0.15),
-                      _buildNavItem(2, 'assets/images/icons/Analytics.svg'),
+                      _buildNavItem(2, 'assets/images/icons/Payments.svg'),
                       _buildNavItem(3, 'assets/images/icons/More.svg'),
                     ],
                   ),

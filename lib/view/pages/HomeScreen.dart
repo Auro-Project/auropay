@@ -27,12 +27,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(height: height *0.08),
                 //create top status bar with avatar with name and notificatin button on right corner
-                SizedBox(
+                const SizedBox(
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 30,
@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.notifications,
@@ -58,20 +58,20 @@ class _HomeScreenState extends State<HomeScreen> {
                     ],
                   ),
                 ),
-                //create reactangle card with balance and currency, logo left bottom of card, expiry right bottom corner
+                //create rectangle card with balance and currency, logo left bottom of card, expiry right bottom corner
                 SizedBox(height: height*0.02,),
                 SizedBox(
-                  height: height * 0.25,
-                  width: width * 0.9,
+                  height: height * 0.24,
+                  width: width * 0.8,
                   child: Card(
                     shape: RoundedRectangleBorder(
                       borderRadius: BorderRadius.circular(20),
                     ),
-                    color: const Color(0xdffffff),
+                    color: const Color(0x0dffffff),
                     child: Column(
                       children: [
-                        SizedBox(height: height * 0.05),
-                        Text(
+                        SizedBox(height: height * 0.04),
+                        const Text(
                           "Your Balance",
                           style: TextStyle(
                             color: Colors.white54,
@@ -80,7 +80,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(height: height * 0.005),
-                        Text(
+                        const Text(
                           "₹2,500.00",
                           style: TextStyle(
                             color: Colors.white,
@@ -99,8 +99,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 55,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 30),
                               child: Column(
                                 children: [
                                   Text(
@@ -123,7 +123,6 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),
@@ -133,16 +132,16 @@ class _HomeScreenState extends State<HomeScreen> {
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Top Up', '/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Send','/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Request','/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Withdraw','/send'),
+                    _homeButton(context,'assets/images/icons/send.png', 'Send\nMoney', '/send'),
+                    _homeButton(context,'assets/images/icons/request.png', 'Request\nMoney','/send'),
+                    _homeButton(context,'assets/images/icons/scan.png', 'Scan to\npay','/send'),
+                    _homeButton(context,'assets/images/icons/withdraw.png', 'Withdraw\nMoney','/send'),
                   ],
                 ),
                 SizedBox(height: height * 0.02),
                 //create a ListBuilder for recent transactions
                 SizedBox(
-                  height: height * 0.42,
+                  height: height * 0.40,
                   width: width * 1,
                   child: Card(
                     shape: RoundedRectangleBorder(
@@ -155,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(
+                            const Text(
                               "Recent Transactions",
                               style: TextStyle(
                                 color: Colors.white54,
@@ -164,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(width: width * 0.2),
-                            Text(
+                            const Text(
                               "View All",
                               style: TextStyle(
                                 color: Colors.white,
@@ -174,12 +173,11 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-                        SizedBox(height: height * 0.01),
                         Expanded(
                           child: ListView.builder(
                             itemCount: 6,
                             itemBuilder: (context, index) {
-                              return ListTile(
+                              return const ListTile(
                                 leading: CircleAvatar(
                                   radius: 20,
                                   backgroundImage: AssetImage("assets/images/avatar.png"),
@@ -251,7 +249,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             text,
             maxLines: 2,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 18,
               fontWeight: FontWeight.w400,

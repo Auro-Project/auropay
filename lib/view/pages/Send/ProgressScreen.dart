@@ -7,16 +7,28 @@ class ProgressScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
 
-    Future.delayed(const Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 2), () {
       Navigator.pushReplacementNamed(context, '/success');
     });
 
     return Scaffold(
-      backgroundColor: const Color(0xFF232323),
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Image.asset('assets/images/HomePage.png',),
-
+          Container(
+            width: 400,
+            height: 300,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFD6E1FF),
+                  Color(0xFFC3E6FF),
+                ],
+              ),
+            ),
+          ),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
@@ -26,6 +38,8 @@ class ProgressScreen extends StatelessWidget {
                   style: TextStyle(
                     color: Colors.white,
                     fontSize: 24,
+                    fontFamily: 'SF Pro Display',
+                    fontWeight: FontWeight.w600,
                   ),
                 ),
               ),
@@ -34,10 +48,11 @@ class ProgressScreen extends StatelessWidget {
               ),
               const Center(
                 child: Text(
-                  "Please wait while we \nprocess your transaction",
+                  "Please wait a few seconds the\ntransaction in process",
                   textAlign: TextAlign.center,
                   style: TextStyle(
-                    color: Colors.white54,
+                    color: Colors.white38,
+                    fontFamily: 'SF Pro Display',
                     fontSize: 20,
                   ),
                 ),
@@ -59,7 +74,9 @@ class ProgressScreen extends StatelessWidget {
                   "Processing...",
                   style: TextStyle(
                     color: Colors.white,
-                    fontSize: 24,
+                    fontFamily: 'SF Pro Display',
+                    fontWeight: FontWeight.normal,
+                    fontSize: 22,
                   ),
                 ),
               ),
