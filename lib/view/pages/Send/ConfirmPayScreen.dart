@@ -8,11 +8,11 @@ class ConfirmPayScreen extends StatelessWidget {
   void showConfirmPay(BuildContext context) {
     showModalBottomSheet(
       useSafeArea: true,
-      backgroundColor: Color(0xFF232323),
-      shape: RoundedRectangleBorder(
+      backgroundColor: const Color(0xFF232323),
+      shape: const RoundedRectangleBorder(
         borderRadius: BorderRadius.only(
-          topLeft: Radius.circular(26.0),
-          topRight: Radius.circular(26.0),
+          topLeft: Radius.circular(20.0),
+          topRight: Radius.circular(20.0),
         ),
       ),
       context: context,
@@ -24,121 +24,132 @@ class ConfirmPayScreen extends StatelessWidget {
             Center(
               child: Column(
                 children: [
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   Image.asset(
                     'assets/images/confirm.png',
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const Text(
-                    "Confirm Payment",
+                    "Payment",
                     style: TextStyle(
                       color: Colors.white,
                       fontSize: 24,
+                      fontFamily: 'SF Pro Display',
+                      fontWeight: FontWeight.w600,
                     ),
                   ),
-                  SizedBox(
-                    height: 20,
+                  const SizedBox(
+                    height: 10,
                   ),
                   const Text(
-                    "amount",
+                    "Tuck Shop",
                     textAlign: TextAlign.center,
                     style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 20,
+                      color: Colors.white38,
+                      fontSize: 18,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   const Text(
-                    "₹ 5000",
+                    "₹ 100",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 36,
+                      fontSize: 22,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //title with information of the user
             Padding(
-              padding: const EdgeInsets.symmetric( horizontal: 40),
+              padding: const EdgeInsets.symmetric(horizontal: 40),
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text(
+                  const Text(
                     'Information',
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
                   //label Paying to in grey, textfield with name of the user
-                  Text(
-                    'Paying to',
+                  const Text(
+                    'Store Name',
                     style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 20,
+                      color: Colors.white38,
+                      fontSize: 16,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
-                    "Zara Larson",
+                  const Text(
+                    "Tuck Shop",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 18,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
-                    'Reference Message',
+                  const Text(
+                    'Product Name',
                     style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 20,
+                      color: Colors.white38,
+                      fontSize: 16,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
-                  Text(
+                  const Text(
                     "Book",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
-                      fontSize: 24,
+                      fontSize: 18,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 20,
                   ),
-                  Text(
+                  const Text(
                     'Card for Operation',
                     style: TextStyle(
-                      color: Colors.white54,
-                      fontSize: 20,
+                      color: Colors.white38,
+                      fontSize: 18,
+                      fontFamily: 'SF Pro Display',
                     ),
                   ),
-                  SizedBox(
+                  const SizedBox(
                     height: 10,
                   ),
                   //create a card with the information of the card, and balance
@@ -151,7 +162,7 @@ class ConfirmPayScreen extends StatelessWidget {
                     ),
                     child: Row(
                       children: [
-                        SizedBox(
+                        const SizedBox(
                           width: 30,
                         ),
                         SvgPicture.asset(
@@ -159,10 +170,10 @@ class ConfirmPayScreen extends StatelessWidget {
                           color: Colors.white,
                           height: 50,
                         ),
-                        SizedBox(
+                        const SizedBox(
                           width: 20,
                         ),
-                        Column(
+                        const Column(
                           mainAxisAlignment: MainAxisAlignment.center,
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
@@ -172,6 +183,7 @@ class ConfirmPayScreen extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
+                                fontFamily: 'SF Pro Display',
                               ),
                             ),
                             SizedBox(
@@ -183,6 +195,7 @@ class ConfirmPayScreen extends StatelessWidget {
                               style: TextStyle(
                                 color: Colors.white54,
                                 fontSize: 20,
+                                fontFamily: 'SF Pro Display',
                               ),
                             ),
                           ],
@@ -193,32 +206,48 @@ class ConfirmPayScreen extends StatelessWidget {
                 ],
               ),
             ),
-            SizedBox(
+            const SizedBox(
               height: 20,
             ),
             //Elevated button to confirm payment
             Center(
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.pushNamed(context, '/progress');
-                },
-                child: const Text(
-                  'Pay',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontSize: 24,
+              child: Container(
+                width: 360,
+                height: 60,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(16.0),
+                  gradient: const LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF9CA2E8),
+                      Color(0xFF7CABEC),
+                    ],
                   ),
                 ),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.white,
-                  minimumSize: const Size(360, 60),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(16.0),
+                child: ElevatedButton(
+                  onPressed: () {
+                    Navigator.pushNamed(context, '/receipt');
+                  },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.transparent,
+                    elevation: 0,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(16.0),
+                    ),
+                  ),
+                  child: const Text(
+                    'Pay',
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 22,
+                      fontFamily: 'SF Pro Display',
+                      fontWeight: FontWeight.bold,
+                    ),
                   ),
                 ),
               ),
             ),
-
           ],
         );
       },
@@ -228,24 +257,41 @@ class ConfirmPayScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF232323),
+      backgroundColor: Colors.black,
       body: Center(
-        child: ElevatedButton(
-          onPressed: () {
-            showConfirmPay(context);
-          },
-          child: const Text(
-            'Confirm Payment',
-            style: TextStyle(
-              color: Colors.black87,
-              fontSize: 24,
+        child: Container(
+          width: 360,
+          height: 60,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(16.0),
+            gradient: const LinearGradient(
+              begin: Alignment.topLeft,
+              end: Alignment.bottomRight,
+              colors: [
+                Color(0xFF9CA2E8),
+                Color(0xFF7CABEC),
+              ],
             ),
           ),
-          style: ElevatedButton.styleFrom(
-            backgroundColor: Colors.white,
-            minimumSize: const Size(360, 60),
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(16.0),
+          child: ElevatedButton(
+            onPressed: () {
+              showConfirmPay(context);
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.transparent,
+              elevation: 0,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(16.0),
+              ),
+            ),
+            child: const Text(
+              'Confirm Payment',
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 22,
+                fontFamily: 'SF Pro Display',
+                fontWeight: FontWeight.bold,
+              ),
             ),
           ),
         ),

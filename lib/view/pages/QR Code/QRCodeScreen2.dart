@@ -5,22 +5,40 @@ class QRScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
+    Future.delayed(const Duration(seconds: 2), () {
+      Navigator.pushReplacementNamed(context, '/confirmpay');
+    });
+
     return Scaffold(
       backgroundColor: Colors.black54,
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(70.0),
-              child: Text(
-                'QR Code',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.all(70.0),
+                  child: Text(
+                    'QR Code',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'SF-Pro-Display',
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Container(
               width: 370.0,
@@ -80,7 +98,7 @@ class QRScreen extends StatelessWidget {
   Widget _buildInfoContainer() {
     return Container(
       width: 200.0,
-      height: 20.0,
+      height: 10.0,
       decoration: BoxDecoration(
         color: Colors.grey,
         borderRadius: BorderRadius.circular(8.0),
@@ -93,7 +111,6 @@ class QRScreen extends StatelessWidget {
             size: 24,
             color: Colors.white,
           ),
-          SizedBox(width: 5.0),
           Text(
             'Point your camera at the QR code to make a payment',
             style: TextStyle(

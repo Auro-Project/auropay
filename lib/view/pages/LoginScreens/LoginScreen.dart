@@ -1,8 +1,22 @@
 import 'package:flutter/material.dart';
 import 'ConfirmActivationCode.dart';
 
-class LoginScreen extends StatelessWidget {
+class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
+
+  @override
+  _LoginScreenState createState() => _LoginScreenState();
+}
+
+class _LoginScreenState extends State<LoginScreen> {
+  TextEditingController phoneNumberController = TextEditingController();
+  String countryCode = '91'; // Default country code
+
+  @override
+  void dispose() {
+    phoneNumberController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -11,17 +25,30 @@ class LoginScreen extends StatelessWidget {
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(70.0),
-              child: Text(
-                'Log in',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.all(70.0),
+                  child: Text(
+                    'Log in',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'SF-Pro-Display',
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
@@ -48,7 +75,16 @@ class LoginScreen extends StatelessWidget {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      // Add widgets for country code input
+                      child: Center(
+                        child: CountryCodePicker(
+                          countryCode: countryCode,
+                          onChanged: (String? newValue) {
+                            setState(() {
+                              countryCode = newValue!;
+                            });
+                          },
+                        ),
+                      ),
                     ),
                     const SizedBox(width: 10),
                     Container(
@@ -58,7 +94,15 @@ class LoginScreen extends StatelessWidget {
                         color: Colors.grey,
                         borderRadius: BorderRadius.circular(8),
                       ),
-                      // Add widgets for phone number input
+                      child: TextField(
+                        controller: phoneNumberController,
+                        keyboardType: TextInputType.phone,
+                        style: const TextStyle(color: Colors.black),
+                        decoration: const InputDecoration(
+                          border: InputBorder.none,
+                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        ),
+                      ),
                     ),
                   ],
                 ),
@@ -85,9 +129,17 @@ class LoginScreen extends StatelessWidget {
                   ),
                   child: ElevatedButton(
                     onPressed: () {
+                      String phoneNumber = phoneNumberController.text;
+                      // Process the user's input here
+                      // For example, pass the data to the next screen
                       Navigator.push(
                         context,
-                        MaterialPageRoute(builder: (context) => const ConfirmActivationCode()),
+                        MaterialPageRoute(
+                          builder: (context) => ConfirmActivationCode(
+                            phoneNumber: phoneNumber,
+                            countryCode: countryCode,
+                          ),
+                        ),
                       );
                     },
                     style: ElevatedButton.styleFrom(
@@ -98,11 +150,14 @@ class LoginScreen extends StatelessWidget {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text('Send Code',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 17.0,
-                    ),),
+                    child: const Text(
+                      'Send Code',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 17.0,
+                        fontFamily: 'SF Pro Display'
+                      ),
+                    ),
                   ),
                 ),
               ],
@@ -114,3 +169,32 @@ class LoginScreen extends StatelessWidget {
   }
 }
 
+class CountryCodePicker extends StatelessWidget {
+  final String countryCode;
+  final ValueChanged<String?> onChanged;
+
+  const CountryCodePicker({
+    Key? key,
+    required this.countryCode,
+    required this.onChanged,
+  }) : super(key: key);
+
+  @override
+  Widget build(BuildContext context) {
+    return DropdownButton<String>(
+      value: countryCode,
+      onChanged: onChanged,
+      items: <String>[
+        '91',
+        '44',
+        '86',
+        // Add more country codes as needed
+      ].map<DropdownMenuItem<String>>((String value) {
+        return DropdownMenuItem<String>(
+          value: value,
+          child: Text(value),
+        );
+      }).toList(),
+    );
+  }
+}

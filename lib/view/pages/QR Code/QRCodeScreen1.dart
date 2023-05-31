@@ -7,22 +7,36 @@ class QRCodeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       backgroundColor: Colors.black54,
       body: Center(
         child: Column(
           children: [
-            const Padding(
-              padding: EdgeInsets.all(70.0),
-              child: Text(
-                'QR Code',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
+            Row(
+              children: [
+                IconButton(
+                  icon: const Icon(
+                    Icons.arrow_back_ios_new,
+                    color: Colors.white,
+                  ),
+                  onPressed: () {
+                    Navigator.pop(context);
+                  },
                 ),
-              ),
+                const Padding(
+                  padding: EdgeInsets.all(70.0),
+                  child: Text(
+                    'QR Code',
+                    style: TextStyle(
+                      fontSize: 20,
+                      fontFamily: 'SF-Pro-Display',
+                      fontWeight: FontWeight.w600,
+                      color: Colors.white,
+                    ),
+                  ),
+                ),
+              ],
             ),
             Container(
               width: 370.0,

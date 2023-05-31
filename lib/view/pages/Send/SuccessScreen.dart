@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 
 class SuccessScreen extends StatelessWidget {
-  const SuccessScreen({super.key});
-
+  const SuccessScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -11,25 +10,44 @@ class SuccessScreen extends StatelessWidget {
 
     // Delayed function to navigate to the SuccessScreen after 3 seconds
 
-
     return Scaffold(
-      backgroundColor: const Color(0xFF151316),
+      backgroundColor: Colors.black,
       body: Stack(
         children: [
-          Image.asset('assets/images/HomePage.png',),
+          Column(
+            children: [
+              Container(
+                width: 400,
+                height: 162,
+                decoration: const BoxDecoration(
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFFD6E1FF),
+                      Color(0xFFC3E6FF),
+                    ],
+                  ),
+                ),
+              ),
+            ],
+          ),
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
-
-                SizedBox(height: height * 0.1),
-                //rectangle contaning terxt trxn completd successfully
+                //rectangle containing text completed successfully
                 Container(
-                  height: height * 0.1,
-                  width: width * 0.9,
+                  height: 56,
+                  width: 300,
                   decoration: BoxDecoration(
-                    color: const Color(0xFF232323),
-                    borderRadius: BorderRadius.circular(16.0),
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFF9CA2E8),
+                        Color(0xFF7CABEC),
+                      ],
+                    ),
+                    borderRadius: BorderRadius.circular(10),
                   ),
                   child: const Center(
                     child: Text(
@@ -37,7 +55,9 @@ class SuccessScreen extends StatelessWidget {
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Colors.white,
-                        fontSize: 24,
+                        fontSize: 17,
+                        fontFamily: 'SF Pro Display',
+                        fontWeight: FontWeight.w600,
                       ),
                     ),
                   ),
@@ -46,149 +66,215 @@ class SuccessScreen extends StatelessWidget {
                 SizedBox(height: height * 0.05),
                 const Center(
                   child: Text(
-                    "₹ 5000",
+                    "- ₹ 5000",
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
+                      fontFamily: 'SF Pro Display',
                       fontWeight: FontWeight.bold,
-                      fontSize: 36,
+                      fontSize: 24,
                     ),
                   ),
                 ),
                 //now 4 columns containing from , to , date , remaining balance
                 SizedBox(height: height * 0.05),
-
                 Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 30),
                   child: Column(
                     children: [
-                      Row(
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white54,
-                                child: Icon(
-                                  Icons.arrow_upward,
-                                  color: Colors.black,
+                                backgroundColor: Colors.white,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF9CA2E8),
+                                        Color(0xFF7CABEC),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.account_circle_sharp,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 10),
-                              const Text(
+                              Text(
                                 "From",
                                 style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: 'SF Pro Display',
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-
                             ],
                           ),
-                          const Text(
-                            "Savings",
+                          Text(
+                            "Zahar Palaznik",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: height * 0.02),
-                      Row(
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white54,
-                                child: Icon(
-                                  Icons.arrow_upward,
-                                  color: Colors.black,
+                                backgroundColor: Colors.white,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF9CA2E8),
+                                        Color(0xFF7CABEC),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.account_circle_sharp,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 10),
-                              const Text(
+                              Text(
                                 "To",
                                 style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: 'SF Pro Display',
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
-
                             ],
                           ),
-                          const Text(
+                          Text(
                             "Irin Machahen",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: height * 0.02),
-                      Row(
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white54,
-                                child: Icon(
-                                  Icons.calendar_today,
-                                  color: Colors.black,
+                                backgroundColor: Colors.white,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF9CA2E8),
+                                        Color(0xFF7CABEC),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.calendar_today_sharp,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 10),
-                              const Text(
+                              Text(
                                 "Date",
                                 style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: 'SF Pro Display',
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "12/12/2021",
+                          SizedBox(width: 10),
+                          Text(
+                            "12 April,2023",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
                       ),
                       SizedBox(height: height * 0.02),
-                      Row(
+                       Row(
                         mainAxisAlignment: MainAxisAlignment.spaceBetween,
                         children: [
                           Row(
                             children: [
                               CircleAvatar(
-                                backgroundColor: Colors.white54,
-                                child: Icon(
-                                  Icons.attach_money,
-                                  color: Colors.black,
+                                backgroundColor: Colors.white,
+                                child: Container(
+                                  decoration: const BoxDecoration(
+                                    shape: BoxShape.circle,
+                                    gradient: LinearGradient(
+                                      begin: Alignment.topLeft,
+                                      end: Alignment.bottomRight,
+                                      colors: [
+                                        Color(0xFF9CA2E8),
+                                        Color(0xFF7CABEC),
+                                      ],
+                                    ),
+                                  ),
+                                  child: const Icon(
+                                    Icons.attach_money_sharp,
+                                    color: Colors.black,
+                                  ),
                                 ),
                               ),
                               SizedBox(width: 10),
-                              const Text(
+                              Text(
                                 "Remaining",
                                 style: TextStyle(
-                                  color: Colors.white54,
-                                  fontSize: 20,
+                                  color: Colors.white,
+                                  fontFamily: 'SF Pro Display',
+                                  fontSize: 17,
+                                  fontWeight: FontWeight.w600,
                                 ),
                               ),
                             ],
                           ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "₹ 5000",
+                          SizedBox(width: 10),
+                          Text(
+                            "₹ 2896",
                             style: TextStyle(
                               color: Colors.white,
-                              fontSize: 24,
+                              fontFamily: 'SF Pro Display',
+                              fontSize: 17,
+                              fontWeight: FontWeight.w600,
                             ),
                           ),
                         ],
@@ -196,32 +282,29 @@ class SuccessScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-
-
-
-
                 SizedBox(height: height * 0.1),
                 ElevatedButton(
                   onPressed: () {
                     Navigator.pop(context); // Go back to the previous screen
                   },
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.white,
+                    minimumSize: Size(width * 0.9, height * 0.06),
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
                   child: const Text(
                     "Done",
                     style: TextStyle(
                       color: Colors.black87,
-                      fontSize: 20,
-                    ),
-                  ),
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: Size(width * 0.9, height * 0.07),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(16.0),
+                      fontFamily: 'SF Pro Display',
+                      fontSize: 17,
+                      fontWeight: FontWeight.normal,
                     ),
                   ),
                 ),
                 SizedBox(height: height * 0.1),
-
               ],
             ),
           ),
