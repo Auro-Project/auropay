@@ -1,4 +1,3 @@
-import 'package:auropay/view/pages/Send/HelpScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
@@ -10,8 +9,11 @@ import '../../view/pages/HomeScreen.dart';
 import '../../view/pages/MoreScreen.dart';
 import '../../view/pages/TransactionScreen.dart';
 import '../../view/pages/SplashScreen.dart';
+import 'dbhelper/mongodb.dart';
 
-void main() {
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await MongoDatabase.connect();
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -33,7 +35,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AuroPay',
-      home: const HelpScreen(),
+      home: const SplashScreen(),
       routes: {
         '/onBoarding': (context) => const OnBoardingScreen(),
         '/home': (context) => const HomeScreen(),
