@@ -3,6 +3,7 @@ import 'dart:developer';
 import 'package:auropay/dbhelper/constant.dart';
 
 class MongoDatabase{
+  // ignore: prefer_typing_uninitialized_variables
   static var db , userCollection;
   static connect() async{
     db = await db.create(MONGO_CONN_URL);
