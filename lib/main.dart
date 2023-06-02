@@ -1,5 +1,11 @@
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/MoreScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/NotificationScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/SplashScreen.dart';
@@ -62,6 +68,12 @@ class MyApp extends StatelessWidget {
               '/qrscreen': (context) => const QRCodeScreen(),
               '/confirmpay': (context) => const ConfirmPayScreen(),
               '/receipt': (context) => ReceiptScreen(),
+              '/profile' : (context) => const ProfileScreen(),
+              '/help' : (context) => const HelpScreen(),
+              '/support' : (context) => const SupportScreen(),
+              '/contact' : (context) => const ContactScreen(),
+              '/settings' : (context) => const SettingScreen(),
+              '/notifications' : (context) => const NotificationScreen(),
             },
           );
         }

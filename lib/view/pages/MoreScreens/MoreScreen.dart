@@ -12,7 +12,6 @@ class MoreScreen extends StatelessWidget {
     Color getTextColor() {
       return themeProvider.isDarkMode ? Colors.white : Colors.black;
     }
-
     return Scaffold(
       body: Center(
         child: Column(
@@ -29,7 +28,7 @@ class MoreScreen extends StatelessWidget {
                   },
                 ),
                  Padding(
-                  padding: EdgeInsets.all(70.0),
+                  padding: const EdgeInsets.all(70.0),
                   child: Text(
                     'More',
                     style: TextStyle(
@@ -57,30 +56,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle profile onTap
-              },
-            ),
-            Divider(
-              color: themeProvider.textColor,
-              indent: 16,
-              endIndent: 16,
-            ),
-            ListTile(
-              leading: Icon(
-                Icons.mail,
-                color: themeProvider.textColor,
-              ),
-              title: Text(
-                'Invitation',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.normal,
-                  color: getTextColor(),
-                ),
-              ),
-              onTap: () {
-                // Handle invitation onTap
+                Navigator.pushNamed(context, '/profile');
               },
             ),
             Divider(
@@ -103,7 +79,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle contacts onTap
+                Navigator.pushNamed(context,'/contact');
               },
             ),
             Divider(
@@ -126,7 +102,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle help onTap
+                Navigator.pushNamed(context, '/help');
               },
             ),
             Divider(
@@ -149,7 +125,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
               onTap: () {
-                // Handle settings onTap
+                Navigator.pushNamed(context,'/settings');
               },
             ),
             Divider(
