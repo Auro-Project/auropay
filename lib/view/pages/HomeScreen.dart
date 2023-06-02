@@ -1,3 +1,5 @@
+import 'package:auropay/view/widgets/CustomShape.dart';
+import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../view/pages/AnalyticsScreen.dart';
@@ -15,7 +17,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  static Widget _homepage(BuildContext context){
+  static Widget _homepage(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -25,8 +27,8 @@ class _HomeScreenState extends State<HomeScreen> {
           Center(
             child: Column(
               children: [
-                SizedBox(height: height *0.08),
-                //create top status bar with avatar with name and notificatin button on right corner
+                SizedBox(height: height * 0.08),
+                //create top status bar with avatar with name and notification button on right corner
                 SizedBox(
                   height: 50,
                   child: Row(
@@ -36,7 +38,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         padding: EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 30,
-                          backgroundImage: AssetImage("assets/images/avatar.png"),
+                          backgroundImage:
+                              AssetImage("assets/images/avatar.png"),
                         ),
                       ),
                       Text(
@@ -59,19 +62,18 @@ class _HomeScreenState extends State<HomeScreen> {
                   ),
                 ),
                 //create reactangle card with balance and currency, logo left bottom of card, expiry right bottom corner
-                SizedBox(height: height*0.02,),
+                SizedBox(
+                  height: height * 0.02,
+                ),
                 SizedBox(
                   height: height * 0.25,
                   width: width * 0.9,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: const Color(0xdffffff),
+                  child: CustomPaint(
+                    painter: CustomShape(),
                     child: Column(
                       children: [
                         SizedBox(height: height * 0.05),
-                        Text(
+                        const Text(
                           "Your Balance",
                           style: TextStyle(
                             color: Colors.white54,
@@ -80,15 +82,15 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(height: height * 0.005),
-                        Text(
+                        const Text(
                           "₹2,500.00",
                           style: TextStyle(
                             color: Colors.white,
-                            fontSize: 32,
+                            fontSize: 36,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: height * 0.04),
+                        SizedBox(height: height * 0.03),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -96,7 +98,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               padding: const EdgeInsets.only(left: 20),
                               child: SvgPicture.asset(
                                 "assets/images/icons/Logo.svg",
-                                height: 55,
+                                height: 45,
                               ),
                             ),
                             Padding(
@@ -123,20 +125,23 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ],
                         ),
-
                       ],
                     ),
                   ),
                 ),
                 //create 4 cards with icons and text
-                SizedBox(height: height * 0.02),
+                SizedBox(height: height * 0.04),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Top Up', '/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Send','/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Request','/send'),
-                    _homeButton(context,'assets/images/icons/Payments.svg', 'Withdraw','/send'),
+                    _homeButton(context, 'assets/images/icons/add.svg', 'TopUp',
+                        '/send'),
+                    _homeButton(context, 'assets/images/icons/send.svg', 'Send',
+                        '/send'),
+                    _homeButton(context, 'assets/images/icons/request.svg',
+                        'Request', '/send'),
+                    _homeButton(context, 'assets/images/icons/withdraw.svg',
+                        'Withdraw', '/send'),
                   ],
                 ),
                 SizedBox(height: height * 0.02),
@@ -177,12 +182,14 @@ class _HomeScreenState extends State<HomeScreen> {
                         SizedBox(height: height * 0.01),
                         Expanded(
                           child: ListView.builder(
+                            padding: EdgeInsets.zero,
                             itemCount: 6,
                             itemBuilder: (context, index) {
                               return ListTile(
                                 leading: CircleAvatar(
                                   radius: 20,
-                                  backgroundImage: AssetImage("assets/images/avatar.png"),
+                                  backgroundImage:
+                                      AssetImage("assets/images/avatar.png"),
                                 ),
                                 title: Text(
                                   "Zara Doe",
@@ -216,7 +223,6 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-
               ],
             ),
           ),
@@ -225,7 +231,8 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  static Widget _homeButton(BuildContext context,String icon, String text,String route){
+  static Widget _homeButton(
+      BuildContext context, String icon, String text, String route) {
     return SizedBox(
       width: 90,
       child: Column(
@@ -234,15 +241,15 @@ class _HomeScreenState extends State<HomeScreen> {
             style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0x12ffffff),
               shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(10),
+                borderRadius: BorderRadius.circular(15),
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(
-                  horizontal: 5, vertical: 25),
+              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 17),
               child: SvgPicture.asset(
                 icon,
                 height: 30,
+                color: Colors.white70,
               ),
             ),
             onPressed: () => Navigator.pushNamed(context, route),
@@ -253,20 +260,19 @@ class _HomeScreenState extends State<HomeScreen> {
             maxLines: 2,
             style: TextStyle(
               color: Colors.white,
-              fontSize: 18,
+              fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
           ),
         ],
       ),
-
     );
   }
 
   @override
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      _homepage( context),
+      _homepage(context),
       const AnalyticsScreen(),
       const TransactionScreen(),
       MoreScreen(),
