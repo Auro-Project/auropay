@@ -11,7 +11,7 @@ class ThemeProvider with ChangeNotifier {
   }
 
   Color get backgroundColor {
-    return _isDarkMode ? Colors.black : Colors.white;
+    return _isDarkMode ? const Color(0xFF161616) : Colors.white;
   }
 
   Color get textColor {
@@ -23,14 +23,20 @@ class ThemeProvider with ChangeNotifier {
         ? ThemeData.dark().copyWith(
       scaffoldBackgroundColor: backgroundColor,
       textTheme: TextTheme(
-        bodyLarge: TextStyle(color: textColor),
+        bodyLarge: TextStyle(
+            color: textColor,
+            fontFamily: 'SF Pro Display',
+        ),
         // Customize more text styles for dark theme as needed
       ),
     )
         : ThemeData.light().copyWith(
       scaffoldBackgroundColor: backgroundColor,
       textTheme: TextTheme(
-        bodyLarge: TextStyle(color: textColor),
+        bodyLarge: TextStyle(
+            color: textColor,
+            fontFamily: 'SF Pro Display',
+        ),
         // Customize more text styles for light theme as needed
       ),
     );

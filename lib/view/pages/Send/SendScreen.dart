@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import '../../widgets/Contacts.dart';
+import '../MoreScreens/ContactScreen.dart';
 
 class SendScreen extends StatelessWidget {
   const SendScreen({Key? key}) : super(key: key);
@@ -22,7 +22,7 @@ class SendScreen extends StatelessWidget {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return ContactListBottomSheet();
+          return ContactScreen();
         },
       );
     }

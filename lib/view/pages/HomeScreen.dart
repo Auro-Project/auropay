@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../view/pages/AnalyticsScreen.dart';
-import '../../view/pages/MoreScreen.dart';
+import 'MoreScreens/MoreScreen.dart';
 import '../widgets/nav_bar/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
 
