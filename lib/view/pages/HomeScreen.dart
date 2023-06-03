@@ -71,7 +71,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: CustomPaint(
                     painter: CustomShape(
                       strokeColor: Colors.white.withOpacity(0.7),
-                      fillColor: Colors.white.withOpacity(0.2)
+                      fillColor: Colors.white54.withOpacity(0.01)
                     ),
                     child: Column(
                       children: [

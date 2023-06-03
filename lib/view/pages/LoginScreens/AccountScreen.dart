@@ -17,18 +17,18 @@ class AccountScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.end,
               children: [
                 Container(
-                  padding: const EdgeInsets.symmetric( vertical: 40.0),
+                  width: MediaQuery.of(context).size.width * 0.8,
+                  padding: const EdgeInsets.symmetric( vertical: 60.0),
                   decoration: border(context, borderRadius: 30.0),
                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Padding(
-                          padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0),
-                          child: Image.asset(
-                            "assets/images/Logo.png",
-                            height: 150,
-                          ),
+                        Image.asset(
+                          "assets/images/Logo.png",
+                          height: 150,
+                          width: 150,
                         ),
+                        const SizedBox(height: 20.0),
                         const Text(
                           textAlign: TextAlign.center,
                           ' Start your financial \nactivity at Auro with\n Convenience',
