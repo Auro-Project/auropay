@@ -1,6 +1,14 @@
-import 'package:flutter/material.dart';
+// ignore: file_names
+import 'package:flutter/material.dart' show AppBar, BorderRadius, BoxDecoration, BuildContext, Color, Colors, Column, Container, CrossAxisAlignment, EdgeInsets, Expanded, FilterChip, FontWeight, Icon, IconButton, Icons, InputBorder, InputDecoration, ListTile, Padding, Row, Scaffold, SizedBox, State, StatefulWidget, StatelessWidget, Text, TextField, TextStyle, Widget, Wrap;
 
-class PaymentHistoryPage extends StatelessWidget {
+class PaymentHistoryPage extends StatefulWidget {
+  const PaymentHistoryPage({super.key});
+
+  @override
+  State<PaymentHistoryPage> createState() => _PaymentHistoryPageState();
+}
+
+class _PaymentHistoryPageState extends State<PaymentHistoryPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,7 +148,7 @@ class TransactionItem extends StatelessWidget {
   final String accountNumber;
   final String amount;
 
-  const TransactionItem({
+  const TransactionItem({super.key,
     required this.logo,
     required this.payeeName,
     required this.accountNumber,

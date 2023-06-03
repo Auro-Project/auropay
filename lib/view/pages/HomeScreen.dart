@@ -14,8 +14,47 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  double aurocoinBalance = 0.0; // Define the Aurocoin balance
 
-  static Widget _homepage(BuildContext context){
+  @override
+  void initState() {
+    super.initState();
+    // Fetch the Aurocoin balance from the server or any other source
+    fetchAurocoinBalance().then((balance) {
+      setState(() {
+        aurocoinBalance = balance;
+      });
+    });
+  }
+  // Fetch the Aurocoin balance from the server or any other source
+  Future<double> fetchAurocoinBalance() async {
+    // Simulating a network request delay
+    await Future.delayed(Duration(seconds: 2));
+    return 2500.0; // Replace with your actual logic to fetch the Aurocoin balance
+
+    void addMoney(double amount) {
+      // Add the logic to process the user's transaction and update the Aurocoin balance
+      // For example, you can make an API request to add the money to the user's account
+      // and then fetch the updated Aurocoin balance from the server
+
+      // Simulate a network request delay
+      setState(() {
+        // Show a loading indicator while fetching the updated Aurocoin balance
+        aurocoinBalance = 0;
+      });
+
+      // Call the fetchAurocoinBalanceFromServer method to fetch the updated balance
+      fetchAurocoinBalanceFromServer().then((balance) {
+        setState(() {
+          // Update the Aurocoin balance with the fetched value
+          aurocoinBalance = balance;
+        });
+      });
+    }
+  }
+
+
+  static Widget _homepage(BuildContext context, num aurocoinBalance){
     final height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
     return Scaffold(
@@ -72,7 +111,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       children: [
                         SizedBox(height: height * 0.05),
                         Text(
-                          "Your Balance",
+                          "Aurocoin Balance",
                           style: TextStyle(
                             color: Colors.white54,
                             fontSize: 20,
@@ -81,7 +120,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         SizedBox(height: height * 0.005),
                         Text(
-                          "₹2,500.00",
+                          "Aurocoin: $aurocoinBalance",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 32,
@@ -212,6 +251,16 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                           ),
                         ),
+                        SizedBox(height: height * 0.02),
+                        // Display Aurocoin balance
+                        Text(
+                          "Aurocoin Balance: $aurocoinBalance",
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 16,
+                            fontWeight: FontWeight.w400,
+                          ),
+                        ),
                       ],
                     ),
                   ),
@@ -266,7 +315,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> _screens = [
-      _homepage( context),
+      _homepage(context, aurocoinBalance), // Pass the Aurocoin balance
       const AnalyticsScreen(),
       const TransactionScreen(),
       MoreScreen(),
@@ -283,4 +332,6 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
     );
   }
+
+  fetchAurocoinBalanceFromServer() {}
 }
