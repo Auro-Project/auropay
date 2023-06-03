@@ -29,12 +29,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(height: height * 0.08),
                 //create top status bar with avatar with name and notification button on right corner
-                SizedBox(
+                const SizedBox(
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 30,
@@ -50,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.notifications,
@@ -101,8 +101,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 45,
                               ),
                             ),
-                            Padding(
-                              padding: const EdgeInsets.only(right: 30),
+                            const Padding(
+                              padding: EdgeInsets.only(right: 30),
                               child: Column(
                                 children: [
                                   Text(
@@ -160,7 +160,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                           children: [
-                            Text(
+                            const Text(
                               "Recent Transactions",
                               style: TextStyle(
                                 color: Colors.white54,
@@ -169,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(width: width * 0.2),
-                            Text(
+                            const Text(
                               "View All",
                               style: TextStyle(
                                 color: Colors.white,
@@ -185,7 +185,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.zero,
                             itemCount: 6,
                             itemBuilder: (context, index) {
-                              return ListTile(
+                              return const ListTile(
                                 leading: CircleAvatar(
                                   radius: 20,
                                   backgroundImage:
@@ -258,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             text,
             maxLines: 2,
-            style: TextStyle(
+            style: const TextStyle(
               color: Colors.white,
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -271,11 +271,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Widget> _screens = [
+    final List<Widget> screens = [
       _homepage(context),
       const AnalyticsScreen(),
       const TransactionScreen(),
-      MoreScreen(),
+      const MoreScreen(),
     ];
     return Scaffold(
       extendBody: true,
@@ -285,7 +285,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: IndexedStack(
         index: _currentIndex,
-        children: _screens,
+        children: screens,
       ),
     );
   }
