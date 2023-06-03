@@ -1,6 +1,6 @@
-import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
 import 'package:flutter/material.dart';
-import 'SignUpScreen.dart';
 
 class AccountScreen extends StatelessWidget {
   const AccountScreen({Key? key}) : super(key: key);
@@ -11,112 +11,74 @@ class AccountScreen extends StatelessWidget {
       body: Stack(
         children: [
           Image.asset("assets/images/AccountScreen1.png"),
-          Positioned(
-            top: 200,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 130),
-              child: Image.asset(
-                "assets/images/Logo1.png",
-              ),
-            ),
-          ),
           Center(
+            heightFactor: 2,
             child: Column(
-              mainAxisAlignment: MainAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.end,
               children: [
-                Padding(
-                  padding: const EdgeInsets.only(top: 100.0),
-                  child: RichText(
-                    text: const TextSpan(
-                      text: ' Start your financial \nactivity with ',
-                      style: TextStyle(
-                        fontSize: 22,
-                        color: Colors.white60,
-                      ),
+                Container(
+                  padding: const EdgeInsets.symmetric( vertical: 40.0),
+                  decoration: border(context, borderRadius: 30.0),
+                   child: Column(
+                      mainAxisSize: MainAxisSize.min,
                       children: [
-                        TextSpan(
-                          text: 'AuroPay',
-                          style: TextStyle(
-                            fontWeight: FontWeight.bold,
+                        Padding(
+                          padding: const EdgeInsets.symmetric(horizontal: 120.0, vertical: 20.0),
+                          child: Image.asset(
+                            "assets/images/Logo.png",
+                            height: 150,
                           ),
-                        )
+                        ),
+                        const Text(
+                          textAlign: TextAlign.center,
+                          ' Start your financial \nactivity at Auro with\n Convenience',
+                          style: TextStyle(
+                            fontSize: 18,
+                            color: Colors.white60,
+                          ),
+                        ),
+                        const SizedBox(height: 10.0),
                       ],
-                    ),
-                  ),
+                    )
                 ),
-
+                const SizedBox(height: 80.0),
+                appButton(context, gradient(context),'Sign In', '/login'),
                 const SizedBox(height: 16.0),
-                Container(
-                  width: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const LoginScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                appButton(context, border(context), 'Sign Up', '/signup'),
+                const SizedBox(height: 20.0),
+                const Row(
+                  children: [
+                    Expanded(
+                      child: Divider(
+                        indent: 30,
+                        color: Colors.grey,
                       ),
                     ),
-                    child: const Text("Log in",
-                      style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18.0,
-                    ),),
-                  ),
-                ),
+                    Padding(
+                      padding: EdgeInsets.symmetric(horizontal: 10),
+                      child: Text(
+                        'Continue with',
+                        style: TextStyle(
+                          color: Colors.grey,
+                          fontSize: 18,
 
-                const SizedBox(height: 16.0),
-
-                Container(
-                  width: 250,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(builder: (context) => const SignUpScreen()),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
+                        ),
                       ),
                     ),
-                    child: const Text("Sign up",
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18.0,
-                      ),),
-
-                  ),
+                    Expanded(
+                      child: Divider(
+                        endIndent: 30,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ],
                 ),
+                const SizedBox(height: 20.0),
+                appButton(context, border(context), 'Sign In with Google', '/signup', iconPath: 'assets/images/icons/Google.svg'),
+                const SizedBox(height: 80),
               ],
             ),
-          )
+          ),
         ],
       ),
     );

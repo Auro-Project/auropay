@@ -1,4 +1,5 @@
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
@@ -57,6 +58,7 @@ class MyApp extends StatelessWidget {
             routes: {
               '/onBoarding': (context) => const OnBoardingScreen(),
               '/login': (context) => const LoginScreen(),
+              '/signup': (context) => const SignUpScreen(),
               '/home': (context) => const HomeScreen(),
               '/transactions': (context) => const TransactionScreen(),
               '/analytics': (context) => const AnalyticsScreen(),

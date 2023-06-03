@@ -69,7 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
                   height: height * 0.25,
                   width: width * 0.9,
                   child: CustomPaint(
-                    painter: CustomShape(),
+                    painter: CustomShape(
+                      strokeColor: Colors.white.withOpacity(0.7),
+                      fillColor: Colors.white.withOpacity(0.2)
+                    ),
                     child: Column(
                       children: [
                         SizedBox(height: height * 0.05),

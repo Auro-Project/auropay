@@ -3,6 +3,10 @@ import 'package:flutter/material.dart';
 
 //Copy this CustomPainter code to the Bottom of the File
 class CustomShape extends CustomPainter {
+  final Color strokeColor;
+  final Color fillColor;
+
+  CustomShape({required this.strokeColor, required this.fillColor});
   @override
   void paint(Canvas canvas, Size size) {
     Path path_0 = Path();
@@ -100,11 +104,11 @@ class CustomShape extends CustomPainter {
     Paint paint_1_stroke = Paint()
       ..style = PaintingStyle.stroke
       ..strokeWidth = 1;
-    paint_1_stroke.color = Colors.white.withOpacity(0.7);
+    paint_1_stroke.color = strokeColor;
     canvas.drawPath(path_1, paint_1_stroke);
 
     Paint paint_1_fill = Paint()..style = PaintingStyle.fill;
-    paint_1_fill.color = Color(0xffffffff).withOpacity(0.01);
+    paint_1_fill.color = fillColor;
     canvas.drawPath(path_1, paint_1_fill);
   }
 
