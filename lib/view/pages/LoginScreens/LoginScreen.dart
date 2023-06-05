@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ConfirmActivationCode.dart';
+import 'package:provider/provider.dart';
+import '../providers/theme_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -20,105 +21,141 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black54,
-      body: Center(
-        child: Column(
-          children: [
-            Row(
+      backgroundColor: themeProvider.backgroundColor,
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 50),
+            child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.arrow_back_ios_new),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'Log in',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Log in',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'SF Pro Display',
+                        color: themeProvider.textColor,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Phone number',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white38,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: CountryCodePicker(
-                          countryCode: countryCode,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              countryCode = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      width: 250,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextField(
-                        controller: phoneNumberController,
-                        keyboardType: TextInputType.phone,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Please confirm the country code and enter your phone number',
+          ),
+          const SizedBox(height: 50),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Username',
                   style: TextStyle(
-                    fontSize: 16,
+                    fontSize: 18,
                     fontFamily: 'SF-Pro-Display',
                     fontWeight: FontWeight.w500,
                     color: Colors.white38,
                   ),
                 ),
-                const SizedBox(height: 20),
-                Container(
-                  width: 200,
+              ),
+              const SizedBox(height: 10),
+              Container(
+                width: 360,
+                height: 40,
+                decoration: BoxDecoration(
+                  color: Colors.white38,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextField(
+                  keyboardType: TextInputType.text,
+                  style: TextStyle(color: themeProvider.textColor),
+                  decoration: const InputDecoration(
+                    border: InputBorder.none,
+                    contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              const Align(
+                alignment: Alignment.centerLeft,
+                child: Text(
+                  'Phone number',
+                  style: TextStyle(
+                    fontSize: 18,
+                    fontFamily: 'SF-Pro-Display',
+                    fontWeight: FontWeight.w500,
+                    color: Colors.white38,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 10),
+              Row(
+                children: [
+                  Container(
+                    width: 100,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white38,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: Center(
+                      child: CountryCodePicker(
+                        countryCode: countryCode,
+                        onChanged: (String? newValue) {
+                          setState(() {
+                            countryCode = newValue!;
+                          });
+                        },
+                      ),
+                    ),
+                  ),
+                  const SizedBox(width: 10),
+                  Container(
+                    width: 250,
+                    height: 40,
+                    decoration: BoxDecoration(
+                      color: Colors.white38,
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      controller: phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      style:  TextStyle(color: themeProvider.textColor,),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              const SizedBox(height: 10),
+              const Text(
+                'Please confirm the country code and enter your phone number',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'SF-Pro-Display',
+                  fontWeight: FontWeight.w500,
+                  color: Colors.white38,
+                ),
+              ),
+              const SizedBox(height: 350),
+              Align(
+                alignment: Alignment.bottomCenter,
+                child: Container(
+                  width: 360,
+                  height: 50,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     gradient: const LinearGradient(
@@ -132,15 +169,7 @@ class _LoginScreenState extends State<LoginScreen> {
                       String phoneNumber = phoneNumberController.text;
                       // Process the user's input here
                       // For example, pass the data to the next screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConfirmActivationCode(
-                            phoneNumber: phoneNumber,
-                            countryCode: countryCode,
-                          ),
-                        ),
-                      );
+                     Navigator.pushNamed(context, '/code');
                     },
                     style: ElevatedButton.styleFrom(
                       foregroundColor: Colors.transparent,
@@ -150,20 +179,20 @@ class _LoginScreenState extends State<LoginScreen> {
                         borderRadius: BorderRadius.circular(30),
                       ),
                     ),
-                    child: const Text(
+                    child: Text(
                       'Send Code',
                       style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
-                        fontFamily: 'SF Pro Display'
+                          color: themeProvider.textColor,
+                          fontSize: 18.0,
+                          fontFamily: 'SF Pro Display'
                       ),
                     ),
                   ),
                 ),
-              ],
-            ),
-          ],
-        ),
+              ),
+            ],
+          ),
+        ],
       ),
     );
   }

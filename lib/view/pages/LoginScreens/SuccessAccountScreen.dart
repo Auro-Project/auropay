@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import '../providers/theme_provider.dart';
 
 class SuccessAccountScreen extends StatelessWidget {
   const SuccessAccountScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: themeProvider.backgroundColor,
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -17,17 +20,17 @@ class SuccessAccountScreen extends StatelessWidget {
               height: 64,
             ),
             const SizedBox(height: 10),
-            const Text(
+             Text(
               'Success!',
               style: TextStyle(
                 fontSize: 34,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: themeProvider.textColor,
               ),
             ),
             const SizedBox(height: 10),
             const Text(
-              'You have successfully registered',
+              'You have successfully signed up',
               style: TextStyle(
                 fontSize: 17,
                 color: Colors.white38,
@@ -54,11 +57,11 @@ class SuccessAccountScreen extends StatelessWidget {
                     borderRadius: BorderRadius.circular(30),
                   ),
                 ),
-                child: const Text(
+                child: Text(
                   'Start',
                   style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17.0,
+                    color: themeProvider.textColor,
+                    fontSize: 18.0,
                   ),
                 ),
               ),

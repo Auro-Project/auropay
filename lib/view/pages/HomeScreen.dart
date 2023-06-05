@@ -1,11 +1,13 @@
+import 'package:auropay/view/pages/providers/theme_provider.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
-import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../view/pages/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/nav_bar/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
+import 'package:provider/provider.dart';
+
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -20,6 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   static Widget _homepage(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
     final double width = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       body: Stack(
         children: [
@@ -29,12 +32,12 @@ class _HomeScreenState extends State<HomeScreen> {
               children: [
                 SizedBox(height: height * 0.08),
                 //create top status bar with avatar with name and notification button on right corner
-                const SizedBox(
+                 SizedBox(
                   height: 50,
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Padding(
+                      const Padding(
                         padding: EdgeInsets.only(left: 20),
                         child: CircleAvatar(
                           radius: 30,
@@ -45,16 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         "Hi, Zara",
                         style: TextStyle(
-                          color: Colors.white,
+                          color: themeProvider.textColor,
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
                       ),
                       Padding(
-                        padding: EdgeInsets.only(right: 20),
+                        padding: const EdgeInsets.only(right: 20),
                         child: Icon(
                           Icons.notifications,
-                          color: Colors.white,
+                          color: themeProvider.textColor,
                           size: 30,
                         ),
                       ),
@@ -85,10 +88,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         SizedBox(height: height * 0.005),
-                        const Text(
+                         Text(
                           "₹2,500.00",
                           style: TextStyle(
-                            color: Colors.white,
+                            color: themeProvider.textColor,
                             fontSize: 36,
                             fontWeight: FontWeight.bold,
                           ),
@@ -104,11 +107,11 @@ class _HomeScreenState extends State<HomeScreen> {
                                 height: 45,
                               ),
                             ),
-                            const Padding(
-                              padding: EdgeInsets.only(right: 30),
+                             Padding(
+                              padding: const EdgeInsets.only(right: 30),
                               child: Column(
                                 children: [
-                                  Text(
+                                  const Text(
                                     "Valid Thru",
                                     style: TextStyle(
                                       color: Colors.white38,
@@ -118,7 +121,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   Text(
                                     "MM/YY",
                                     style: TextStyle(
-                                      color: Colors.white,
+                                      color: themeProvider.textColor,
                                       fontSize: 20,
                                       fontWeight: FontWeight.bold,
                                     ),
@@ -172,10 +175,10 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(width: width * 0.2),
-                            const Text(
+                             Text(
                               "View All",
                               style: TextStyle(
-                                color: Colors.white,
+                                color: themeProvider.textColor,
                                 fontSize: 16,
                                 fontWeight: FontWeight.w400,
                               ),
@@ -188,8 +191,8 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: EdgeInsets.zero,
                             itemCount: 6,
                             itemBuilder: (context, index) {
-                              return const ListTile(
-                                leading: CircleAvatar(
+                              return ListTile(
+                                leading: const CircleAvatar(
                                   radius: 20,
                                   backgroundImage:
                                       AssetImage("assets/images/avatar.png"),
@@ -197,12 +200,12 @@ class _HomeScreenState extends State<HomeScreen> {
                                 title: Text(
                                   "Zara Doe",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: themeProvider.textColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),
                                 ),
-                                subtitle: Text(
+                                subtitle: const Text(
                                   "12 Jub, 12:00 PM",
                                   style: TextStyle(
                                     color: Colors.white54,
@@ -213,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 trailing: Text(
                                   "-₹200.00",
                                   style: TextStyle(
-                                    color: Colors.white,
+                                    color: themeProvider.textColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -236,6 +239,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   static Widget _homeButton(
       BuildContext context, String icon, String text, String route) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
       width: 90,
       child: Column(
@@ -257,12 +261,12 @@ class _HomeScreenState extends State<HomeScreen> {
             ),
             onPressed: () => Navigator.pushNamed(context, route),
           ),
-          const SizedBox(height: 10),
+           const SizedBox(height: 10),
           Text(
             text,
             maxLines: 2,
-            style: const TextStyle(
-              color: Colors.white,
+            style:  TextStyle(
+              color: themeProvider.textColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
@@ -276,7 +280,7 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     final List<Widget> screens = [
       _homepage(context),
-      const AnalyticsScreen(),
+       AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),
     ];

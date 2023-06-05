@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'ConfirmAccountScreen.dart';
+import 'package:provider/provider.dart';
+import '../providers/theme_provider.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -22,36 +23,40 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black54,
+      backgroundColor: themeProvider.backgroundColor,
       body: Center(
         child: Column(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
+            Container(
+              padding: const EdgeInsets.only(top: 50),
+              child: Row(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.arrow_back_ios_new),
+                    onPressed: () {
+                      Navigator.pop(context);
+                    },
                   ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                  Expanded(
+                    child: Align(
+                      alignment: Alignment.center,
+                      child: Text(
+                        'Sign Up',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          fontFamily: 'SF Pro Display',
+                          color: themeProvider.textColor,
+                        ),
+                      ),
                     ),
                   ),
-                ),
-              ],
+                ],
+              ),
             ),
+            const SizedBox(height: 50),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
@@ -60,7 +65,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   child: Text(
                     'Full Name',
                     style: TextStyle(
-                      fontSize: 16,
+                      fontSize: 18,
                       fontFamily: 'SF-Pro-Display',
                       fontWeight: FontWeight.w500,
                       color: Colors.white38,
@@ -69,15 +74,45 @@ class _SignUpScreenState extends State<SignUpScreen> {
                 ),
                 const SizedBox(height: 10),
                 Container(
-                  width: 250,
+                  width: 360,
                   height: 40,
                   decoration: BoxDecoration(
-                    color: Colors.grey,
+                    color: Colors.white38,
                     borderRadius: BorderRadius.circular(8),
                   ),
                   child: TextField(
                     controller: nameController,
-                    style: const TextStyle(color: Colors.black),
+                    style: TextStyle(color: themeProvider.textColor),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                const Align(
+                  alignment: Alignment.centerLeft,
+                  child: Text(
+                    'Email Address',
+                    style: TextStyle(
+                      fontSize: 18,
+                      fontFamily: 'SF-Pro-Display',
+                      fontWeight: FontWeight.w500,
+                      color: Colors.white38,
+                    ),
+                  ),
+                ),
+                const SizedBox(height: 10),
+                Container(
+                  width: 360,
+                  height: 40,
+                  decoration: BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: TextField(
+                    controller: nameController,
+                    style: TextStyle(color: themeProvider.textColor),
                     decoration: const InputDecoration(
                       border: InputBorder.none,
                       contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -93,7 +128,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
                       child: Text(
                         'Phone number',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 18,
                           fontFamily: 'SF-Pro-Display',
                           fontWeight: FontWeight.w500,
                           color: Colors.white38,
@@ -107,13 +142,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 100,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.grey,
+                            color: Colors.white38,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: Center(
                             child: DropdownButton<String>(
                               value: countryCode,
-                              dropdownColor: Colors.grey,
+                              dropdownColor: Colors.white38,
                               elevation: 0,
                               underline: const SizedBox(),
                               onChanged: (String? newValue) {
@@ -132,7 +167,9 @@ class _SignUpScreenState extends State<SignUpScreen> {
                                   value: value,
                                   child: Text(
                                     value,
-                                    style: const TextStyle(color: Colors.black),
+                                    style: TextStyle(
+                                      color: themeProvider.textColor,
+                                    ),
                                   ),
                                 );
                               }).toList(),
@@ -144,13 +181,13 @@ class _SignUpScreenState extends State<SignUpScreen> {
                           width: 250,
                           height: 40,
                           decoration: BoxDecoration(
-                            color: Colors.grey,
+                            color: Colors.white38,
                             borderRadius: BorderRadius.circular(8),
                           ),
                           child: TextField(
                             controller: phoneNumberController,
                             keyboardType: TextInputType.phone,
-                            style: const TextStyle(color: Colors.black),
+                            style: TextStyle(color: themeProvider.textColor),
                             decoration: const InputDecoration(
                               border: InputBorder.none,
                               contentPadding: EdgeInsets.symmetric(horizontal: 10),
@@ -169,47 +206,39 @@ class _SignUpScreenState extends State<SignUpScreen> {
                         color: Colors.white38,
                       ),
                     ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          String name = nameController.text;
-                          String phoneNumber = phoneNumberController.text;
-                          // Process the user's input here
-                          // For example, pass the data to the next screen
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ConfirmAccountScreen(
-                                name: name,
-                                phoneNumber: phoneNumber,
-                                countryCode: countryCode,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
+                    const SizedBox(height: 300),
+                    Align(
+                      alignment: Alignment.bottomCenter,
+                      child: Container(
+                        width: 360,
+                        height: 50,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          gradient: const LinearGradient(
+                            colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
+                            begin: Alignment.centerLeft,
+                            end: Alignment.centerRight,
                           ),
                         ),
-                        child: const Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.0,
+                        child: ElevatedButton(
+                          onPressed: () {
+                            Navigator.pushNamed(context, '/passcode');
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.transparent,
+                            backgroundColor: Colors.transparent,
+                            elevation: 0,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(30),
+                            ),
+                          ),
+                          child: Text(
+                            'Sign Up',
+                            style: TextStyle(
+                              color: themeProvider.textColor,
+                              fontSize: 18,
+                            ),
+                            textAlign: TextAlign.center,
                           ),
                         ),
                       ),

@@ -1,98 +1,105 @@
 import 'package:flutter/material.dart';
-import 'SuccessAccountScreen.dart';
+import 'package:provider/provider.dart';
+import '../providers/theme_provider.dart';
 
 class ConfirmActivationCode extends StatelessWidget {
   const ConfirmActivationCode({Key? key, required String phoneNumber, required String countryCode}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black54,
-      body: Center(
-        child: Column(
-         // mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            Row(
+      backgroundColor: themeProvider.backgroundColor,
+      body: Column(
+        children: [
+          Container(
+            padding: const EdgeInsets.only(top: 50),
+            child: Row(
               children: [
                 IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
+                  icon: const Icon(Icons.arrow_back_ios_new),
                   onPressed: () {
                     Navigator.pop(context);
                   },
                 ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'Enter Activation Code',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Enter Activation Code',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'SF Pro Display',
+                        color: themeProvider.textColor,
+                      ),
                     ),
                   ),
                 ),
               ],
             ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: List.generate(
-                4,
-                    (index) => Container(
-                  width: 64,
-                  height: 64,
-                  margin: const EdgeInsets.only(right: 10),
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(8),
+          ),
+          const SizedBox(height: 50),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: List.generate(
+              4,
+                  (index) => Container(
+                width: 64,
+                height: 64,
+                margin: const EdgeInsets.only(right: 10),
+                decoration: BoxDecoration(
+                  color: Colors.white38,
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                child: TextFormField(
+                  keyboardType: TextInputType.number,
+                  onChanged: (value) {
+                    if (value.length == 1) {
+                      if (index < 3) {
+                        // Move the focus to the next TextFormField
+                        FocusScope.of(context).nextFocus();
+                      } else {
+                        // Perform any action you want after the last digit is entered
+                        // For example, you can trigger a verification process or submit the code
+                      }
+                    }
+                  },
+                  style: const TextStyle(
+                    fontSize: 20,
+                    color: Colors.white,
                   ),
-                  child: TextFormField(
-                    keyboardType: TextInputType.number,
-                    onChanged: (value) {
-                      // Handle code input
-                      // You can store the entered code in a list or any other data structure as per your requirements
-                      // For example, if you want to store it in a list, you can define a list and update it with the entered values
-                      // Here's an example implementation:
-                      // Define a list to store the entered code
-                      List<String> enteredCode = List.filled(4, ''); // Initialize the list with empty strings
-                      enteredCode[index] = value; // Update the entered value at the corresponding index
-                      // You can then use this `enteredCode` list as per your requirements
-                    },
-                    style: TextStyle(
+                  decoration: InputDecoration(
+                    contentPadding: const EdgeInsets.all(20),
+                    border: InputBorder.none,
+                    hintText: 'X', // Display a placeholder value or any other visual indicator
+                    hintStyle: TextStyle(
                       fontSize: 20,
-                      color: Colors.white,
-                    ),
-                    decoration: InputDecoration(
-                      contentPadding: const EdgeInsets.all(20),
-                      border: InputBorder.none,
-                      hintText: 'X', // Display a placeholder value or any other visual indicator
-                      hintStyle: TextStyle(
-                        fontSize: 20,
-                        color: Colors.white38,
-                      ),
+                      color: themeProvider.textColor,
                     ),
                   ),
                 ),
               ),
             ),
+          ),
 
-            const SizedBox(height: 10),
-            const Column(
-              children: [
-                Text(
-                  'A code has been sent to your phone',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'SF-Pro-Display',
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white38,
-                  ),
+          const SizedBox(height: 10),
+           Column(
+            children: [
+              const Text(
+                'A code has been sent to your phone',
+                style: TextStyle(
+                  fontSize: 16,
+                  fontFamily: 'SF-Pro-Display',
+                  fontWeight: FontWeight.w600,
+                  color: Colors.white38,
                 ),
-                SizedBox(height: 8),
-                Text(
+              ),
+              TextButton(
+                onPressed: () {
+                  // Add your code here for the action when the button is pressed
+                },
+                child: const Text(
                   'Request code again',
                   style: TextStyle(
                     fontSize: 16,
@@ -102,45 +109,44 @@ class ConfirmActivationCode extends StatelessWidget {
                     decoration: TextDecoration.underline,
                   ),
                 ),
-              ],
-            ),
-            const SizedBox(height: 200),
-            Container(
-              width: 200,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(10),
-                gradient: const LinearGradient(
-                  colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                  begin: Alignment.centerLeft,
-                  end: Alignment.centerRight,
-                ),
               ),
-              child: ElevatedButton(
-                onPressed: () {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const SuccessAccountScreen()),
-                  );
-                },
-                style: ElevatedButton.styleFrom(
-                  foregroundColor: Colors.transparent,
-                  backgroundColor: Colors.transparent,
-                  elevation: 0,
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                ),
-                child: const Text(
-                  'Continue',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17.0,
-                  ),
-                ),
+
+            ],
+          ),
+          const SizedBox(height: 350),
+          Container(
+            width: 360,
+            height: 50,
+            decoration: BoxDecoration(
+              borderRadius: BorderRadius.circular(10),
+              gradient: const LinearGradient(
+                colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
+                begin: Alignment.centerLeft,
+                end: Alignment.centerRight,
               ),
             ),
-          ],
-        ),
+            child: ElevatedButton(
+              onPressed: () {
+               Navigator.pushNamed(context, '/passcode');
+              },
+              style: ElevatedButton.styleFrom(
+                foregroundColor: Colors.transparent,
+                backgroundColor: Colors.transparent,
+                elevation: 0,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(30),
+                ),
+              ),
+              child: Text(
+                'Continue',
+                style: TextStyle(
+                  color: themeProvider.textColor,
+                  fontSize: 18.0,
+                ),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

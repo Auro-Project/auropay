@@ -1,9 +1,14 @@
+import 'package:auropay/view/pages/LoginScreens/ConfirmAccountScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/ConfirmActivationCode.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/PasscodeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/SuccessAccountScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/NotificationScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
 import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
@@ -59,9 +64,10 @@ class MyApp extends StatelessWidget {
               '/onBoarding': (context) => const OnBoardingScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignUpScreen(),
+              '/code': (context) =>  ConfirmActivationCode(phoneNumber: '', countryCode: '',),
               '/home': (context) => const HomeScreen(),
               '/transactions': (context) => const TransactionScreen(),
-              '/analytics': (context) => const AnalyticsScreen(),
+              '/analytics': (context) =>  AnalyticsScreen(),
               '/more': (context) => const MoreScreen(),
               '/send': (context) => const SendScreen(),
               '/progress': (context) => const ProgressScreen(),
@@ -76,6 +82,10 @@ class MyApp extends StatelessWidget {
               '/contact' : (context) => const ContactScreen(),
               '/settings' : (context) => const SettingScreen(),
               '/notifications' : (context) => const NotificationScreen(),
+              '/notifs' : (context) => const NotifScreen(),
+              '/confirmaccount' : (context) => const ConfirmAccountScreen(),
+              '/passcode' : (context) =>  PasscodeScreen(),
+              '/accsuccess' : (context) => const SuccessAccountScreen()
             },
           );
         }

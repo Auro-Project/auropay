@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'SuccessAccountScreen.dart';
 
 class ConfirmAccountScreen extends StatelessWidget {
-  const ConfirmAccountScreen({Key? key, required String name, required String countryCode, required String phoneNumber}) : super(key: key);
+  const ConfirmAccountScreen({Key? key, required }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
