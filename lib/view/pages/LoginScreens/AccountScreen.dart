@@ -41,41 +41,11 @@ class AccountScreen extends StatelessWidget {
                       ],
                     )
                 ),
-                const SizedBox(height: 80.0),
+                const SizedBox(height: 200.0),
                 appButton(context, gradient(context),'Sign In', '/login'),
-                const SizedBox(height: 16.0),
+                const SizedBox(height: 20.0),
                 appButton(context, border(context), 'Sign Up', '/signup'),
-                const SizedBox(height: 20.0),
-                const Row(
-                  children: [
-                    Expanded(
-                      child: Divider(
-                        indent: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                    Padding(
-                      padding: EdgeInsets.symmetric(horizontal: 10),
-                      child: Text(
-                        'Continue with',
-                        style: TextStyle(
-                          color: Colors.grey,
-                          fontSize: 18,
-
-                        ),
-                      ),
-                    ),
-                    Expanded(
-                      child: Divider(
-                        endIndent: 30,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 20.0),
-                appButton(context, border(context), 'Sign In with Google', '/signup', iconPath: 'assets/images/icons/Google.svg'),
-                const SizedBox(height: 80),
+                const SizedBox(height: 40.0),
               ],
             ),
           ),

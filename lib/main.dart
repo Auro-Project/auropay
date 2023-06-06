@@ -12,6 +12,7 @@ import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
 import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen2.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/SplashScreen.dart';
@@ -24,7 +25,6 @@ import 'package:auropay/view/pages/providers/theme_provider.dart';
 import 'package:auropay/view/pages/AnalyticsScreen.dart';
 import 'package:auropay/view/pages/HomeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
-import 'package:auropay/view/pages/QR Code/QRCodeScreen1.dart';
 import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
@@ -64,7 +64,7 @@ class MyApp extends StatelessWidget {
               '/onBoarding': (context) => const OnBoardingScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignUpScreen(),
-              '/code': (context) =>  ConfirmActivationCode(phoneNumber: '', countryCode: '',),
+              '/code': (context) =>  const ConfirmActivationCode(phoneNumber: '', countryCode: '',),
               '/home': (context) => const HomeScreen(),
               '/transactions': (context) => const TransactionScreen(),
               '/analytics': (context) =>  AnalyticsScreen(),
@@ -73,7 +73,7 @@ class MyApp extends StatelessWidget {
               '/progress': (context) => const ProgressScreen(),
               '/success': (context) => const SuccessScreen(),
               '/account': (context) => const AccountScreen(),
-              '/qrscreen': (context) => const QRCodeScreen(),
+              '/qrscreen': (context) => const QRScreen(),
               '/confirmpay': (context) => const ConfirmPayScreen(),
               '/receipt': (context) => ReceiptScreen(),
               '/profile' : (context) => const ProfileScreen(),
@@ -84,7 +84,7 @@ class MyApp extends StatelessWidget {
               '/notifications' : (context) => const NotificationScreen(),
               '/notifs' : (context) => const NotifScreen(),
               '/confirmaccount' : (context) => const ConfirmAccountScreen(),
-              '/passcode' : (context) =>  PasscodeScreen(),
+              '/passcode' : (context) =>  const PasscodeScreen(),
               '/accsuccess' : (context) => const SuccessAccountScreen()
             },
           );

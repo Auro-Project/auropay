@@ -43,10 +43,10 @@ class ConfirmActivationCode extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: List.generate(
-              4,
+              6,
                   (index) => Container(
-                width: 64,
-                height: 64,
+                width: 50,
+                height: 50,
                 margin: const EdgeInsets.only(right: 10),
                 decoration: BoxDecoration(
                   color: Colors.white38,
@@ -56,7 +56,7 @@ class ConfirmActivationCode extends StatelessWidget {
                   keyboardType: TextInputType.number,
                   onChanged: (value) {
                     if (value.length == 1) {
-                      if (index < 3) {
+                      if (index < 5) {
                         // Move the focus to the next TextFormField
                         FocusScope.of(context).nextFocus();
                       } else {
@@ -69,14 +69,9 @@ class ConfirmActivationCode extends StatelessWidget {
                     fontSize: 20,
                     color: Colors.white,
                   ),
-                  decoration: InputDecoration(
-                    contentPadding: const EdgeInsets.all(20),
+                  decoration: const InputDecoration(
+                    contentPadding: EdgeInsets.all(20),
                     border: InputBorder.none,
-                    hintText: 'X', // Display a placeholder value or any other visual indicator
-                    hintStyle: TextStyle(
-                      fontSize: 20,
-                      color: themeProvider.textColor,
-                    ),
                   ),
                 ),
               ),
