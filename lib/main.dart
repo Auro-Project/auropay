@@ -15,6 +15,7 @@ import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
 import 'package:auropay/view/pages/QR%20Code/QRCodeScreen2.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
+import 'package:auropay/view/pages/Send/TopUpScreen.dart';
 import 'package:auropay/view/pages/SplashScreen.dart';
 import 'package:auropay/view/pages/TransactionScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
@@ -22,7 +23,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 import 'package:auropay/view/pages/providers/theme_provider.dart';
-import 'package:auropay/view/pages/AnalyticsScreen.dart';
+import 'package:auropay/view/pages/FutureEnhancements/AnalyticsScreen.dart';
 import 'package:auropay/view/pages/HomeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
 import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
@@ -85,7 +86,8 @@ class MyApp extends StatelessWidget {
               '/notifs' : (context) => const NotifScreen(),
               '/confirmaccount' : (context) => const ConfirmAccountScreen(),
               '/passcode' : (context) =>  const PasscodeScreen(),
-              '/accsuccess' : (context) => const SuccessAccountScreen()
+              '/accsuccess' : (context) => const SuccessAccountScreen(),
+              '/topup' : (context) =>  PaymentTopUpScreen(),
             },
           );
         }

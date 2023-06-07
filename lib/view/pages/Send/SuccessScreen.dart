@@ -107,8 +107,8 @@ class SuccessScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              Text(
+                              const SizedBox(width: 10),
+                              const Text(
                                 "From",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -119,7 +119,7 @@ class SuccessScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Text(
+                          const Text(
                             "Zahar Palaznik",
                             style: TextStyle(
                               color: Colors.white,
@@ -156,8 +156,8 @@ class SuccessScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              Text(
+                              const SizedBox(width: 10),
+                              const Text(
                                 "To",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -168,7 +168,7 @@ class SuccessScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          Text(
+                          const Text(
                             "Irin Machahen",
                             style: TextStyle(
                               color: Colors.white,
@@ -205,8 +205,8 @@ class SuccessScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              Text(
+                              const SizedBox(width: 10),
+                              const Text(
                                 "Date",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -217,8 +217,8 @@ class SuccessScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(width: 10),
-                          Text(
+                          const SizedBox(width: 10),
+                          const Text(
                             "12 April,2023",
                             style: TextStyle(
                               color: Colors.white,
@@ -255,8 +255,8 @@ class SuccessScreen extends StatelessWidget {
                                   ),
                                 ),
                               ),
-                              SizedBox(width: 10),
-                              Text(
+                              const SizedBox(width: 10),
+                              const Text(
                                 "Remaining",
                                 style: TextStyle(
                                   color: Colors.white,
@@ -267,8 +267,8 @@ class SuccessScreen extends StatelessWidget {
                               ),
                             ],
                           ),
-                          SizedBox(width: 10),
-                          Text(
+                          const SizedBox(width: 10),
+                          const Text(
                             "₹ 2896",
                             style: TextStyle(
                               color: Colors.white,

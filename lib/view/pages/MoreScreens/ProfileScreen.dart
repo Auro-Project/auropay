@@ -18,7 +18,6 @@ class ProfileScreen extends StatelessWidget {
           Container(
             padding: const EdgeInsets.only(top: 50),
             child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
@@ -26,29 +25,20 @@ class ProfileScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                Text(
-                  'Profile',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.center,
+                    child: Text(
+                      'Profile',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontWeight: FontWeight.w600,
+                        fontFamily: 'SF Pro Display',
+                        color: themeProvider.textColor, // Apply the text color from the theme
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
                   ),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        child: Text('Menu Item 1'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 2'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 3'),
-                      ),
-                    ];
-                  },
                 ),
               ],
             ),
@@ -120,20 +110,6 @@ class ProfileScreen extends StatelessWidget {
                 const TextField(
                   decoration: InputDecoration(
                     hintText: 'Enter date of birth',
-                  ),
-                ),
-                const SizedBox(height: 16),
-                Text(
-                  'Username',
-                  style: TextStyle(
-                    fontSize: 17,
-                    fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
-                  ),
-                ),
-                const TextField(
-                  decoration: InputDecoration(
-                    hintText: 'Enter username',
                   ),
                 ),
                 const SizedBox(height: 16),

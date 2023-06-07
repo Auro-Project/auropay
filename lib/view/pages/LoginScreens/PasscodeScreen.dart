@@ -1,5 +1,8 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
 import '../providers/theme_provider.dart';
 
 class PasscodeScreen extends StatefulWidget {
@@ -40,37 +43,11 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      appBar: myAppBar(context, 'Create Passcode'),
       backgroundColor: themeProvider.backgroundColor,
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Create Passcode',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'SF Pro Display',
-                        color: themeProvider.textColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 50),
+          const SizedBox(height: 40),
           Column(
             children: [
               const Text(
@@ -144,41 +121,8 @@ class _PasscodeScreenState extends State<PasscodeScreen> {
                   ),
                 ),
               ),
-              const SizedBox(height: 350),
-              Container(
-                width: 360,
-                height: 50,
-                decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  gradient: const LinearGradient(
-                    colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                    begin: Alignment.centerLeft,
-                    end: Alignment.centerRight,
-                  ),
-                ),
-                child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/home');
-                  },
-                  style: ElevatedButton.styleFrom(
-                    foregroundColor: Colors.transparent,
-                    backgroundColor: Colors.transparent,
-                    elevation: 0,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(30),
-                    ),
-                  ),
-                  child: Text(
-                    'PROCEED',
-                    style: TextStyle(
-                        color: themeProvider.textColor,
-                        fontSize: 18.0,
-                        fontWeight: FontWeight.normal,
-                        fontFamily: 'SF Pro Display'
-                    ),
-                  ),
-                ),
-              ),
+              const SizedBox(height: 300),
+              Center(child: appButton(context, gradient(context),'PROCEED', '/home')),
 
             ],
           ),

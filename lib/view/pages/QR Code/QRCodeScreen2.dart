@@ -54,9 +54,10 @@ class QRScreen extends StatelessWidget {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 580),
                 child: Row(
-                //  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                   children: [
                     _buildButton(Icons.qr_code_scanner_sharp, 'Scan'),
+                    _buildButton(Icons.payment, 'Pay'),
                   ],
                 ),
               ),

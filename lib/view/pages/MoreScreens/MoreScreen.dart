@@ -12,6 +12,97 @@ class MoreScreen extends StatelessWidget {
     Color getTextColor() {
       return themeProvider.isDarkMode ? Colors.white : Colors.black;
     }
+
+    void _showLogoutConfirmationBottomSheet(BuildContext context) {
+      showModalBottomSheet(
+        context: context,
+        shape: const RoundedRectangleBorder(
+          borderRadius: BorderRadius.vertical(
+            top: Radius.circular(16.0),
+          ),
+        ),
+        builder: (BuildContext context) {
+          return SingleChildScrollView(
+            child: ConstrainedBox(
+              constraints: BoxConstraints(
+                minHeight: MediaQuery.of(context).size.height * 1, // Set desired height here
+              ),
+              child: Container(
+                padding: EdgeInsets.all(16.0),
+                child: Column(
+                  mainAxisSize: MainAxisSize.min,
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                    Text(
+                      'Log Out',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'SF-Pro-Display',
+                        fontWeight: FontWeight.w600,
+                        color: getTextColor(),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Text(
+                      'Are you sure you want to log out?',
+                      style: TextStyle(
+                        fontSize: 16,
+                        fontFamily: 'SF-Pro-Display',
+                        fontWeight: FontWeight.normal,
+                        color: getTextColor(),
+                      ),
+                    ),
+                    SizedBox(height: 16.0),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      children: [
+                        TextButton(
+                          child: Text(
+                            'Cancel',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'SF-Pro-Display',
+                              fontWeight: FontWeight.normal,
+                              color: getTextColor(),
+                            ),
+                          ),
+                          onPressed: () {
+                            Navigator.of(context).pop();
+                          },
+                        ),
+                        ElevatedButton(
+                          onPressed: () {
+                            // Perform the logout action
+                            // ...
+                            // Close all screens and go back to the login screen
+                            Navigator.of(context).popUntil((route) => route.isFirst);
+                          },
+                          style: ElevatedButton.styleFrom(
+                            foregroundColor: Colors.white,
+                            backgroundColor: Colors.deepPurpleAccent,
+                          ),
+                          child: const Text(
+                            'Log Out',
+                            style: TextStyle(
+                              fontSize: 18,
+                              fontFamily: 'SF-Pro-Display',
+                              fontWeight: FontWeight.normal,
+                              color: Colors.white,
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+              ),
+            ),
+          );
+        },
+      );
+    }
+
+
     return Scaffold(
       body: Center(
         child: Column(
@@ -27,7 +118,7 @@ class MoreScreen extends StatelessWidget {
                     Navigator.pop(context);
                   },
                 ),
-                 Padding(
+                Padding(
                   padding: const EdgeInsets.all(70.0),
                   child: Text(
                     'More',
@@ -49,7 +140,7 @@ class MoreScreen extends StatelessWidget {
               title: Text(
                 'Profile',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: 'SF-Pro-Display',
                   fontWeight: FontWeight.normal,
                   color: getTextColor(),
@@ -66,36 +157,13 @@ class MoreScreen extends StatelessWidget {
             ),
             ListTile(
               leading: Icon(
-                Icons.contacts,
-                color: themeProvider.textColor,
-              ),
-              title: Text(
-                'Contacts',
-                style: TextStyle(
-                  fontSize: 17,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.normal,
-                  color: getTextColor(),
-                ),
-              ),
-              onTap: () {
-                Navigator.pushNamed(context,'/contact');
-              },
-            ),
-            Divider(
-              color: themeProvider.textColor,
-              indent: 16,
-              endIndent: 16,
-            ),
-            ListTile(
-              leading: Icon(
                 Icons.help,
                 color: themeProvider.textColor,
               ),
               title: Text(
                 'Help',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: 'SF-Pro-Display',
                   fontWeight: FontWeight.normal,
                   color: getTextColor(),
@@ -118,14 +186,14 @@ class MoreScreen extends StatelessWidget {
               title: Text(
                 'Settings',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: 'SF-Pro-Display',
                   fontWeight: FontWeight.normal,
                   color: getTextColor(),
                 ),
               ),
               onTap: () {
-                Navigator.pushNamed(context,'/settings');
+                Navigator.pushNamed(context, '/settings');
               },
             ),
             Divider(
@@ -141,7 +209,7 @@ class MoreScreen extends StatelessWidget {
               title: Text(
                 'Dark Mode',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: 'SF-Pro-Display',
                   fontWeight: FontWeight.normal,
                   color: getTextColor(),
@@ -172,14 +240,14 @@ class MoreScreen extends StatelessWidget {
               title: const Text(
                 'Logout',
                 style: TextStyle(
-                  fontSize: 17,
+                  fontSize: 18,
                   fontFamily: 'SF-Pro-Display',
                   fontWeight: FontWeight.normal,
                   color: Colors.red,
                 ),
               ),
               onTap: () {
-                // Handle logout onTap
+                _showLogoutConfirmationBottomSheet(context);
               },
             ),
           ],
