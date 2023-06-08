@@ -1,10 +1,9 @@
-import 'package:auropay/view/pages/HomeScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/passcode/CodeScreen.dart';
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'LoginScreen.dart';
 
 class ConfirmOTPScreen extends StatefulWidget {
   final String phoneNumber;
@@ -36,7 +35,7 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => HomeScreen(),
+          builder: (context) => CreatePasscodeScreen(),
         ),
       );
     } catch (e) {
@@ -80,7 +79,7 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
                 children: List.generate(
                   6,
                   (index) => Container(
-                    width: 50,
+                    width: 40,
                     height: 60,
                     margin: const EdgeInsets.all( 5),
                     padding: const EdgeInsets.only(top: 5),

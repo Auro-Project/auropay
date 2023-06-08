@@ -65,141 +65,6 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   @override
-  // Widget build(BuildContext context) {
-  //   return Scaffold(
-  //     backgroundColor: Colors.black54,
-  //     body: Center(
-  //       child: Column(
-  //         children: [
-  //           Row(
-  //             children: [
-  //               IconButton(
-  //                 icon: const Icon(
-  //                   Icons.arrow_back_ios_new,
-  //                   color: Colors.white,
-  //                 ),
-  //                 onPressed: () {
-  //                   Navigator.pop(context);
-  //                 },
-  //               ),
-  //               const Padding(
-  //                 padding: EdgeInsets.all(70.0),
-  //                 child: Text(
-  //                   'Log in',
-  //                   style: TextStyle(
-  //                     fontSize: 20,
-  //                     fontFamily: 'SF-Pro-Display',
-  //                     fontWeight: FontWeight.w600,
-  //                     color: Colors.white,
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //           Column(
-  //             crossAxisAlignment: CrossAxisAlignment.start,
-  //             children: [
-  //               const Align(
-  //                 alignment: Alignment.centerLeft,
-  //                 child: Text(
-  //                   'Phone number',
-  //                   style: TextStyle(
-  //                     fontSize: 16,
-  //                     fontFamily: 'SF-Pro-Display',
-  //                     fontWeight: FontWeight.w500,
-  //                     color: Colors.white38,
-  //                   ),
-  //                 ),
-  //               ),
-  //               const SizedBox(height: 10),
-  //               Row(
-  //                 children: [
-  //                   Container(
-  //                     width: 100,
-  //                     height: 40,
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.grey,
-  //                       borderRadius: BorderRadius.circular(8),
-  //                     ),
-  //                     child: Center(child: Text(
-  //                         countryCode,
-  //                       style: TextStyle(
-  //                         fontSize: 18,
-  //                         fontFamily: 'SF-Pro-Display',
-  //                         fontWeight: FontWeight.w500,
-  //                         color: Colors.white,
-  //                       ),
-  //                     )),
-  //                   ),
-  //                   const SizedBox(width: 10),
-  //                   Container(
-  //                     width: 250,
-  //                     height: 40,
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.grey,
-  //                       borderRadius: BorderRadius.circular(8),
-  //                     ),
-  //                     child: TextField(
-  //                       controller: phoneNumberController,
-  //                       keyboardType: TextInputType.phone,
-  //                       style: const TextStyle(color: Colors.black),
-  //                       decoration: const InputDecoration(
-  //                         border: InputBorder.none,
-  //                         contentPadding: EdgeInsets.symmetric(horizontal: 10),
-  //                       ),
-  //                     ),
-  //                   ),
-  //                 ],
-  //               ),
-  //               const SizedBox(height: 10),
-  //               const Text(
-  //                 'Please confirm the country code and enter your phone number',
-  //                 style: TextStyle(
-  //                   fontSize: 16,
-  //                   fontFamily: 'SF-Pro-Display',
-  //                   fontWeight: FontWeight.w500,
-  //                   color: Colors.white38,
-  //                 ),
-  //               ),
-  //               const SizedBox(height: 20),
-  //               Container(
-  //                 width: 200,
-  //                 decoration: BoxDecoration(
-  //                   borderRadius: BorderRadius.circular(10),
-  //                   gradient: const LinearGradient(
-  //                     colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-  //                     begin: Alignment.centerLeft,
-  //                     end: Alignment.centerRight,
-  //                   ),
-  //                 ),
-  //                 child: ElevatedButton(
-  //                   onPressed: sendOTP,
-  //                   style: ElevatedButton.styleFrom(
-  //                     foregroundColor: Colors.transparent,
-  //                     backgroundColor: Colors.transparent,
-  //                     elevation: 0,
-  //                     shape: RoundedRectangleBorder(
-  //                       borderRadius: BorderRadius.circular(30),
-  //                     ),
-  //                   ),
-  //                   child: const Text(
-  //                     'Send Code',
-  //                     style: TextStyle(
-  //                       color: Colors.white,
-  //                       fontSize: 17.0,
-  //                       fontFamily: 'SF Pro Display',
-  //                     ),
-  //                   ),
-  //                 ),
-  //               ),
-  //             ],
-  //           ),
-  //         ],
-  //       ),
-  //     ),
-  //   );
-  // }
-
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
@@ -272,8 +137,8 @@ class _LoginScreenState extends State<LoginScreen> {
             ),
           ),
           const SizedBox(height: 10),
-          Center(
-            child: const Text(
+          const Center(
+            child: Text(
               'Please confirm the country code and enter your phone\n number',
               style: TextStyle(
                 fontSize: 16,
@@ -288,30 +153,7 @@ class _LoginScreenState extends State<LoginScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
-                child: Container(
-                  decoration: gradient(context),
-                  child: ElevatedButton(
-                    onPressed: sendOTP,
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Send Code',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
-                        fontFamily: 'SF Pro Display',
-                      ),
-                    ),
-                  ),
-                ),
-                // child: appButton(
-                //     context, gradient(context), 'Send Code', '/confirmOTP'),
+                child: appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
               ),
             ),
           ),

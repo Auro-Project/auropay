@@ -1,11 +1,13 @@
 
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../providers/theme_provider.dart';
+import 'ConfirmOTPScreenD.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -22,10 +24,10 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   @override
   void dispose() {
-    nameController.dispose();
-    mailController.dispose();
-    phoneNumberController.dispose();
-    _pageController.dispose();
+    // nameController.dispose();
+    // mailController.dispose();
+    // phoneNumberController.dispose();
+    // _pageController.dispose();
     super.dispose();
   }
 
@@ -156,204 +158,132 @@ class FirstStep extends StatelessWidget {
 }
 
 class SecondStep extends StatefulWidget {
-  final TextEditingController phoneNumberController;
-
-  const SecondStep({Key? key, required this.phoneNumberController})
-      : super(key: key);
+  const SecondStep({Key? key, required TextEditingController phoneNumberController}) : super(key: key);
 
   @override
   _SecondStepState createState() => _SecondStepState();
 }
 
 class _SecondStepState extends State<SecondStep> {
-  TextEditingController otpController = TextEditingController();
-  FirebaseAuth _auth = FirebaseAuth.instance;
-  late String verificationId = '';
-  String errorMessage = '';
-  bool isCodeSent = false; // Track whether OTP code has been sent
+  TextEditingController phoneNumberController = TextEditingController();
+  String countryCode = '+91'; // Default country code
 
   @override
   void dispose() {
-    otpController.dispose();
+    phoneNumberController.dispose();
     super.dispose();
   }
-/*
+
   void sendOTP() async {
-    String phoneNumber = widget.phoneNumberController.text.trim();
-    String formattedPhoneNumber = '+91$phoneNumber'; // Replace '+91' with the desired country code
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: formattedPhoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
-          // TODO: Navigate to the next page after successful verification
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print('Verification failed: ${e.message}');
-        },
-        codeSent: (String verId, int? resendToken) {
-          setState(() {
-            verificationId = verId;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verId) {
-          setState(() {
-            verificationId = verId;
-          });
-        },
-        timeout: Duration(seconds: 60), // Increase timeout to 60 seconds
-      );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Failed to send OTP. Please try again.';
-      });
-      print('Error sending OTP: $e');
-    }
-  }
-  void resendOTP() async {
-    String phoneNumber = widget.phoneNumberController.text.trim();
-    String formattedPhoneNumber = '+91$phoneNumber'; // Replace '+91' with the desired country code
+    String phoneNumber = phoneNumberController.text.trim();
+    String fullPhoneNumber = '$countryCode$phoneNumber';
 
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: formattedPhoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
-          // TODO: Navigate to the next page after successful verification
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print('Verification failed: ${e.message}');
-        },
-        codeSent: (String verId, int? resendToken) {
-          setState(() {
-            verificationId = verId;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verId) {
-          setState(() {
-            verificationId = verId;
-          });
-        },
-        timeout: Duration(seconds: 60), // Increase timeout to 60 seconds
-      );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Failed to send OTP. Please try again.';
-      });
-      print('Error sending OTP: $e');
-    }
-  }
-*/
-  void sendOTP() async {
-    if (isCodeSent) return; // Prevent sending multiple OTPs
-    String phoneNumber = widget.phoneNumberController.text.trim();
-    String formattedPhoneNumber = '+91$phoneNumber'; // Replace '+91' with the desired country code
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: formattedPhoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
-          // TODO: Navigate to the next page after successful verification
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print('Verification failed: ${e.message}');
-        },
-        codeSent: (String verId, int? resendToken) {
-          setState(() {
-            verificationId = verId;
-            isCodeSent = true;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verId) {
-          setState(() {
-            verificationId = verId;
-            isCodeSent = true;
-          });
-        },
-        timeout: const Duration(seconds: 60), // Increase timeout to 60 seconds
-      );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Failed to send OTP. Please try again.';
-      });
-      print('Error sending OTP: $e');
-    }
-  }
-  void resendOTP() async {
-    if (isCodeSent) return; // Prevent sending multiple OTPs
-    String phoneNumber = widget.phoneNumberController.text.trim();
-    String formattedPhoneNumber = '+91$phoneNumber'; // Replace '+91' with the desired country code
-
-    try {
-      await _auth.verifyPhoneNumber(
-        phoneNumber: formattedPhoneNumber,
-        verificationCompleted: (PhoneAuthCredential credential) async {
-          await _auth.signInWithCredential(credential);
-          // TODO: Navigate to the next page after successful verification
-        },
-        verificationFailed: (FirebaseAuthException e) {
-          print('Verification failed: ${e.message}');
-        },
-        codeSent: (String verId, int? resendToken) {
-          setState(() {
-            verificationId = verId;
-            isCodeSent = true;
-          });
-        },
-        codeAutoRetrievalTimeout: (String verId) {
-          setState(() {
-            verificationId = verId;
-            isCodeSent = true;
-          });
-        },
-        timeout: Duration(seconds: 60), // Increase timeout to 60 seconds
-      );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Failed to send OTP. Please try again.';
-      });
-      print('Error sending OTP: $e');
-    }
-  }
-
-  void verifyOTP() async {
-    String otp = otpController.text.trim();
-    PhoneAuthCredential credential = PhoneAuthProvider.credential(
-      verificationId: verificationId,
-      smsCode: otp,
-    );
-    try {
-      await _auth.signInWithCredential(credential);
-      // TODO: Navigate to the next page after successful verification
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Invalid OTP. Please try again.';
-      });
-      print('Error verifying OTP: $e');
-
-      if (e is FirebaseAuthException) {
-        if (e.code == 'firebase_auth/session-expired') {
-          setState(() {
-            errorMessage = 'The SMS code has expired. Please re-send the verification code to try again.';
-          });
+    await FirebaseAuth.instance.verifyPhoneNumber(
+      phoneNumber: fullPhoneNumber,
+      verificationCompleted: (PhoneAuthCredential credential) {
+        // Auto-retrieval of verification code completed
+        // This callback is optional
+      },
+      verificationFailed: (FirebaseAuthException e) {
+        // Verification failed
+        if (kDebugMode) {
+          print('Verification Failed: ${e.message}');
         }
-        // Handle other FirebaseAuthException codes if needed
-      }
-    }
+      },
+      codeSent: (String verificationId, int? resendToken) {
+        // Navigate to the ConfirmActivationCode screen
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => ConfirmOTPScreen(
+              phoneNumber: phoneNumber,
+              countryCode: countryCode,
+              verificationId: verificationId,
+            ),
+          ),
+        );
+      },
+      codeAutoRetrievalTimeout: (String verificationId) {
+        // Code auto-retrieval timed out
+      },
+      timeout: const Duration(seconds: 60),
+    );
   }
+
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      children: [
-        const SizedBox(height: 30),
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            myPhone(context, 'Phone Number', widget.phoneNumberController, '+91'),
-            const SizedBox(height: 10),
-            const Text(
+    return Scaffold(
+      backgroundColor: themeProvider.backgroundColor,
+      body: Column(
+        crossAxisAlignment:
+        CrossAxisAlignment.start, // Aligns children to the left
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 30, left: 16, right: 16),
+            child: Text(
+              'Phone number',
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: 'SF-Pro-Display',
+                fontWeight: FontWeight.w500,
+                color: Colors.white38,
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+            child: Row(
+              children: [
+                Container(
+                  width: 80,
+                  height: 50,
+                  decoration: BoxDecoration(
+                    color: const Color(0xFF3A3A3B),
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                  child: Center(
+                    child: Text(
+                      countryCode,
+                      style: TextStyle(
+                        color: themeProvider.textColor,
+                        fontSize: 16,
+                      ),
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF3A3A3B),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      controller: phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      style: TextStyle(color: themeProvider.textColor),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        hintText: 'Enter your phone number', // Placeholder text
+                        hintStyle: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 18,
+                          fontFamily: 'SF-Pro-Display',
+                          fontWeight: FontWeight.w500,
+                        ),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ),
+          const SizedBox(height: 10),
+          const Center(
+            child: Text(
               'Please confirm the country code and enter your phone\n number',
               style: TextStyle(
                 fontSize: 16,
@@ -362,101 +292,18 @@ class _SecondStepState extends State<SecondStep> {
                 color: Colors.white38,
               ),
             ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: sendOTP,
-              child: const Text(
-                'Send OTP',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w500,
-                ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
               ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(360, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-            Container(
-              width: 360,
-              height: 50,
-              decoration: BoxDecoration(
-                color: Colors.white38,
-                borderRadius: BorderRadius.circular(8),
-              ),
-              child: TextField(
-                controller: otpController,
-                keyboardType: TextInputType.number,
-                style: TextStyle(color: themeProvider.textColor),
-                decoration: const InputDecoration(
-                  border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                  hintText: 'Enter OTP',
-                  hintStyle: TextStyle(color: Colors.white70),
-                ),
-              ),
-            ),
-            const SizedBox(height: 10),
-
-            Text(
-              errorMessage,
-              style: TextStyle(
-                color: Colors.red,
-                fontSize: 16,
-              ),
-            ),
-
-            ElevatedButton(
-              onPressed: verifyOTP,
-              child: const Text(
-                'Verify OTP',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(360, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: resendOTP,
-              child: const Text(
-                'Resend OTP',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w500,
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                minimumSize: const Size(360, 50),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
-                ),
-              ),
-            ),
-            SizedBox(height: 10),
-          ],
-        ),
-        Expanded(
-          child: Align(
-            alignment: Alignment.bottomCenter,
-            child: Padding(
-              padding: const EdgeInsets.only(bottom: 40),
-              child: appButton(context, gradient(context), 'Sign Up', '/createPasscode'),
             ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }
@@ -468,7 +315,7 @@ Widget myPhone(BuildContext context, String label, TextEditingController control
   final themeProvider = Provider.of<ThemeProvider>(context);
 
   return Padding(
-    padding: const EdgeInsets.symmetric(horizontal: 35.0),
+    padding: const EdgeInsets.symmetric(horizontal: 15.0),
     child: Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -526,5 +373,80 @@ Widget myPhone(BuildContext context, String label, TextEditingController control
       ],
     ),
   );
+}
+
+
+class OTPScreen extends StatefulWidget {
+  final String verificationId;
+
+  const OTPScreen({Key? key, required this.verificationId}) : super(key: key);
+
+  @override
+  _OTPScreenState createState() => _OTPScreenState();
+}
+
+class _OTPScreenState extends State<OTPScreen> {
+  TextEditingController otpController = TextEditingController();
+
+  void verifyOTP() async {
+    String otp = otpController.text.trim();
+
+    PhoneAuthCredential credential = PhoneAuthProvider.credential(
+      verificationId: widget.verificationId,
+      smsCode: otp,
+    );
+
+    try {
+      await FirebaseAuth.instance.signInWithCredential(credential);
+      // OTP verification successful
+      // Add your desired code here, e.g., navigate to the home screen
+      // Navigator.push(context, MaterialPageRoute(builder: (context) => HomeScreen()));
+      if (kDebugMode) {
+        print('OTP Verified');
+      }
+    } catch (e) {
+      // OTP verification failed
+      if (kDebugMode) {
+        print('OTP Verification Failed: $e');
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('OTP Verification'),
+      ),
+      body: Center(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            const Text(
+              'Enter the OTP sent to your phone',
+              style: TextStyle(fontSize: 18.0),
+            ),
+            const SizedBox(height: 20),
+            SizedBox(
+              width: 200,
+              child: TextField(
+                controller: otpController,
+                keyboardType: TextInputType.number,
+                style: const TextStyle(fontSize: 16.0),
+                decoration: const InputDecoration(
+                  labelText: 'OTP',
+                ),
+              ),
+            ),
+            const SizedBox(height: 20),
+            ElevatedButton(
+              onPressed: verifyOTP,
+              child: const Text('Verify'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
 }
 
