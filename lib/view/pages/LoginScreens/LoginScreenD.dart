@@ -10,6 +10,9 @@ import '../../widgets/Constants.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../providers/theme_provider.dart';
 import 'ConfirmOTPScreenD.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -27,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
     phoneNumberController.dispose();
     super.dispose();
   }
-
+/*
   void sendOTP() async {
     String phoneNumber = phoneNumberController.text.trim();
     String fullPhoneNumber = '$countryCode$phoneNumber';
@@ -63,7 +66,69 @@ class _LoginScreenState extends State<LoginScreen> {
       timeout: const Duration(seconds: 60),
     );
   }
+*/
+  void sendOTP() async {
+    String phoneNumber = phoneNumberController.text.trim();
+    String fullPhoneNumber = '$countryCode$phoneNumber';
 
+    QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+        .collection('users')
+        .where('phoneNumber', isEqualTo: fullPhoneNumber)
+        .get();
+
+    if (snapshot.size == 1) {
+      // User exists, send OTP
+      await FirebaseAuth.instance.verifyPhoneNumber(
+        phoneNumber: fullPhoneNumber,
+        verificationCompleted: (PhoneAuthCredential credential) {
+          // Auto-retrieval of verification code completed
+          // This callback is optional
+        },
+        verificationFailed: (FirebaseAuthException e) {
+          // Verification failed
+          if (kDebugMode) {
+            print('Verification Failed: ${e.message}');
+          }
+        },
+        codeSent: (String verificationId, int? resendToken) {
+          // Navigate to the ConfirmOTPScreen
+          Navigator.push(
+            context,
+            MaterialPageRoute(
+              builder: (context) => ConfirmOTPScreen(
+                phoneNumber: phoneNumber,
+                countryCode: countryCode,
+                verificationId: verificationId,
+              ),
+            ),
+          );
+        },
+        codeAutoRetrievalTimeout: (String verificationId) {
+          // Code auto-retrieval timed out
+        },
+        timeout: const Duration(seconds: 60),
+      );
+    } else {
+      // User does not exist, show error message or navigate to sign up screen
+      showDialog(
+        context: context,
+        builder: (BuildContext context) {
+          return AlertDialog(
+            title: const Text('User not found'),
+            content: const Text('Please sign up to continue.'),
+            actions: <Widget>[
+              TextButton(
+                child: const Text('OK'),
+                onPressed: () {
+                  Navigator.of(context).pop();
+                },
+              ),
+            ],
+          );
+        },
+      );
+    }
+  }
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
