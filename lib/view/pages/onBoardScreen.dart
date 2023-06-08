@@ -12,7 +12,6 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       body: Stack(
         children: [
           Container(
@@ -31,16 +30,18 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   height: 55,
                 ),
               )),
-          Positioned(
-            top: 780,
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 80),
-              child: CustomButton(
-                onTap: () {
-                  Navigator.pushNamed(context, '/account');
-                },
+          Column(
+            mainAxisAlignment: MainAxisAlignment.end,
+            children: [
+              Center(
+                heightFactor: 2.5,
+                child: CustomButton(
+                  onTap: () {
+                    Navigator.pushNamed(context, '/account');
+                  },
+                ),
               ),
-            ),
+            ],
           ),
         ],
       ),

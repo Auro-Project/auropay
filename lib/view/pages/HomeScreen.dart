@@ -29,7 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
             Image.asset("assets/images/HomePage.png"),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: width * 0.05,
+                horizontal: width * 0.02,
                 vertical: height * 0.08,
               ),
               child: Column(

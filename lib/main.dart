@@ -1,5 +1,6 @@
 import 'package:auropay/view/pages/LoginScreens/ConfirmAccountScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/ConfirmActivationCode.dart';
+import 'package:auropay/view/pages/LoginScreens/ConfirmPasscodeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/PasscodeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
@@ -86,6 +87,7 @@ class MyApp extends StatelessWidget {
               '/notifs' : (context) => const NotifScreen(),
               '/confirmaccount' : (context) => const ConfirmAccountScreen(),
               '/passcode' : (context) =>  const PasscodeScreen(),
+              '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
               '/accsuccess' : (context) => const SuccessAccountScreen(),
               '/topup' : (context) =>  PaymentTopUpScreen(),
             },
