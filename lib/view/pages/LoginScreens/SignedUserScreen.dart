@@ -1,8 +1,8 @@
-import 'package:auropay/view/widgets/CustomAppBar.dart';
+
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
 import '../providers/theme_provider.dart';
 
@@ -16,6 +16,7 @@ class SignedUserScreen extends StatefulWidget {
 class _SignedUserScreenState extends State<SignedUserScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
+  final storage = new FlutterSecureStorage();
 
   @override
   void initState() {
@@ -33,10 +34,29 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     super.dispose();
   }
 
+  Future<bool> confirmPasscode() async {
+    String passcode = passcodeControllers.map((controller) => controller.text).join();
+    String? savedPasscode = await storage.read(key: 'passcode');
+    return passcode == savedPasscode;
+  }
+
   void focusNextPasscodeField() {
     if (currentPasscodeIndex < passcodeControllers.length - 1) {
       currentPasscodeIndex++;
       FocusScope.of(context).nextFocus();
+    }
+  }
+
+  void checkPasscode(int index, String value) async {
+    if (index == 3 && value.isNotEmpty) { // If it's the last field and it's filled
+      if (await confirmPasscode()) {
+        Navigator.pushNamed(context, '/home');
+      } else {
+        // Show an error message to the user
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(content: Text('Invalid passcode')),
+        );
+      }
     }
   }
 
@@ -74,7 +94,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                     color: Colors.white.withOpacity(0.8),
                   ),
                   const SizedBox(height: 30),
-                   Text(
+                  Text(
                     'Hello, Naresh!',
                     style: TextStyle(
                       fontSize: 28,
@@ -116,7 +136,8 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                             ),
                             textAlign: TextAlign.center,
                             onChanged: (value) {
-                              if (value.isNotEmpty) {
+                              checkPasscode(i, value);
+                              if (value.isNotEmpty && i < 3) {
                                 focusNextPasscodeField();
                               }
                             },
@@ -149,7 +170,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                 width: 40,
                 color: Colors.white.withOpacity(0.8),
               ),
-              ),
+            ),
             const SizedBox(height: 10),
             Text(
               'Use Face ID',
@@ -168,3 +189,4 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
   }
 
 }
+

@@ -298,7 +298,10 @@ class _SecondStepState extends State<SecondStep> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
-                child: appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
+                child:
+                // appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
+                appButton(context, gradient(context), 'send', '/createPasscode')
+
               ),
             ),
           ),
