@@ -1,6 +1,6 @@
-import 'package:auropay/view/pages/LoginScreens/ConfirmOTPScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/ConfirmOTPScreenD.dart';
+import 'package:auropay/view/pages/LoginScreens/LoginScreenD.dart';
+import 'package:auropay/view/pages/LoginScreens/SignUpScreenD.dart';
 import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/passcode/CodeScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
@@ -11,7 +11,7 @@ import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
 import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
-import 'package:auropay/view/pages/QR%20Code/QRCodeScreen2.dart';
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/Send/TopUpScreen.dart';
@@ -25,23 +25,42 @@ import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
 import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
-void main() {
+// void main() async {
+//   // Initialize Firebase
+//   WidgetsFlutterBinding.ensureInitialized();
+//   await Firebase.initializeApp();
+//
+//   SystemChrome.setSystemUIOverlayStyle(
+//     const SystemUiOverlayStyle(
+//       statusBarColor: Colors.transparent,
+//       statusBarIconBrightness: Brightness.dark,
+//       statusBarBrightness: Brightness.dark,
+//     ),
+//   );
+//
+//   runApp(
+//     ChangeNotifierProvider<ThemeProvider>(
+//       create: (_) => ThemeProvider(),
+//       child: const MyApp(),
+//     ),
+//   );
+// }
+
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.dark,
       statusBarBrightness: Brightness.dark,
-    ),
-  );
-
-  runApp(
-    ChangeNotifierProvider<ThemeProvider>(
-      create: (_) => ThemeProvider(),
-      child: const MyApp(),
     ),
   );
 }
@@ -66,7 +85,7 @@ class MyApp extends StatelessWidget {
               '/account': (context) => const AccountScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignUpScreen(),
-              '/confirmOTP': (context) =>  const ConfirmOTPScreen(phoneNumber: '', countryCode: '',),
+              '/confirmOTP': (context) =>  const ConfirmOTPScreen(phoneNumber: '', countryCode: '', verificationId: '',),
               '/createPasscode' : (context) =>  const CreatePasscodeScreen(),
               '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
               '/home': (context) => const HomeScreen(),

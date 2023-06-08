@@ -30,7 +30,6 @@ class CustomButton extends StatelessWidget {
   }
 }
 
-
 class RPSCustomPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
