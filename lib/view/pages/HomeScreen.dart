@@ -248,7 +248,7 @@ class _HomeScreenState extends State<HomeScreen> {
       ) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
-      width: 90,
+      width: 140,
       child: Column(
         children: [
           ElevatedButton(
@@ -259,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ),
             child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 17),
+              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 17),
               child: SvgPicture.asset(
                 icon,
                 height: 30,
