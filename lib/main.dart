@@ -1,11 +1,8 @@
-import 'package:auropay/view/pages/LoginScreens/ConfirmAccountScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/ConfirmActivationCode.dart';
-import 'package:auropay/view/pages/LoginScreens/ConfirmPasscodeScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/ConfirmOTPScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/PasscodeScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/SuccessAccountScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/passcode/CodeScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
@@ -21,9 +18,6 @@ import 'package:auropay/view/pages/Send/TopUpScreen.dart';
 import 'package:auropay/view/pages/SplashScreen.dart';
 import 'package:auropay/view/pages/TransactionScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
-import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
 import 'package:auropay/view/pages/providers/theme_provider.dart';
 import 'package:auropay/view/pages/FutureEnhancements/AnalyticsScreen.dart';
 import 'package:auropay/view/pages/HomeScreen.dart';
@@ -31,6 +25,9 @@ import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
 import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
+import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   SystemChrome.setSystemUIOverlayStyle(
@@ -65,20 +62,23 @@ class MyApp extends StatelessWidget {
             home: const SplashScreen(),
             routes: {
               '/onBoarding': (context) => const OnBoardingScreen(),
+              '/signedUser' : (context) => const SignedUserScreen(),
+              '/account': (context) => const AccountScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignUpScreen(),
-              '/code': (context) =>  const ConfirmActivationCode(phoneNumber: '', countryCode: '',),
+              '/confirmOTP': (context) =>  const ConfirmOTPScreen(phoneNumber: '', countryCode: '',),
+              '/createPasscode' : (context) =>  const CreatePasscodeScreen(),
+              '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
               '/home': (context) => const HomeScreen(),
+              '/topup' : (context) =>  PaymentTopUpScreen(),
+              '/qrscreen': (context) => const QRScreen(),
+              '/confirmpay': (context) => const ConfirmPayScreen(),
+              '/progress': (context) => const ProgressScreen(),
+              '/success': (context) => const SuccessScreen(),
+              '/receipt': (context) => ReceiptScreen(),
               '/transactions': (context) => const TransactionScreen(),
               '/analytics': (context) =>  AnalyticsScreen(),
               '/more': (context) => const MoreScreen(),
-              '/send': (context) => const SendScreen(),
-              '/progress': (context) => const ProgressScreen(),
-              '/success': (context) => const SuccessScreen(),
-              '/account': (context) => const AccountScreen(),
-              '/qrscreen': (context) => const QRScreen(),
-              '/confirmpay': (context) => const ConfirmPayScreen(),
-              '/receipt': (context) => ReceiptScreen(),
               '/profile' : (context) => const ProfileScreen(),
               '/help' : (context) => const HelpScreen(),
               '/support' : (context) => const SupportScreen(),
@@ -86,12 +86,7 @@ class MyApp extends StatelessWidget {
               '/settings' : (context) => const SettingScreen(),
               '/notifications' : (context) => const NotificationScreen(),
               '/notifs' : (context) => const NotifScreen(),
-              '/confirmaccount' : (context) => const ConfirmAccountScreen(),
-              '/passcode' : (context) =>  const PasscodeScreen(),
-              '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
-              '/accsuccess' : (context) => const SuccessAccountScreen(),
-              '/topup' : (context) =>  PaymentTopUpScreen(),
-              '/signedUser' : (context) => const SignedUserScreen(),
+              '/send': (context) => const SendScreen(),
             },
           );
         }

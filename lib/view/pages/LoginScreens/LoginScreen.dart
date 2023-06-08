@@ -28,30 +28,28 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       appBar: myAppBar(context, 'Log in'),
       backgroundColor: themeProvider.backgroundColor,
-      body: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 15.0),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const SizedBox(height: 50),
-            const Align(
-              alignment: Alignment.centerLeft,
-              child: Text(
-                'Phone number',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w500,
-                  color: Colors.white38,
-                ),
+      body: Column(
+        crossAxisAlignment: CrossAxisAlignment.start, // Aligns children to the left
+        children: [
+          const Padding(
+            padding: EdgeInsets.only(top: 30, left: 16, right: 16),
+            child: Text(
+              'Phone number',
+              style: TextStyle(
+                fontSize: 18,
+                fontFamily: 'SF-Pro-Display',
+                fontWeight: FontWeight.w500,
+                color: Colors.white38,
               ),
             ),
-            const SizedBox(height: 10),
-            Row(
+          ),
+          Padding(
+            padding: const EdgeInsets.fromLTRB(16, 10, 16, 0),
+            child: Row(
               children: [
                 Container(
                   width: 100,
-                  height: 40,
+                  height: 50,
                   decoration: BoxDecoration(
                     color: const Color(0xFF3A3A3B),
                     borderRadius: BorderRadius.circular(8),
@@ -67,36 +65,44 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
                 const SizedBox(width: 10),
-                Container(
-                  width: 250,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: const Color(0xFF3A3A3B),
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextField(
-                    controller: phoneNumberController,
-                    keyboardType: TextInputType.phone,
-                    style: TextStyle(color: themeProvider.textColor),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                      hintText: 'Enter your phone number', // Placeholder text
-                      hintStyle: TextStyle(
-                        color: Colors.white38,
-                        fontSize: 14,
-                        fontFamily: 'SF-Pro-Display',
-                        fontWeight: FontWeight.w500,
+                Expanded(
+                  child: Container(
+                    height: 50,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF3A3A3B),
+                      borderRadius: BorderRadius.circular(8),
+                    ),
+                    child: TextField(
+                      controller: phoneNumberController,
+                      keyboardType: TextInputType.phone,
+                      style: TextStyle(color: themeProvider.textColor),
+                      decoration: const InputDecoration(
+                        border: InputBorder.none,
+                        contentPadding: EdgeInsets.symmetric(horizontal: 10),
+                        hintText: 'Enter your phone number', // Placeholder text
+                        hintStyle: TextStyle(
+                          color: Colors.white38,
+                          fontSize: 18,
+                          fontFamily: 'SF-Pro-Display',
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ),
                   ),
                 ),
               ],
             ),
-            const SizedBox(height: 400.0),
-            Center(child: appButton(context, gradient(context),'Send Code', '/code')),
-          ],
-        ),
+          ),
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 40),
+                child: appButton(context, gradient(context), 'Send Code', '/confirmOTP'),
+              ),
+            ),
+          ),
+        ],
       ),
     );
   }

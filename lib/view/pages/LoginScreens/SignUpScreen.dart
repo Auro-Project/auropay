@@ -187,7 +187,7 @@ class SecondStep extends StatelessWidget {
             alignment: Alignment.bottomCenter,
             child: Padding(
               padding: const EdgeInsets.only(bottom: 40),
-              child: appButton(context, gradient(context), 'Sign Up', '/passcode'),
+              child: appButton(context, gradient(context), 'Sign Up', '/createPasscode'),
             ),
           ),
         ),
