@@ -1,3 +1,5 @@
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:auropay/view/pages/providers/theme_provider.dart';
@@ -18,20 +20,20 @@ class MoreScreen extends StatelessWidget {
         context: context,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
-            top: Radius.circular(16.0),
+            top: Radius.circular(30.0),
           ),
         ),
         builder: (BuildContext context) {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height * 1, // Set desired height here
+                minHeight: MediaQuery.of(context).size.height * 0.5, // Set desired height here
               ),
               child: Container(
-                padding: EdgeInsets.all(16.0),
+                padding: EdgeInsets.all(30.0),
                 child: Column(
-                  mainAxisSize: MainAxisSize.min,
-                  crossAxisAlignment: CrossAxisAlignment.start,
+                  mainAxisSize: MainAxisSize.max,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
                     Text(
                       'Log Out',
@@ -52,42 +54,55 @@ class MoreScreen extends StatelessWidget {
                         color: getTextColor(),
                       ),
                     ),
-                    SizedBox(height: 16.0),
+                    SizedBox(height: 50.0),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        TextButton(
-                          child: Text(
-                            'Cancel',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'SF-Pro-Display',
-                              fontWeight: FontWeight.normal,
-                              color: getTextColor(),
+                        Container(
+                          decoration: border(context) ,
+                          child: Padding(
+                            padding: const EdgeInsets.symmetric(  horizontal: 20.0),
+                            child: TextButton(
+                              child: Text(
+                                'Cancel',
+                                style: TextStyle(
+                                  fontSize: 18,
+                                  fontFamily: 'SF-Pro-Display',
+                                  fontWeight: FontWeight.normal,
+                                  color: getTextColor(),
+                                ),
+                              ),
+                              onPressed: () {
+                                Navigator.of(context).pop();
+                              },
                             ),
                           ),
-                          onPressed: () {
-                            Navigator.of(context).pop();
-                          },
                         ),
-                        ElevatedButton(
-                          onPressed: () {
-                            // Perform the logout action
-                            // ...
-                            // Close all screens and go back to the login screen
-                            Navigator.of(context).popUntil((route) => route.isFirst);
-                          },
-                          style: ElevatedButton.styleFrom(
-                            foregroundColor: Colors.white,
-                            backgroundColor: Colors.deepPurpleAccent,
-                          ),
-                          child: const Text(
-                            'Log Out',
-                            style: TextStyle(
-                              fontSize: 18,
-                              fontFamily: 'SF-Pro-Display',
-                              fontWeight: FontWeight.normal,
-                              color: Colors.white,
+                        Container(
+                          decoration: gradient(context),
+                          child: ElevatedButton(
+                            onPressed: () {
+                              // Perform the logout action
+                              // ...
+                              // Close all screens and go back to the login screen
+                              Navigator.of(context).popUntil((route) => route.isFirst);
+                            },
+                            style: ElevatedButton.styleFrom(
+                              primary: Colors.transparent,
+                              elevation: 0,
+                              minimumSize: Size(150, 50),
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10.0),
+                              ),
+                            ),
+                            child: const Text(
+                              'Log Out',
+                              style: TextStyle(
+                                fontSize: 18,
+                                fontFamily: 'SF-Pro-Display',
+                                fontWeight: FontWeight.normal,
+                                color: Colors.white,
+                              ),
                             ),
                           ),
                         ),
