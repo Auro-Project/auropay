@@ -85,7 +85,7 @@ class MyApp extends StatelessWidget {
               '/signedUser' : (context) => const SignedUserScreen(),
               '/account': (context) => const AccountScreen(),
               '/login': (context) => const LoginScreen(),
-              '/signup': (context) => const SignUpScreen(),
+              '/signup': (context) =>  SignUpScreen(),
               '/confirmOTP': (context) =>  ConfirmOTPScreen(phoneNumber: '', countryCode: '', verificationId: '', onVerificationComplete: (PhoneAuthCredential ) {  },),
               '/createPasscode' : (context) =>  const CreatePasscodeScreen(),
               '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
