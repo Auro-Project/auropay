@@ -130,23 +130,7 @@ class FirstStep extends StatelessWidget {
             child: Padding(
               padding: const EdgeInsets.only(bottom: 40),
               // child as elevated button
-              child: ElevatedButton(
-                onPressed: onNext,
-                child: const Text(
-                  'Next',
-                  style: TextStyle(
-                    fontSize: 18,
-                    fontFamily: 'SF-Pro-Display',
-                    fontWeight: FontWeight.w500,
-                  ),
-                ),
-                style: ElevatedButton.styleFrom(
-                  minimumSize: const Size(360, 50),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                ),
-              ),
+              child: appButtonFunc(context, gradient(context), "Next", onNext),
             ),
           ),
         ),
