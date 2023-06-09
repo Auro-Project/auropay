@@ -9,12 +9,16 @@ class ConfirmOTPScreen extends StatefulWidget {
   final String phoneNumber;
   final String countryCode;
   final String verificationId;
+  final Function(PhoneAuthCredential) onVerificationComplete;
 
-  const ConfirmOTPScreen({
+
+
+  ConfirmOTPScreen({
     Key? key,
     required this.phoneNumber,
     required this.countryCode,
     required this.verificationId,
+    required this.onVerificationComplete,
   }) : super(key: key);
 
   @override

@@ -1,3 +1,4 @@
+/*
 import 'package:auropay/view/pages/LoginScreens/ConfirmOTPScreen.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +21,7 @@ class LoginScreen extends StatefulWidget {
   @override
   _LoginScreenState createState() => _LoginScreenState();
 }
+
 
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController phoneNumberController = TextEditingController();
@@ -55,7 +57,7 @@ class _LoginScreenState extends State<LoginScreen> {
             builder: (context) => ConfirmOTPScreen(
               phoneNumber: phoneNumber,
               countryCode: countryCode,
-              verificationId: verificationId,
+              verificationId: verificationId, onVerificationComplete: (PhoneAuthCredential ) {  },
             ),
           ),
         );
@@ -67,6 +69,101 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 */
+  void sendOTP() async {
+    String phoneNumber = phoneNumberController.text.trim();
+    String fullPhoneNumber = '$countryCode$phoneNumber';
+
+    try {
+      DocumentSnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(fullPhoneNumber)
+          .get();
+
+      if (snapshot.exists) {
+        // User exists, send OTP
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: fullPhoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) {
+            // Auto-retrieval of verification code completed
+            // This callback is optional
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            // Verification failed
+            print('Verification Failed: ${e.message}');
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            // Navigate to the ConfirmOTPScreen
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ConfirmOTPScreen(
+                  phoneNumber: phoneNumber,
+                  countryCode: countryCode,
+                  verificationId: verificationId, onVerificationComplete: (PhoneAuthCredential ) {  },
+                ),
+              ),
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            // Code auto-retrieval timed out
+          },
+          timeout: const Duration(seconds: 60),
+        );
+      } else {
+        // User does not exist, show error message
+        showDialog(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text('User not found'),
+              content: const Text('Please sign up to continue.'),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+    } catch (e) {
+      print('Error fetching user data: $e');
+    }
+  }
+
+  /*
+  void login(String phoneNumber, String password) async {
+    try {
+      // Check if the phone number exists in Firestore
+      QuerySnapshot<Map<String, dynamic>> snapshot = await FirebaseFirestore.instance
+          .collection('users')
+          .where('phoneNumber', isEqualTo: phoneNumber)
+          .limit(1)
+          .get();
+
+      if (snapshot.size > 0) {
+        // Phone number exists in Firestore, proceed with login
+        UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+          email: phoneNumber, // Use email field to store phone number
+          password: password,
+        );
+
+        print('Login successful!');
+        // Perform any additional operations after login
+      } else {
+        // Phone number is not registered
+        print('Phone number not registered');
+        // Display an error message to the user
+      }
+    } catch (e) {
+      print('Login failed: $e');
+      // Display an error message to the user
+    }
+  }
+
   void sendOTP() async {
     String phoneNumber = phoneNumberController.text.trim();
     String fullPhoneNumber = '$countryCode$phoneNumber';
@@ -98,7 +195,7 @@ class _LoginScreenState extends State<LoginScreen> {
               builder: (context) => ConfirmOTPScreen(
                 phoneNumber: phoneNumber,
                 countryCode: countryCode,
-                verificationId: verificationId,
+                verificationId: verificationId, onVerificationComplete: (PhoneAuthCredential ) {  },
               ),
             ),
           );
@@ -128,7 +225,7 @@ class _LoginScreenState extends State<LoginScreen> {
         },
       );
     }
-  }
+  } */
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -301,3 +398,4 @@ class _OTPScreenState extends State<OTPScreen> {
     );
   }
 }
+*/

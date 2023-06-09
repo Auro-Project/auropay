@@ -1,4 +1,5 @@
 
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
@@ -14,6 +15,24 @@ class SignUpScreen extends StatefulWidget {
 
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
+}
+void signUp(String phoneNumber, String password) async {
+  try {
+    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+      email: phoneNumber, // Use email field to store phone number
+      password: password,
+    );
+
+    // Store additional user data in Firestore
+    await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+      'phoneNumber': phoneNumber,
+      // Add any additional fields you want to store
+    });
+
+    print('Signup successful!');
+  } catch (e) {
+    print('Signup failed: $e');
+  }
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
@@ -84,6 +103,7 @@ class FirstStep extends StatelessWidget {
           children: [
             myField(context, 'Full Name', nameController, false),
             myField(context, 'Email Address', mailController, false),
+
           ],
         ),
         Expanded(
@@ -115,6 +135,7 @@ class FirstStep extends StatelessWidget {
       ],
     );
   }
+
 
 // Rest of the code for myField and myPhone functions
   Column myField(BuildContext context, String label, TextEditingController controller, bool obscure) {
@@ -190,7 +211,7 @@ class _SecondStepState extends State<SecondStep> {
           print('Verification Failed: ${e.message}');
         }
       },
-      codeSent: (String verificationId, int? resendToken) {
+      codeSent: (String verificationId, int? resendToken) async {
         // Navigate to the ConfirmActivationCode screen
         Navigator.push(
           context,
@@ -199,9 +220,33 @@ class _SecondStepState extends State<SecondStep> {
               phoneNumber: phoneNumber,
               countryCode: countryCode,
               verificationId: verificationId,
+              onVerificationComplete: (PhoneAuthCredential credential) async {
+                try {
+                  // Sign in with the credential
+                  UserCredential userCredential =
+                  await FirebaseAuth.instance.signInWithCredential(credential);
+
+                  // Store additional user data in Firestore
+                  await FirebaseFirestore.instance
+                      .collection('users')
+                      .doc(userCredential.user!.uid)
+                      .set({
+                    'phoneNumber': phoneNumber,
+                    // Add any additional fields you want to store
+                  });
+
+                  print('Phone number stored in Firestore successfully!');
+                } catch (e) {
+                  print('Failed to store phone number in Firestore: $e');
+                }
+              },
             ),
           ),
         );
+
+
+
+
       },
       codeAutoRetrievalTimeout: (String verificationId) {
         // Code auto-retrieval timed out
@@ -299,8 +344,8 @@ class _SecondStepState extends State<SecondStep> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
                 child:
-                // appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
-                appButton(context, gradient(context), 'send', '/createPasscode')
+                appButtonFunc(context, gradient(context), 'Send Code',sendOTP),
+               // appButton(context, gradient(context), 'send', '/createPasscode')
 
               ),
             ),

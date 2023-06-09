@@ -1,4 +1,5 @@
 import 'package:auropay/view/pages/LoginScreens/ConfirmOTPScreenD.dart';
+import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreenD.dart';
 import 'package:auropay/view/pages/LoginScreens/SignUpScreenD.dart';
 import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
@@ -71,21 +72,21 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+        create: (context) => ThemeProvider(),
         builder: (context,child) {
           final provider = Provider.of<ThemeProvider>(context);
           return MaterialApp(
             debugShowCheckedModeBanner: false,
             title: 'AuroPay',
             theme: provider.theme,
-            home: const SplashScreen(),
+            home: const SignedUserScreen(),
             routes: {
               '/onBoarding': (context) => const OnBoardingScreen(),
               '/signedUser' : (context) => const SignedUserScreen(),
               '/account': (context) => const AccountScreen(),
               '/login': (context) => const LoginScreen(),
               '/signup': (context) => const SignUpScreen(),
-              '/confirmOTP': (context) =>  const ConfirmOTPScreen(phoneNumber: '', countryCode: '', verificationId: '',),
+              '/confirmOTP': (context) =>  ConfirmOTPScreen(phoneNumber: '', countryCode: '', verificationId: '', onVerificationComplete: (PhoneAuthCredential ) {  },),
               '/createPasscode' : (context) =>  const CreatePasscodeScreen(),
               '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
               '/home': (context) => const HomeScreen(),
