@@ -17,34 +17,70 @@ class SignUpScreen extends StatefulWidget {
   @override
   _SignUpScreenState createState() => _SignUpScreenState();
 }
+final _formKey = GlobalKey<FormState>();
+final TextEditingController fullNameController = TextEditingController();
+final TextEditingController emailController = TextEditingController();
+final TextEditingController passwordController = TextEditingController();
+final TextEditingController confirmPasswordController =
+TextEditingController();
+final TextEditingController phoneNumberController = TextEditingController();
+final FirebaseAuth auth = FirebaseAuth.instance;
+final FirebaseFirestore firestore = FirebaseFirestore.instance;
+
 void signUp(String phoneNumber, String password) async {
   try {
-    UserCredential userCredential = await FirebaseAuth.instance.createUserWithEmailAndPassword(
+    UserCredential userCredential =
+    await FirebaseAuth.instance.createUserWithEmailAndPassword(
       email: phoneNumber, // Use email field to store phone number
       password: password,
     );
 
     // Store additional user data in Firestore
-    await FirebaseFirestore.instance.collection('users').doc(userCredential.user!.uid).set({
+    await FirebaseFirestore.instance
+        .collection('users')
+        .doc(userCredential.user!.uid)
+        .set({
+      'fullName': fullNameController.text.trim(),
+      'email': emailController.text.trim(),
       'phoneNumber': phoneNumber,
+      'password' : confirmPasswordController,
+
       // Add any additional fields you want to store
     });
 
-    print('Signup successful!');
+    if (kDebugMode) {
+      print('Signup successful!');
+    }
   } catch (e) {
-    print('Signup failed: $e');
+    if (kDebugMode) {
+      print('Signup failed: $e');
+    }
   }
 }
 
+void registerUser() async {
+  final String fullName = fullNameController.text.trim();
+  final String email = emailController.text.trim();
+  final String password = passwordController.text.trim();
+  final String confirmPassword = confirmPasswordController.text.trim();
+  final String phoneNumber = phoneNumberController.text.trim();
+
+  if (_formKey.currentState!.validate()) {
+    // Perform phone number verification here
+
+    // If phone number verification is successful, proceed with registration
+    signUp(phoneNumber, password);
+  }
+}
+
+
 class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> formKey = GlobalKey<FormState>();
   PageController _pageController = PageController(initialPage: 0);
   TextEditingController nameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
   TextEditingController passController = TextEditingController();
   TextEditingController confirmPassController = TextEditingController();
-
-
-
   TextEditingController phoneNumberController = TextEditingController();
 
   @override
@@ -57,7 +93,12 @@ class _SignUpScreenState extends State<SignUpScreen> {
     _pageController.dispose();
     super.dispose();
   }
-
+  String? validatePassword(String? value) {
+    if (value != passController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -66,7 +107,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: themeProvider.backgroundColor,
       body: PageView(
         controller: _pageController,
-        physics: NeverScrollableScrollPhysics(),
+        physics: const NeverScrollableScrollPhysics(),
         children: [
           FirstStep(
             nameController: nameController,
@@ -75,7 +116,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             confirmPassController: confirmPassController,
             onNext: () {
               _pageController.nextPage(
-                duration: Duration(milliseconds: 300),
+                duration: const Duration(milliseconds: 300),
                 curve: Curves.easeInOut,
               );
             },
@@ -98,6 +139,7 @@ class FirstStep extends StatelessWidget {
 
   final VoidCallback onNext;
 
+
   const FirstStep({
     Key? key,
     required this.nameController,
@@ -106,6 +148,7 @@ class FirstStep extends StatelessWidget {
     required this.confirmPassController,
     required this.onNext,
   }) : super(key: key);
+
 
   @override
   Widget build(BuildContext context) {
@@ -125,6 +168,7 @@ class FirstStep extends StatelessWidget {
           ],
         ),
         Expanded(
+
           child: Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
@@ -200,9 +244,13 @@ class _SecondStepState extends State<SecondStep> {
                     // Add any additional fields you want to store
                   });
 
-                  print('Phone number stored in Firestore successfully!');
+                  if (kDebugMode) {
+                    print('Phone number stored in Firestore successfully!');
+                  }
                 } catch (e) {
-                  print('Failed to store phone number in Firestore: $e');
+                  if (kDebugMode) {
+                    print('Failed to store phone number in Firestore: $e');
+                  }
                 }
               },
             ),
