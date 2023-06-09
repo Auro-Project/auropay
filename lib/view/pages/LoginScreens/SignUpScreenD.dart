@@ -1,9 +1,13 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
+import 'package:auropay/view/widgets/CustomField.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
 import 'ConfirmOTPScreenD.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -112,81 +116,33 @@ class _SignUpScreenState extends State<SignUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text('Sign Up'),
-      ),
+      appBar: myAppBar(context, 'Sign Up'),
       body: Padding(
-        padding: const EdgeInsets.all(16.0),
+        padding: const EdgeInsets.all(24.0),
         child: Form(
           key: _formKey,
-          child: ListView(
+          child: Column(
               children: [
-                TextFormField(
-                  controller: _fullNameController,
-                  decoration: const InputDecoration(labelText: 'Full Name'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter your full name';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _emailController,
-                  decoration: const InputDecoration(labelText: 'Email'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter an email address';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _passwordController,
-                  decoration: const InputDecoration(labelText: 'Password'),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a password';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _confirmPasswordController,
-                  decoration: const InputDecoration(labelText: 'Confirm Password'),
-                  obscureText: true,
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please confirm your password';
-                    }
-                    if (value != _passwordController.text) {
-                      return 'Passwords do not match';
-                    }
-                    return null;
-                  },
-                ),
-                TextFormField(
-                  controller: _phoneNumberController,
-                  decoration: const InputDecoration(labelText: 'Phone Number'),
-                  validator: (value) {
-                    if (value!.isEmpty) {
-                      return 'Please enter a phone number';
-                    }
-                    return null;
-                  },
-                ),
+                myField(context, 'Full Name', _fullNameController, false,
+                    truePhrase: 'Please enter your full name', falsePhrase: null),
+                myField(context, 'Email', _emailController, false,
+                    truePhrase: 'Please enter an email address', falsePhrase: null),
+                myField(context, 'Password', _passwordController, false,
+                    truePhrase: 'Please enter a password', falsePhrase: null),
+                myField(context, 'Confirm Password', _confirmPasswordController, false,
+                    truePhrase: 'Passwords do not match', falsePhrase: null),
+                myField(context, 'Phone Number', _phoneNumberController, false,
+                    truePhrase: 'Please enter a phone number', falsePhrase: null),
 
-
-                ElevatedButton(
-                  onPressed: () {
-                    _sendOtp(context);
-                    _signUp(context);
-
-                  },
-                  child: const Text('Signup'),
+                Expanded(
+                  child: Align(
+                    alignment: Alignment.bottomCenter,
+                    child: appButtonFunc(context, gradient(context), 'Sign Up',  () {
+                      _sendOtp(context);
+                      _signUp(context);
+                    }),
+                  ),
                 ),
-
               ]),
         ),
       ),

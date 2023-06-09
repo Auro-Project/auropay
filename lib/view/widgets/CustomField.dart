@@ -1,10 +1,12 @@
-
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../pages/providers/theme_provider.dart';
 import 'Constants.dart';
 
-Column myField(BuildContext context, String label, TextEditingController controller, bool obscure) {
+Column myField(BuildContext context,
+    String label, TextEditingController controller, bool obscure,
+    { String? truePhrase, String? falsePhrase }
+    ) {
   final themeProvider = Provider.of<ThemeProvider>(context);
 
   return Column(
@@ -27,7 +29,7 @@ Column myField(BuildContext context, String label, TextEditingController control
             colorbg: Colors.grey.withOpacity(0.3),
             borderColor: Colors.transparent,
             borderRadius: 10),
-        child: TextField(
+        child: TextFormField(
           controller: controller,
           obscureText: obscure,
           style: TextStyle(color: themeProvider.textColor),
@@ -35,6 +37,12 @@ Column myField(BuildContext context, String label, TextEditingController control
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 15),
           ),
+          validator: (value) {
+            if (value!.isEmpty) {
+              return truePhrase;
+            }
+            return falsePhrase;
+          },
         ),
       ),
       const SizedBox(height: 20),
