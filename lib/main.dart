@@ -79,7 +79,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             title: 'AuroPay',
             theme: provider.theme,
-            home: const SignedUserScreen(),
+            home: const SplashScreen(),
             routes: {
               '/onBoarding': (context) => const OnBoardingScreen(),
               '/signedUser' : (context) => const SignedUserScreen(),
