@@ -4,6 +4,7 @@ import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:auropay/view/pages/LoginScreens/SignUpScreenD.dart';
 
 class ConfirmOTPScreen extends StatefulWidget {
   final String phoneNumber;
@@ -159,13 +160,15 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
                       verificationId: widget.verificationId,
                       smsCode: code,
                   );
+// Call the _signUp method
 
                   // Call signInWithCredential method to sign in the user
-                  signInWithCredential(credential);
+
                 }),
                     ),
               ),
             ),
+
           ],
         ),
       ),

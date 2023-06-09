@@ -23,6 +23,42 @@ class _SignUpScreenState extends State<SignUpScreen> {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  void _sendOtp(BuildContext context) async {
+   // final String phoneNumber = _phoneNumberController.text.trim();
+    final String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) {
+            // Auto-verification if the device automatically detects the SMS code
+            FirebaseAuth.instance.signInWithCredential(credential);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            print('Failed to send OTP: ${e.message}');
+            // Handle the error if OTP sending fails
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => ConfirmOTPScreen(
+                  verificationId: verificationId,
+                  phoneNumber: phoneNumber, countryCode: '', onVerificationComplete: (PhoneAuthCredential ) {  },
+                ),
+              ),
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            // Handle code auto-retrieval timeout
+          },
+        );
+      } catch (e) {
+        print('Send OTP Error: $e');
+        // Handle the send OTP error
+      }
+    }
+  }
   @override
   void dispose() {
     _fullNameController.dispose();
@@ -140,12 +176,16 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   return null;
                 },
               ),
-              ElevatedButton(
-                onPressed: () => _signUp(context),
-                child: const Text('Sign Up'),
-              ),
-            ],
+
+          ElevatedButton(
+            onPressed: () {
+              _signUp(context);
+              _sendOtp(context);
+            },
+            child: const Text('Send OTP'),
           ),
+
+        ]),
         ),
       ),
     );
