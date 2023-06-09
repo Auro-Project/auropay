@@ -28,7 +28,7 @@ class ConfirmOTPScreen extends StatefulWidget {
 
 class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
   List<String> enteredCode =
-      List.filled(6, ''); // Initialize the list with empty strings
+  List.filled(6, ''); // Initialize the list with empty strings
   String errorMessage = '';
 
   void signInWithCredential(PhoneAuthCredential credential) async {
@@ -48,6 +48,38 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
         errorMessage = 'Enter the correct OTP'; // Display error message
       });
       print('Sign In Failed: $e');
+    }
+  }
+  void verifyOTP(String verificationId, String smsCode) async {
+    try {
+      PhoneAuthCredential credential = PhoneAuthProvider.credential(
+        verificationId: verificationId,
+        smsCode: smsCode,
+      );
+
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithCredential(credential);
+
+      if (userCredential.user != null) {
+        // Verification successful
+        // You can navigate to the next screen or perform any other actions
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(
+            builder: (context) => CreatePasscodeScreen(), // Replace with your desired next screen
+          ),
+        );
+      } else {
+        // Verification failed
+        setState(() {
+          errorMessage = 'Invalid OTP'; // Display error message
+        });
+      }
+    } catch (e) {
+      print('OTP Verification Error: $e');
+      setState(() {
+        errorMessage = 'An error occurred during verification'; // Display error message
+      });
     }
   }
 
@@ -83,7 +115,7 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   6,
-                  (index) => Container(
+                      (index) => Container(
                     width: 40,
                     height: 60,
                     margin: const EdgeInsets.all( 5),
@@ -111,7 +143,7 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
                         counterText: '',
                         border: InputBorder.none,
                         hintText:
-                            'X', // Display a placeholder value or any other visual indicator
+                        'X', // Display a placeholder value or any other visual indicator
                         hintStyle: TextStyle(
                           fontSize: 20,
                           color: Colors.white38,
@@ -149,23 +181,23 @@ class _ConfirmOTPScreenState extends State<ConfirmOTPScreen> {
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child:
-                    Padding(
-                      padding: const EdgeInsets.only(bottom: 40.0),
-                      child: appButtonFunc(context, gradient(context), 'Verify OTP', () {
-                  // Join the enteredCode list into a single string
-                  String code = enteredCode.join('');
+                Padding(
+                  padding: const EdgeInsets.only(bottom: 40.0),
+                  child: appButtonFunc(context, gradient(context), 'Verify OTP', () {
+                    // Join the enteredCode list into a single string
+                    String code = enteredCode.join('');
 
-                  // Create PhoneAuthCredential using the verificationId and the entered code
-                  PhoneAuthCredential credential = PhoneAuthProvider.credential(
+                    // Create PhoneAuthCredential using the verificationId and the entered code
+                    PhoneAuthCredential credential = PhoneAuthProvider.credential(
                       verificationId: widget.verificationId,
                       smsCode: code,
-                  );
+                    );
 // Call the _signUp method
+                    verifyOTP(widget.verificationId, code);
+                    // Call signInWithCredential method to sign in the user
 
-                  // Call signInWithCredential method to sign in the user
-
-                }),
-                    ),
+                  }),
+                ),
               ),
             ),
 
