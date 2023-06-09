@@ -176,7 +176,10 @@ class FirstStep extends StatelessWidget {
         Container(
           width: 360,
           height: 50,
-          decoration: border(context, colorbg: Colors.grey.withOpacity(0.3),  borderRadius: 10),
+          decoration: border(context,
+              colorbg: Colors.grey.withOpacity(0.3),
+              borderColor: Colors.transparent,
+              borderRadius: 10),
           child: TextField(
             controller: controller,
             style: TextStyle(color: themeProvider.textColor),
