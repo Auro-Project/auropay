@@ -17,11 +17,16 @@ BoxDecoration gradient(BuildContext context) => BoxDecoration(
       ],
     );
 
-BoxDecoration border(BuildContext context, {double borderRadius = 20}) => BoxDecoration(
-  color: Colors.black.withOpacity(0.1),
+BoxDecoration border(BuildContext contex,
+{
+  double borderRadius = 20,
+  Color borderColor = Colors.white70,
+  Color colorbg = Colors.black12,
+}) => BoxDecoration(
+  color: colorbg,
   borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
   border: Border.all(
-    color: Colors.white70,
+    color: borderColor,
     width: 1,
   ),
 );
