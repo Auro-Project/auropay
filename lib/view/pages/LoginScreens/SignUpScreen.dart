@@ -1,268 +1,150 @@
-// import 'package:flutter/material.dart';
-// import 'package:provider/provider.dart';
-// import '../../widgets/AppButtons.dart';
-// import '../../widgets/Constants.dart';
-// import '../../widgets/CustomAppBar.dart';
-// import '../providers/theme_provider.dart';
-//
-// class SignUpScreen extends StatefulWidget {
-//   const SignUpScreen({Key? key}) : super(key: key);
-//
-//   @override
-//   _SignUpScreenState createState() => _SignUpScreenState();
-// }
-//
-// class _SignUpScreenState extends State<SignUpScreen> {
-//   PageController _pageController = PageController(initialPage: 0);
-//   TextEditingController nameController = TextEditingController();
-//   TextEditingController mailController = TextEditingController();
-//   TextEditingController phoneNumberController = TextEditingController();
-//
-//   @override
-//   void dispose() {
-//     nameController.dispose();
-//     mailController.dispose();
-//     phoneNumberController.dispose();
-//     _pageController.dispose();
-//     super.dispose();
-//   }
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//     return Scaffold(
-//       appBar: myAppBar(context, 'Sign Up'),
-//       backgroundColor: themeProvider.backgroundColor,
-//       body: PageView(
-//         controller: _pageController,
-//         physics: NeverScrollableScrollPhysics(),
-//         children: [
-//           FirstStep(
-//             nameController: nameController,
-//             mailController: mailController,
-//             onNext: () {
-//               _pageController.nextPage(
-//                 duration: Duration(milliseconds: 300),
-//                 curve: Curves.easeInOut,
-//               );
-//             },
-//           ),
-//           SecondStep(
-//             phoneNumberController: phoneNumberController,
-//           ),
-//         ],
-//       ),
-//     );
-//   }
-// }
-//
-// class FirstStep extends StatelessWidget {
-//   final TextEditingController nameController;
-//   final TextEditingController mailController;
-//   final VoidCallback onNext;
-//
-//   const FirstStep({
-//     Key? key,
-//     required this.nameController,
-//     required this.mailController,
-//     required this.onNext,
-//   }) : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.center,
-//       children: [
-//         const SizedBox(height: 30),
-//         Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             myField(context, 'Full Name', nameController, false),
-//             myField(context, 'Email Address', mailController, false),
-//           ],
-//         ),
-//         Expanded(
-//           child: Align(
-//             alignment: Alignment.bottomCenter,
-//             child: Padding(
-//               padding: const EdgeInsets.only(bottom: 40),
-//               // child as elevated button
-//               child: Container(
-//                 decoration: gradient(context),
-//                 child: ElevatedButton(
-//                   onPressed: onNext,
-//                   style: ElevatedButton.styleFrom(
-//                     backgroundColor: Colors.transparent,
-//                     elevation: 0,
-//                     minimumSize: const Size(360, 50),
-//                     shape: RoundedRectangleBorder(
-//                       borderRadius: BorderRadius.circular(8),
-//                     ),
-//                   ),
-//                   child: const Text(
-//                     'Next',
-//                     style: TextStyle(
-//                       fontSize: 18,
-//                       fontFamily: 'SF-Pro-Display',
-//                       fontWeight: FontWeight.w500,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-//
-// // Rest of the code for myField and myPhone functions
-//   Column myField(BuildContext context, String label, TextEditingController controller, bool obscure) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.start,
-//       children: [
-//         Text(
-//           label,
-//           style: const TextStyle(
-//             fontSize: 18,
-//             fontFamily: 'SF-Pro-Display',
-//             fontWeight: FontWeight.w500,
-//             color: Colors.white38,
-//           ),
-//         ),
-//         const SizedBox(height: 10),
-//         Container(
-//           width: 360,
-//           height: 50,
-//           decoration: BoxDecoration(
-//             color: Colors.white38,
-//             borderRadius: BorderRadius.circular(8),
-//           ),
-//           child: TextField(
-//             controller: controller,
-//             style: TextStyle(color: themeProvider.textColor),
-//             decoration: const InputDecoration(
-//               border: InputBorder.none,
-//               contentPadding: EdgeInsets.symmetric(horizontal: 15),
-//             ),
-//           ),
-//         ),
-//         const SizedBox(height: 20),
-//
-//       ],
-//     );
-//   }
-//
-// }
-//
-// class SecondStep extends StatelessWidget {
-//   final TextEditingController phoneNumberController;
-//
-//   const SecondStep({Key? key, required this.phoneNumberController})
-//       : super(key: key);
-//
-//   @override
-//   Widget build(BuildContext context) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//     return Column(
-//       crossAxisAlignment: CrossAxisAlignment.end,
-//       children: [
-//         const SizedBox(height: 30),
-//         Column(
-//           crossAxisAlignment: CrossAxisAlignment.center,
-//           children: [
-//             myPhone(context, 'Phone Number', phoneNumberController, '+91'),
-//             const SizedBox(height: 10),
-//             const Text(
-//               'Please confirm the country code and enter your phone\n number',
-//               style: TextStyle(
-//                 fontSize: 16,
-//                 fontFamily: 'SF-Pro-Display',
-//                 fontWeight: FontWeight.w500,
-//                 color: Colors.white38,
-//               ),
-//             ),
-//           ],
-//         ),
-//         Expanded(
-//           child: Align(
-//             alignment: Alignment.bottomCenter,
-//             child: Padding(
-//               padding: const EdgeInsets.only(bottom: 40),
-//               child: appButton(context, gradient(context), 'Sign Up', '/createPasscode'),
-//             ),
-//           ),
-//         ),
-//       ],
-//     );
-//   }
-//
-// // Rest of the code for myField and myPhone functions
-//
-//   Widget myPhone(BuildContext context, String label, TextEditingController controller,String countryCode) {
-//     final themeProvider = Provider.of<ThemeProvider>(context);
-//
-//     return Padding(
-//       padding: const EdgeInsets.symmetric(horizontal: 35.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: [
-//           Text(
-//             label,
-//             style: const TextStyle(
-//               fontSize: 18,
-//               fontFamily: 'SF-Pro-Display',
-//               fontWeight: FontWeight.w500,
-//               color: Colors.white38,
-//             ),
-//           ),
-//           const SizedBox(height: 10),
-//           Row(
-//             mainAxisAlignment: MainAxisAlignment.start,
-//             children: [
-//               Container(
-//                 width: 60,
-//                 height: 50,
-//                 decoration: BoxDecoration(
-//                   color: Colors.white38,
-//                   borderRadius: BorderRadius.circular(8),
-//                 ),
-//                 child: Center(
-//                   child: Text(
-//                     countryCode,
-//                     style: TextStyle(
-//                       color: themeProvider.textColor,
-//                     ),
-//                   ),
-//                 ),
-//               ),
-//               const SizedBox(width: 10),
-//               Container(
-//                 width: 290,
-//                 height: 50,
-//                 decoration: BoxDecoration(
-//                   color: Colors.white38,
-//                   borderRadius: BorderRadius.circular(8),
-//                 ),
-//                 child: TextField(
-//                   controller: controller,
-//                   keyboardType: TextInputType.phone,
-//                   style: TextStyle(color: themeProvider.textColor),
-//                   decoration: const InputDecoration(
-//                     border: InputBorder.none,
-//                     contentPadding: EdgeInsets.symmetric(horizontal: 10),
-//                   ),
-//                 ),
-//               ),
-//             ],
-//           ),
-//           const SizedBox(height: 10),
-//
-//         ],
-//       ),
-//     );
-//   }
-// }
+import 'package:auropay/view/widgets/CustomError.dart';
+
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
+import 'ConfirmOTP.dart';
+
+class SignUpScreen extends StatefulWidget {
+  const SignUpScreen({Key? key}) : super(key: key);
+
+  @override
+  _SignUpScreenState createState() => _SignUpScreenState();
+}
+
+class _SignUpScreenState extends State<SignUpScreen> {
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
+
+  void _sendOtp(BuildContext context) async {
+    // final String phoneNumber = _phoneNumberController.text.trim();
+    final String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) {
+            // Auto-verification if the device automatically detects the SMS code
+            FirebaseAuth.instance.signInWithCredential(credential);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            print('Failed to send OTP: ${e.message}');
+            // Handle the error if OTP sending fails
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            Navigator.push(
+              context,
+              MaterialPageRoute(
+                builder: (context) => confirmOTP(
+                  verificationId: verificationId,
+                  phoneNumber: phoneNumber, countryCode: '', onVerificationComplete: (PhoneAuthCredential ) {  },
+                ),
+              ),
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            // Handle code auto-retrieval timeout
+          },
+        );
+      } catch (e) {
+        print('Send OTP Error: $e');
+        showGlobalSnackBar(context, 'Failed to send OTP');
+        // Handle the send OTP error
+      }
+    }
+  }
+  @override
+  void dispose() {
+    _fullNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _phoneNumberController.dispose();
+    super.dispose();
+  }
+
+  String? _validatePassword(String? value) {
+    if (value != _passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
+  void _signUp(BuildContext context) async {
+    final String fullName = _fullNameController.text.trim();
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    final String phoneNumber = _phoneNumberController.text.trim();
+
+    if (_formKey.currentState!.validate()) {
+      try {
+        final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        final CollectionReference users = _firestore.collection('users');
+        await users.doc(userCredential.user!.uid).set({
+          'fullName': fullName,
+          'email': email,
+          'phoneNumber': phoneNumber,
+        });
+
+        Navigator.push(
+          context,
+          MaterialPageRoute(builder: (context) => confirmOTP(phoneNumber: '', countryCode: '', verificationId: '', onVerificationComplete: (PhoneAuthCredential ) {  },)),
+        );
+      } catch (e) {
+        if (kDebugMode) {
+          print('Signup failed: $e');
+        }
+      }
+    }
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      appBar: myAppBar(context, 'Sign Up'),
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
+        child: Form(
+          key: _formKey,
+          child: ListView(
+              children: [
+                myField(context, 'Full Name', _fullNameController, false,
+                    truePhrase: 'Please enter your full name', falsePhrase: null),
+                myField(context, 'Email', _emailController, false,
+                    truePhrase: 'Please enter an email address', falsePhrase: null),
+                myField(context, 'Password', _passwordController, true,
+                    truePhrase: 'Please enter a password', falsePhrase: null),
+                myField(context, 'Confirm Password', _confirmPasswordController, true,
+                    truePhrase: 'Passwords do not match', falsePhrase: null),
+                myField(context, 'Phone Number', _phoneNumberController, false,
+                    truePhrase: 'Please enter a phone number', falsePhrase: null),
+
+                Align(
+                  alignment: Alignment.bottomCenter,
+                  child: appButtonFunc(context, gradient(context), 'Sign Up',  () {
+                    _sendOtp(context);
+                    _signUp(context);
+                  }),
+                ),
+              ]),
+        ),
+      ),
+    );
+  }
+}

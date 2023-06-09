@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
-import '../widgets/nav_bar/BottomNavBar.dart';
+import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
 import 'package:provider/provider.dart';
 

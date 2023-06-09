@@ -3,9 +3,9 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../widgets/AppButtons.dart';
 import '../../../widgets/Constants.dart';
+import '../../../widgets/CustomError.dart';
 import '../../providers/theme_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-
 
 class CreatePasscodeScreen extends StatefulWidget {
   const CreatePasscodeScreen({Key? key}) : super(key: key);
@@ -17,10 +17,11 @@ class CreatePasscodeScreen extends StatefulWidget {
 class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   void savePasscode() async {
-    String passcode = passcodeControllers.map((controller) => controller.text).join();
+    String passcode =
+        passcodeControllers.map((controller) => controller.text).join();
     await storage.write(key: 'passcode', value: passcode);
   }
 
@@ -145,9 +146,10 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
                 child:
-                // appButton(context, gradient(context), 'Proceed', '/confirmPasscode'),
-                appButtonFunc(context, gradient(context), 'Proceed', () { savePasscode();
-                Navigator.pushNamed(context, '/confirmPasscode');
+                    // appButton(context, gradient(context), 'Proceed', '/confirmPasscode'),
+                    appButtonFunc(context, gradient(context), 'Proceed', () {
+                  savePasscode();
+                  Navigator.pushNamed(context, '/confirmPasscode');
                 }),
               ),
             ),
@@ -156,7 +158,6 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
       ),
     );
   }
-
 }
 
 class ConfirmPasscodeScreen extends StatefulWidget {
@@ -169,8 +170,7 @@ class ConfirmPasscodeScreen extends StatefulWidget {
 class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
-  final storage = new FlutterSecureStorage();
-
+  final storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -189,7 +189,8 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
   }
 
   Future<bool> confirmPasscode() async {
-    String passcode = passcodeControllers.map((controller) => controller.text).join();
+    String passcode =
+        passcodeControllers.map((controller) => controller.text).join();
     String? savedPasscode = await storage.read(key: 'passcode');
     return passcode == savedPasscode;
   }
@@ -265,132 +266,26 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
             ),
           ),
           const SizedBox(height: 50),
-          const SizedBox(height: 16),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                padding: const EdgeInsets.only(bottom: 40),
-                child:
-                // appButton(context, gradient(context), 'Proceed', '/home'),
-                appButtonFunc(context, gradient(context), 'Proceed', () async {
-                  if (await confirmPasscode()) {
-                    Navigator.pushNamed(context, '/home');
-                  } else {
-                    // Show an error message to the user
-                    print('Invalid passcode');
-                  }
-                })
-              ),
+                  padding: const EdgeInsets.only(bottom: 40),
+                  child:
+                      // appButton(context, gradient(context), 'Proceed', '/home'),
+                      appButtonFunc(context, gradient(context), 'Done',
+                          () async {
+                    if (await confirmPasscode()) {
+                      Navigator.pushReplacementNamed(context, '/home');
+                    } else {
+                      // Show an error message to the user
+                      showGlobalSnackBar(context, 'Invalid passcode');
+                    }
+                  })),
             ),
           ),
         ],
       ),
     );
   }
-
-
-  // Widget confirmPasscode(BuildContext context) {
-  //   final themeProvider = Provider.of<ThemeProvider>(context);
-  //   return Column(
-  //     children: [
-  //       const SizedBox(height: 40),
-  //       Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 36),
-  //         child: Column(
-  //           crossAxisAlignment: CrossAxisAlignment.start,
-  //           children: [
-  //             const Text(
-  //               'Confirm your passcode',
-  //               style: TextStyle(
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.normal,
-  //                 fontFamily: 'SF Pro Display',
-  //                 color: Colors.white38,
-  //               ),
-  //             ),
-  //             const SizedBox(height: 30),
-  //             Row(
-  //               mainAxisAlignment: MainAxisAlignment.center,
-  //               children: [
-  //                 for (int i = 0; i < 4; i++)
-  //                   Container(
-  //                     width: 60,
-  //                     height: 60,
-  //                     margin: const EdgeInsets.symmetric(horizontal: 8),
-  //                     decoration: BoxDecoration(
-  //                       color: Colors.white38,
-  //                       borderRadius: BorderRadius.circular(8),
-  //                     ),
-  //                     child: TextField(
-  //                       controller: passcodeControllers[i],
-  //                       keyboardType: TextInputType.number,
-  //                       maxLength: 1,
-  //                       obscureText: true,
-  //                       style: TextStyle(
-  //                         color: themeProvider.textColor,
-  //                         fontSize: 24,
-  //                         fontWeight: FontWeight.bold,
-  //                       ),
-  //                       textAlign: TextAlign.center,
-  //                       onChanged: (value) {
-  //                         if (value.isNotEmpty) {
-  //                           focusNextPasscodeField();
-  //                         }
-  //                       },
-  //                       decoration: const InputDecoration(
-  //                         counterText: '',
-  //                         border: InputBorder.none,
-  //                       ),
-  //                     ),
-  //                   ),
-  //               ],
-  //             ),
-  //           ],
-  //         ),
-  //       ),
-  //       const SizedBox(height: 50),
-  //       Padding(
-  //         padding: const EdgeInsets.symmetric(horizontal: 16),
-  //         child: Center(
-  //           child: OutlinedButton(
-  //             onPressed: () {
-  //               // Add your code here for the action when the button is pressed
-  //             },
-  //             style: OutlinedButton.styleFrom(
-  //               side: const BorderSide(color: Colors.deepPurpleAccent),
-  //               shape: RoundedRectangleBorder(
-  //                 borderRadius: BorderRadius.circular(6),
-  //               ),
-  //               minimumSize: const Size(250, 60),
-  //             ),
-  //             child: const Text(
-  //               'USE FINGERPRINT/FACE ID',
-  //               style: TextStyle(
-  //                 fontSize: 16,
-  //                 fontWeight: FontWeight.normal,
-  //                 fontFamily: 'SF Pro Display',
-  //                 color: Colors.deepPurpleAccent,
-  //               ),
-  //               textAlign: TextAlign.center,
-  //             ),
-  //           ),
-  //         ),
-  //       ),
-  //       const SizedBox(height: 16),
-  //       Expanded(
-  //         child: Align(
-  //           alignment: Alignment.bottomCenter,
-  //           child: Padding(
-  //             padding: const EdgeInsets.only(bottom:
-  //             40),
-  //             child: appButton(context, gradient(context), 'Proceed', '/home'),
-  //           ),
-  //         ),
-  //       ),
-  //     ],
-  //   );
-  // }
-
 }
-

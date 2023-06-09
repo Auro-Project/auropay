@@ -1,5 +1,5 @@
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {

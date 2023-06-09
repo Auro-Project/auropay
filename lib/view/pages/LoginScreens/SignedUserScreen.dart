@@ -16,7 +16,7 @@ class SignedUserScreen extends StatefulWidget {
 class _SignedUserScreenState extends State<SignedUserScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
-  final storage = new FlutterSecureStorage();
+  final storage = const FlutterSecureStorage();
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
       } else {
         // Show an error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text('Invalid passcode')),
+          const SnackBar(content: Text('Invalid passcode')),
         );
       }
     }
