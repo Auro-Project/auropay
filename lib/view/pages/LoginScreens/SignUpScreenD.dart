@@ -39,14 +39,21 @@ class _SignUpScreenState extends State<SignUpScreen> {
   PageController _pageController = PageController(initialPage: 0);
   TextEditingController nameController = TextEditingController();
   TextEditingController mailController = TextEditingController();
+  TextEditingController passController = TextEditingController();
+  TextEditingController confirmPassController = TextEditingController();
+
+
+
   TextEditingController phoneNumberController = TextEditingController();
 
   @override
   void dispose() {
-    // nameController.dispose();
-    // mailController.dispose();
-    // phoneNumberController.dispose();
-    // _pageController.dispose();
+    nameController.dispose();
+    mailController.dispose();
+    phoneNumberController.dispose();
+    // passController.dispose();
+    // confirmPassController.dispose();
+    _pageController.dispose();
     super.dispose();
   }
 
@@ -63,6 +70,8 @@ class _SignUpScreenState extends State<SignUpScreen> {
           FirstStep(
             nameController: nameController,
             mailController: mailController,
+            passController: passController,
+            confirmPassController: confirmPassController,
             onNext: () {
               _pageController.nextPage(
                 duration: Duration(milliseconds: 300),
@@ -82,12 +91,18 @@ class _SignUpScreenState extends State<SignUpScreen> {
 class FirstStep extends StatelessWidget {
   final TextEditingController nameController;
   final TextEditingController mailController;
+  final TextEditingController passController;
+  final TextEditingController confirmPassController;
+
+
   final VoidCallback onNext;
 
   const FirstStep({
     Key? key,
     required this.nameController,
     required this.mailController,
+    required this.passController,
+    required this.confirmPassController,
     required this.onNext,
   }) : super(key: key);
 
@@ -103,6 +118,10 @@ class FirstStep extends StatelessWidget {
           children: [
             myField(context, 'Full Name', nameController, false),
             myField(context, 'Email Address', mailController, false),
+            myField(context, 'Password', passController, true),
+            myField(context, 'Confirm Password', confirmPassController, true),
+
+
 
           ],
         ),
@@ -157,10 +176,7 @@ class FirstStep extends StatelessWidget {
         Container(
           width: 360,
           height: 50,
-          decoration: BoxDecoration(
-            color: Colors.white38,
-            borderRadius: BorderRadius.circular(8),
-          ),
+          decoration: border(context, colorbg: Colors.grey.withOpacity(0.3),  borderRadius: 10),
           child: TextField(
             controller: controller,
             style: TextStyle(color: themeProvider.textColor),
