@@ -7,6 +7,7 @@ import 'package:provider/provider.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
 import '../../widgets/CustomAppBar.dart';
+import '../../widgets/CustomField.dart';
 import '../providers/theme_provider.dart';
 import 'ConfirmOTPScreenD.dart';
 
@@ -121,8 +122,6 @@ class FirstStep extends StatelessWidget {
             myField(context, 'Password', passController, true),
             myField(context, 'Confirm Password', confirmPassController, true),
 
-
-
           ],
         ),
         Expanded(
@@ -157,43 +156,6 @@ class FirstStep extends StatelessWidget {
 
 
 // Rest of the code for myField and myPhone functions
-  Column myField(BuildContext context, String label, TextEditingController controller, bool obscure) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: [
-        Text(
-          label,
-          style: const TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.w500,
-            color: Colors.white38,
-          ),
-        ),
-        const SizedBox(height: 10),
-        Container(
-          width: 360,
-          height: 50,
-          decoration: border(context,
-              colorbg: Colors.grey.withOpacity(0.3),
-              borderColor: Colors.transparent,
-              borderRadius: 10),
-          child: TextField(
-            controller: controller,
-            style: TextStyle(color: themeProvider.textColor),
-            decoration: const InputDecoration(
-              border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 15),
-            ),
-          ),
-        ),
-        const SizedBox(height: 20),
-
-      ],
-    );
-  }
 
 }
 

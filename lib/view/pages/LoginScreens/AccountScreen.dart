@@ -10,9 +10,10 @@ class AccountScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          Image.asset("assets/images/AccountScreen1.png"),
+          Image.asset("assets/images/AccountScreen1.png",
+              fit: BoxFit.cover,
+          ),
           Center(
-            heightFactor: 2,
             child: Column(
               mainAxisAlignment: MainAxisAlignment.end,
               children: [

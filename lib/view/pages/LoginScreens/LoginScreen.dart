@@ -1,3 +1,7 @@
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
+import 'package:auropay/view/widgets/CustomAppBar.dart';
+import 'package:auropay/view/widgets/CustomField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -48,33 +52,21 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Login'),
-      ),
+      appBar: myAppBar(context, 'Sign In'),
       body: Padding(
-        padding: EdgeInsets.all(16.0),
+        padding: EdgeInsets.all(24.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            TextField(
-              controller: emailController,
-              decoration: InputDecoration(
-                labelText: 'Email',
-              ),
-            ),
+            myField(context, 'Email', emailController, false),
+            myField(context, 'Password', passwordController, true),
             SizedBox(height: 16.0),
-            TextField(
-              controller: passwordController,
-              obscureText: true,
-              decoration: InputDecoration(
-                labelText: 'Password',
-              ),
-            ),
-            SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: login,
-              child: Text('Login'),
-            ),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                  child: appButtonFunc(context,margin: EdgeInsets.only(bottom: 10.0),
+                      gradient(context), 'Sign In', login)),
+            )
           ],
         ),
       ),

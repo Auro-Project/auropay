@@ -13,7 +13,7 @@ class CustomButton extends StatelessWidget {
         size: Size(255, (130 * 0.5833333333333334).toDouble()),
         painter: RPSCustomPainter(),
         child: const Padding(
-          padding: EdgeInsets.symmetric(horizontal: 80, vertical: 30),
+          padding: EdgeInsets.symmetric(horizontal: 50, vertical: 20),
           child: Text(
             'Get Started',
             style: TextStyle(

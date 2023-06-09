@@ -53,12 +53,14 @@ Container appButtonFunc(
     BoxDecoration styleButton,
     String title,
     Function() onPressed,
-    {String? iconPath,}
+    {String? iconPath,
+     EdgeInsets? margin,}
     ) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.88,
     height: MediaQuery.of(context).size.height * 0.065,
     decoration: styleButton,
+    margin: margin,
     child: ElevatedButton(
       onPressed: onPressed,
       style: ElevatedButton.styleFrom(

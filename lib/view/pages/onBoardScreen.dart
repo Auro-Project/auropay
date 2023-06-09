@@ -22,9 +22,9 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
             ),
           ),
           Positioned(
-              top: 660,
+              top: 620,
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 130),
+                padding: const EdgeInsets.symmetric(horizontal: 120),
                 child: Image.asset(
                   "assets/images/MiniLogo.png",
                   height: 55,
