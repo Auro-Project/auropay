@@ -1,3 +1,5 @@
+import 'package:auropay/view/Theme/appColors.dart';
+
 import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
@@ -67,6 +69,7 @@ class _LoginScreenState extends State<LoginScreen> {
     return Scaffold(
       key: _scaffoldKey,
       appBar: myAppBar(context, 'Sign In'),
+      backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(

@@ -1,8 +1,9 @@
-import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:auropay/view/pages/providers/theme_provider.dart';
+import 'package:auropay/view/Theme/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -12,7 +13,7 @@ class MoreScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
     Color getTextColor() {
-      return themeProvider.isDarkMode ? Colors.white : Colors.black;
+      return themeProvider.currentTheme == ThemeMode.dark ? Colors.white : Colors.black;
     }
 
     void _showLogoutConfirmationBottomSheet(BuildContext context) {
@@ -59,9 +60,9 @@ class MoreScreen extends StatelessWidget {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Container(
-                          decoration: border(context) ,
+                          decoration: border(context),
                           child: Padding(
-                            padding: const EdgeInsets.symmetric(  horizontal: 20.0),
+                            padding: const EdgeInsets.symmetric(horizontal: 20.0),
                             child: TextButton(
                               child: Text(
                                 'Cancel',
@@ -117,40 +118,16 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-
     return Scaffold(
+      appBar: myAppBar(context, 'More'),
+      backgroundColor: AppColors.primaryColor,
       body: Center(
         child: Column(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: Icon(
-                    Icons.arrow_back_ios_new,
-                    color: getTextColor(),
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(70.0),
-                  child: Text(
-                    'More',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: getTextColor(),
-                    ),
-                  ),
-                ),
-              ],
-            ),
             ListTile(
               leading: Icon(
                 Icons.person,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
               title: Text(
                 'Profile',
@@ -166,14 +143,14 @@ class MoreScreen extends StatelessWidget {
               },
             ),
             Divider(
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
               indent: 16,
               endIndent: 16,
             ),
             ListTile(
               leading: Icon(
                 Icons.help,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
               title: Text(
                 'Help',
@@ -189,14 +166,14 @@ class MoreScreen extends StatelessWidget {
               },
             ),
             Divider(
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
               indent: 16,
               endIndent: 16,
             ),
             ListTile(
               leading: Icon(
                 Icons.settings,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
               title: Text(
                 'Settings',
@@ -212,14 +189,14 @@ class MoreScreen extends StatelessWidget {
               },
             ),
             Divider(
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
               indent: 16,
               endIndent: 16,
             ),
             ListTile(
               leading: Icon(
                 Icons.nightlight_round,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
               title: Text(
                 'Dark Mode',
@@ -231,7 +208,7 @@ class MoreScreen extends StatelessWidget {
                 ),
               ),
               trailing: Switch(
-                value: themeProvider.isDarkMode,
+                value: themeProvider.currentTheme == ThemeMode.dark,
                 onChanged: (value) {
                   themeProvider.toggleTheme();
                 },
@@ -243,7 +220,7 @@ class MoreScreen extends StatelessWidget {
               },
             ),
             Divider(
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
               indent: 16,
               endIndent: 16,
             ),

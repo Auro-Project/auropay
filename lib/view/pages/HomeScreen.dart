@@ -1,4 +1,5 @@
-import 'package:auropay/view/pages/providers/theme_provider.dart';
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/Theme/theme_provider.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -23,18 +24,18 @@ class _HomeScreenState extends State<HomeScreen> {
     final width = MediaQuery.of(context).size.width;
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
         child: Stack(
           children: [
-            Image.asset("assets/images/HomePage.png"),
+            Image.asset("assets/images/shapes/gradHM.png"),
             Padding(
               padding: EdgeInsets.symmetric(
-                horizontal: width * 0.02,
+                // horizontal: width * 0.02,
                 vertical: height * 0.08,
               ),
               child: Column(
                 children: [
-                  SizedBox(height: height * 0.02),
                   SizedBox(
                     height: 50,
                     child: Row(
@@ -51,7 +52,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           "Hi, Zara",
                           style: TextStyle(
-                            color: themeProvider.textColor,
+                            color: AppColors.textColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -60,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           padding: const EdgeInsets.only(right: 20),
                           child: Icon(
                             Icons.notifications,
-                            color: themeProvider.textColor,
+                            color: AppColors.textColor,
                             size: 30,
                           ),
                         ),
@@ -79,10 +80,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.05),
-                          const Text(
+                          Text(
                             "Your Balance",
                             style: TextStyle(
-                              color: Colors.white54,
+                              color: AppColors.textColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                             ),
@@ -91,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             "₹2,500.00",
                             style: TextStyle(
-                              color: themeProvider.textColor,
+                              color: AppColors.textColor,
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
@@ -105,6 +106,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SvgPicture.asset(
                                   "assets/images/icons/Logo.svg",
                                   height: 45,
+                                  color: AppColors.textColor,
                                 ),
                               ),
                               Padding(
@@ -114,14 +116,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                     const Text(
                                       "Valid Thru",
                                       style: TextStyle(
-                                        color: Colors.white38,
+                                        color: AppColors.textColor,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Text(
                                       "MM/YY",
                                       style: TextStyle(
-                                        color: themeProvider.textColor,
+                                        color: AppColors.textColor,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -161,7 +163,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      color: const Color(0xff1E1E1E),
+                      color: AppColors.primaryColor.withOpacity(0.85),
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.02),
@@ -171,16 +173,16 @@ class _HomeScreenState extends State<HomeScreen> {
                               const Text(
                                 "Recent Transactions",
                                 style: TextStyle(
-                                  color: Colors.white54,
+                                  color: AppColors.textColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
                                 ),
                               ),
-                              SizedBox(width: width * 0.2),
+                              SizedBox(width: width * 0.08),
                               Text(
                                 "View All",
                                 style: TextStyle(
-                                  color: themeProvider.textColor,
+                                  color: AppColors.accent1,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -202,7 +204,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   title: Text(
                                     "Zara Doe",
                                     style: TextStyle(
-                                      color: themeProvider.textColor,
+                                      color: AppColors.textColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -210,7 +212,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   subtitle: const Text(
                                     "12 Jub, 12:00 PM",
                                     style: TextStyle(
-                                      color: Colors.white54,
+                                      color: AppColors.textColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -218,7 +220,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   trailing: Text(
                                     "-₹200.00",
                                     style: TextStyle(
-                                      color: themeProvider.textColor,
+                                      color: AppColors.textColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -253,7 +255,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0x12ffffff),
+              backgroundColor: AppColors.textColor.withOpacity(0.9),
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(15),
               ),
@@ -264,7 +266,7 @@ class _HomeScreenState extends State<HomeScreen> {
               child: SvgPicture.asset(
                 icon,
                 height: 30,
-                color: Colors.white70,
+                color: AppColors.primaryColor,
               ),
             ),
             onPressed: () => Navigator.pushNamed(context, route),
@@ -275,7 +277,7 @@ class _HomeScreenState extends State<HomeScreen> {
             maxLines: 2,
             textAlign: TextAlign.center,
             style: TextStyle(
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),

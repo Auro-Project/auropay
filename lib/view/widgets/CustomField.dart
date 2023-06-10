@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../pages/providers/theme_provider.dart';
+import '../Theme/appColors.dart';
+import '../Theme/theme_provider.dart';
 import 'Constants.dart';
 
 Column myField(BuildContext context,
@@ -18,7 +19,7 @@ Column myField(BuildContext context,
           fontSize: 18,
           fontFamily: 'SF-Pro-Display',
           fontWeight: FontWeight.w500,
-          color: Colors.white38,
+          color: AppColors.textColor,
         ),
       ),
       const SizedBox(height: 10),
@@ -26,13 +27,13 @@ Column myField(BuildContext context,
         width: 360,
         height: 50,
         decoration: border(context,
-            colorbg: Colors.grey.withOpacity(0.3),
+            colorbg: Colors.grey.withOpacity(0.25),
             borderColor: Colors.transparent,
             borderRadius: 10),
         child: TextFormField(
           controller: controller,
           obscureText: obscure,
-          style: TextStyle(color: themeProvider.textColor),
+          style: TextStyle(color: AppColors.textColor),
           decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 15),

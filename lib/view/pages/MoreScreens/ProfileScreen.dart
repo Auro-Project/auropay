@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 
 
@@ -11,7 +12,7 @@ class ProfileScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context); // Access the ThemeProvider
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor, // Apply the background color from the theme
+      backgroundColor: AppColors.primaryColor, // Apply the background color from the theme
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,7 +35,7 @@ class ProfileScreen extends StatelessWidget {
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'SF Pro Display',
-                        color: themeProvider.textColor, // Apply the text color from the theme
+                        color: AppColors.textColor, // Apply the text color from the theme
                       ),
                       textAlign: TextAlign.center,
                     ),
@@ -76,7 +77,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                    color: AppColors.textColor, // Apply the text color from the theme
                   ),
                 ),
                 const TextField(
@@ -90,7 +91,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                    color: AppColors.textColor, // Apply the text color from the theme
                   ),
                 ),
                 const TextField(
@@ -104,7 +105,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                    color: AppColors.textColor, // Apply the text color from the theme
                   ),
                 ),
                 const TextField(
@@ -118,7 +119,7 @@ class ProfileScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 17,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                    color: AppColors.textColor, // Apply the text color from the theme
                   ),
                 ),
                 const TextField(

@@ -1,3 +1,4 @@
+import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/widgets/CustomError.dart';
 
 import '../../../view/widgets/CustomAppBar.dart';
@@ -118,6 +119,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Sign Up'),
+      backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Form(

@@ -1,10 +1,11 @@
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+import '../../../Theme/appColors.dart';
 import '../../../widgets/AppButtons.dart';
 import '../../../widgets/Constants.dart';
 import '../../../widgets/CustomError.dart';
-import '../../providers/theme_provider.dart';
+import '../../../Theme/theme_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
 class CreatePasscodeScreen extends StatefulWidget {
@@ -53,7 +54,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Create Passcode'),
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
           const SizedBox(height: 40),
@@ -68,7 +69,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                    color: Colors.white38,
+                    color: AppColors.textColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -81,7 +82,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Colors.white38,
+                          color: AppColors.grey,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -90,7 +91,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                            color: themeProvider.textColor,
+                            color: AppColors.textColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -112,9 +113,9 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
             ),
           ),
           const SizedBox(height: 50),
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 16),
-            child: Center(
+          Expanded(
+            child: Align(
+              alignment: Alignment.bottomCenter,
               child: OutlinedButton(
                 onPressed: () {
                   // Add your code here for the action when the button is pressed
@@ -122,12 +123,12 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                 style: OutlinedButton.styleFrom(
                   side: const BorderSide(color: Colors.deepPurpleAccent),
                   shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(6),
+                    borderRadius: BorderRadius.circular(15),
                   ),
                   minimumSize: const Size(250, 60),
                 ),
                 child: const Text(
-                  'USE FINGERPRINT/FACE ID',
+                  'Use Thumb/Face ID',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
@@ -139,7 +140,6 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
               ),
             ),
           ),
-          const SizedBox(height: 16),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -207,7 +207,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Confirm Passcode'),
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
           const SizedBox(height: 40),
@@ -222,7 +222,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                    color: Colors.white38,
+                    color: AppColors.textColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -235,7 +235,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Colors.white38,
+                          color: AppColors.grey,
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -244,7 +244,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                            color: themeProvider.textColor,
+                            color: AppColors.textColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),

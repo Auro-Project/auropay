@@ -1,4 +1,7 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import '../widgets/CustomButton.dart';
 
 class OnBoardingScreen extends StatefulWidget {
@@ -17,28 +20,33 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage("assets/images/GetStartedScreen.png"),
-                  fit: BoxFit.cover),
+                  image: AssetImage('assets/images/onBoardL.png'),
+                  fit: BoxFit.cover
+              ),
             ),
           ),
           Positioned(
               top: 620,
               child: Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 120),
-                child: Image.asset(
-                  "assets/images/MiniLogo.png",
-                  height: 55,
+                child: SvgPicture.asset(
+                  "assets/images/icons/AP.svg",
+                  // height: 55,
                 ),
               )),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
               Center(
-                heightFactor: 2.5,
-                child: CustomButton(
-                  onTap: () {
-                    Navigator.pushNamed(context, '/account');
-                  },
+                heightFactor: 3,
+                child: Stack(
+                  children: [
+                    CustomButton(
+                      onTap: () {
+                        Navigator.pushNamed(context, '/account');
+                      },
+                    ),
+                  ],
                 ),
               ),
             ],

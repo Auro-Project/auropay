@@ -1,6 +1,8 @@
+import 'package:auropay/view/Theme/appColors.dart';
+
 import '../../../view/pages/Routes.dart';
 import '../../../view/pages/SplashScreen.dart';
-import '../../../view/pages/providers/theme_provider.dart';
+import 'view/Theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
@@ -28,11 +30,13 @@ class MyApp extends StatelessWidget {
     return ChangeNotifierProvider(
       create: (context) => ThemeProvider(),
       builder: (context, child) {
-        final provider = Provider.of<ThemeProvider>(context);
+        final themeProvider = Provider.of<ThemeProvider>(context);
         return MaterialApp(
           debugShowCheckedModeBanner: false,
           title: 'AuroPay',
-          theme: provider.theme,
+          theme: AppColors.lightTheme,
+          darkTheme: AppColors.darkTheme,
+          themeMode: themeProvider.currentTheme,
           home: const SplashScreen(),
           routes: routes, // Use the routes from the routes.dart file
         );

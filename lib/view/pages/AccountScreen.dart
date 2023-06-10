@@ -1,5 +1,8 @@
-import '../../../view/widgets/AppButtons.dart';
-import '../../../view/widgets/Constants.dart';
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+
+import '../widgets/AppButtons.dart';
+import '../widgets/Constants.dart';
 import 'package:flutter/material.dart';
 
 class AccountScreen extends StatelessWidget {
@@ -8,9 +11,10 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFFE5E5E5),
       body: Stack(
         children: [
-          Image.asset("assets/images/AccountScreen1.png",
+          Image.asset("assets/images/shapes/gradAC.png",
               fit: BoxFit.cover,
           ),
           Center(
@@ -20,12 +24,14 @@ class AccountScreen extends StatelessWidget {
                 Container(
                   width: MediaQuery.of(context).size.width * 0.8,
                   padding: const EdgeInsets.symmetric( vertical: 60.0),
-                  decoration: border(context, borderRadius: 30.0),
+                  decoration: border(context,
+                      colorbg: Colors.white.withOpacity(0.1),
+                      borderRadius: 30.0),
                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        Image.asset(
-                          "assets/images/Logo.png",
+                        SvgPicture.asset(
+                          "assets/images/icons/APxl.svg",
                           height: 150,
                           width: 150,
                         ),
@@ -35,14 +41,14 @@ class AccountScreen extends StatelessWidget {
                           ' Start your financial \nactivity at Auro with\n Convenience',
                           style: TextStyle(
                             fontSize: 18,
-                            color: Colors.white60,
+                            color: AppColors.textColor,
                           ),
                         ),
                         const SizedBox(height: 10.0),
                       ],
                     )
                 ),
-                const SizedBox(height: 200.0),
+                const SizedBox(height: 150.0),
                 appButton(context, gradient(context),'Sign In', '/login'),
                 const SizedBox(height: 20.0),
                 appButton(context, border(context), 'Sign Up', '/signup'),

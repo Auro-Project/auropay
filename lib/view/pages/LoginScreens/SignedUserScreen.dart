@@ -1,10 +1,11 @@
 
+import 'package:auropay/view/Theme/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import '../../widgets/Constants.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/theme_provider.dart';
 
 class SignedUserScreen extends StatefulWidget {
   const SignedUserScreen({Key? key}) : super(key: key);
@@ -64,7 +65,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Container(
         decoration: const BoxDecoration(
           gradient: LinearGradient(
@@ -130,7 +131,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                             maxLength: 1,
                             obscureText: true,
                             style: TextStyle(
-                              color: themeProvider.textColor,
+                              color: AppColors.textColor,
                               fontSize: 24,
                               fontWeight: FontWeight.bold,
                             ),

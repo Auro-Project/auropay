@@ -20,7 +20,7 @@ import 'package:auropay/view/pages/TransactionScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
 import 'package:auropay/view/pages/FutureEnhancements/AnalyticsScreen.dart';
 import 'package:auropay/view/pages/HomeScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
+import 'package:auropay/view/pages/AccountScreen.dart';
 import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';

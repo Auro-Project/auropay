@@ -1,3 +1,7 @@
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 
 class PaymentTopUpScreen extends StatefulWidget {
@@ -24,48 +28,119 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text('Payment Top-Up'),
-        backgroundColor: Colors.blue, // Customize the app bar color
-      ),
-      body: Padding(
-        padding: const EdgeInsets.all(16.0),
+      appBar: myAppBar(context, 'Add Money'),
+      backgroundColor: AppColors.primaryColor,
+      body: Container(
+        width: MediaQuery.of(context).size.width,
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.circular(30.0),
+          color: AppColors.grey
+        ),
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisAlignment: MainAxisAlignment.start,
           children: [
-            Image.asset(
-              'assets/images/payment.png', // Add an image to represent payment
-              height: 150,
-            ),
-            SizedBox(height: 32.0),
-            TextField(
-              controller: _amountController,
-              keyboardType: TextInputType.number,
-              decoration: InputDecoration(
-                labelText: 'Amount',
-                prefixIcon: Icon(Icons.attach_money), // Add a money icon
-                border: OutlineInputBorder(),
+            SizedBox(height: 40.0),
+            Text(
+              'Enter the amount you want to top-up',
+              style: TextStyle(
+                fontSize: 16.0,
+                fontWeight: FontWeight.w500,
+                color: AppColors.textColor,
               ),
+            ),
+            SizedBox(height: 30.0),
+            Container(
+              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+
+              width: MediaQuery.of(context).size.width *0.3,
+              height: 70,
+              child: TextField(
+                controller: _amountController,
+                keyboardType: TextInputType.number,
+                decoration: InputDecoration(
+                  hintStyle: TextStyle(
+                    fontSize: 36.0,
+                    fontWeight: FontWeight.w500,
+                    color: AppColors.textColor,
+                  ),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8.0),
+                    borderSide: BorderSide.none,
+                  ),
+                  // filled: true,
+                  fillColor: Colors.white,
+                  contentPadding: EdgeInsets.symmetric(
+                    vertical: 40.0,
+                    horizontal: 20.0,
+                  ),
+                ),
+              ),
+            ),
+            Text(
+              'Amount (INR)',
+              style: TextStyle(
+                fontSize: 16.0,
+                // fontWeight: FontWeight.w500,
+                color: AppColors.textColor,
+              ),
+            ),
+            SizedBox(height: 150.0),
+            //write me 6 containers with 2 rows and 3 columns each having random amount of 100's
+            //and a button to add the amount to the text field
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                amountContainer('100'),
+                amountContainer('200'),
+                amountContainer('500'),
+              ],
             ),
             SizedBox(height: 16.0),
-            ElevatedButton(
-              onPressed: _performTopUp,
-              child: Padding(
-                padding: EdgeInsets.symmetric(vertical: 12.0, horizontal: 24.0),
-                child: Text(
-                  'Top-Up',
-                  style: TextStyle(fontSize: 16.0),
-                ),
-              ),
-              style: ElevatedButton.styleFrom(
-                primary: Colors.blue, // Customize the button color
-                onPrimary: Colors.white, // Customize the text color
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8.0),
-                ),
-              ),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                amountContainer('100'),
+                amountContainer('200'),
+                amountContainer('500'),
+              ],
             ),
+            SizedBox(height: 16.0),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                  child: appButtonFunc(context,
+                      margin: EdgeInsets.only(bottom: 30.0) ,
+                      gradient(context), 'Add Money', _performTopUp)),
+            ),
+
           ],
+        ),
+      ),
+    );
+  }
+
+  Container amountContainer(String text) {
+    return Container(
+      width: MediaQuery.of(context).size.width *0.3,
+      height: 100,
+      child: ElevatedButton(
+        onPressed: () {
+          _amountController.text = text;
+        },
+        child: Text(
+          text,
+          style: TextStyle(
+              fontSize: 22.0,
+              fontWeight: FontWeight.w700,
+          ),
+        ),
+        style: ElevatedButton.styleFrom(
+          elevation: 0,
+          foregroundColor: Colors.white,
+          backgroundColor: AppColors.accent1, // Customize the text color
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(15.0),
+          ),
         ),
       ),
     );

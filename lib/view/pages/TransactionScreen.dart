@@ -1,89 +1,63 @@
-import 'package:auropay/view/pages/providers/theme_provider.dart';
+import 'package:auropay/view/Theme/theme_provider.dart';
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
+
+import '../Theme/appColors.dart';
 
 class TransactionScreen extends StatelessWidget {
   const TransactionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
-      body: Column(
+      extendBodyBehindAppBar: true,
+      backgroundColor: AppColors.primaryColor,
+      appBar: myAppBar(context, 'Transaction'),
+      body: Stack(
+        clipBehavior: Clip.none,
         children: [
-          //Image.asset("assets/images/HomePage.png"),
-          Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: Row(
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back_ios_new),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Expanded(
-                  child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      'Transaction',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontWeight: FontWeight.w600,
-                        fontFamily: 'SF Pro Display',
-                        color: themeProvider.textColor,
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+          Image.asset(
+              "assets/images/shapes/gradHM.png",
+              fit: BoxFit.fill,
+              width: MediaQuery.of(context).size.width,
           ),
-          const SizedBox(height: 20,),
           Padding(
-            padding: const EdgeInsets.all(16.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Row(
-                  children: [
-                    Expanded(
-                      child: Container(
-                        decoration: BoxDecoration(
-                          color: Colors.white38,
-                          borderRadius: BorderRadius.circular(8.0),
-                        ),
-                        child: Row(
-                          children: [
-                            IconButton(
-                              icon: const Icon(Icons.mic),
-                              onPressed: () {
-                                // TODO: Implement microphone button action
-                              },
-                            ),
-                            const Expanded(
-                              child: TextField(
-                                decoration: InputDecoration(
-                                  hintText: 'Search',
-                                  border: InputBorder.none,
-                                  contentPadding: EdgeInsets.all(16.0),
-                                ),
-                              ),
-                            ),
-                          ],
+                const SizedBox(height: 60.0),
+                Container(
+                  decoration: BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.circular(15.0),
+                  ),
+                  child: Row(
+                    children: [
+                      IconButton(
+                        icon: const Icon(Icons.mic),
+                        onPressed: () {
+                          // TODO: Implement microphone button action
+                        },
+                      ),
+                      const Expanded(
+                        child: TextField(
+                          decoration: InputDecoration(
+                            hintText: 'Search',
+                            border: InputBorder.none,
+                            contentPadding: EdgeInsets.all(10.0),
+                          ),
                         ),
                       ),
-                    ),
-                    const SizedBox(width: 16.0),
-                    Container(
-                    ),
-                  ],
+                    ],
+                  ),
                 ),
                 const SizedBox(height: 16.0),
                 const Text(
                   'All',
-                  style: TextStyle(color: Colors.white, fontSize: 16.0),
+                  style: TextStyle(color: AppColors.textColor, fontSize: 16.0),
                 ),
                 const SizedBox(height: 8.0),
                 Wrap(
@@ -184,16 +158,16 @@ class TransactionItem extends StatelessWidget {
       leading: logo,
       title: Text(
         payeeName,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.textColor),
       ),
       subtitle: Text(
         accountNumber,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.textColor),
       ),
       trailing: Text(
         amount,
         style: const TextStyle(
-          color: Colors.white,
+          color: AppColors.textColor,
           fontWeight: FontWeight.bold,
         ),
       ),

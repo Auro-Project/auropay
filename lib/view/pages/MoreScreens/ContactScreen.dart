@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 class ContactScreen extends StatefulWidget {
   const ContactScreen({Key? key}) : super(key: key);
@@ -128,7 +129,7 @@ class _ContactScreenState extends State<ContactScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -151,7 +152,7 @@ class _ContactScreenState extends State<ContactScreen> {
                         fontSize: 20,
                         fontWeight: FontWeight.w600,
                         fontFamily: 'SF Pro Display',
-                        color: themeProvider.textColor,
+                        color: AppColors.textColor,
                       ),
                     ),
                   ),

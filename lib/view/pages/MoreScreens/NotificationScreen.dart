@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +31,7 @@ class NotificationScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor,
+                    color: AppColors.textColor,
                   ),
                 ),
                 PopupMenuButton(
@@ -55,7 +56,7 @@ class NotificationScreen extends StatelessWidget {
           ListTile(
             leading: Icon(
               Icons.notifications_active,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Push Notifications',
@@ -63,7 +64,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             trailing: Switch(
@@ -79,14 +80,14 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.manage_accounts_sharp,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Manage Notifications',
@@ -94,19 +95,19 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.sms_sharp,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'SMS Notifications',
@@ -114,7 +115,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             trailing: Switch(
@@ -130,14 +131,14 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.email_sharp,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Email Notifications',
@@ -145,7 +146,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             trailing: Switch(
@@ -161,7 +162,7 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
