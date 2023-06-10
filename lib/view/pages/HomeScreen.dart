@@ -4,6 +4,8 @@ import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -13,6 +15,7 @@ import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -23,6 +26,17 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  Future<String> fetchCurrentUserFullName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      return userData['fullName'];
+    }
+    return '';
+  }
 
   static Future<UserData> loadJsonData() async {
     String jsonData = await rootBundle.loadString('lib/data/user.json');
@@ -34,6 +48,10 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    final String? profilePhotoUrl = currentUser?.photoURL;
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       body: SingleChildScrollView(
@@ -52,12 +70,14 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        const Padding(
+                         Padding(
                           padding: EdgeInsets.only(left: 20),
                           child: CircleAvatar(
                             radius: 30,
-                            backgroundImage:
-                            AssetImage("assets/images/avatar.png"),
+                            backgroundImage: profilePhotoUrl != null
+                                ? NetworkImage(profilePhotoUrl) as ImageProvider<Object>?
+                                : AssetImage("assets/images/avatar.png") as ImageProvider<Object>?,
+                            //AssetImage("assets/images/avatar.png"),
                           ),
                         ),
                         Text(
@@ -300,6 +320,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final List<Widget> screens = [
     FutureBuilder<UserData>(
       future: loadJsonData(),
