@@ -1,12 +1,27 @@
-import 'package:auropay/view/Theme/theme_provider.dart';
+import 'dart:convert';
+import 'package:auropay/model/UserData.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter/services.dart';
 
+import '../../model/Transaction.dart';
 import '../Theme/appColors.dart';
 
 class TransactionScreen extends StatelessWidget {
-  const TransactionScreen({super.key});
+  const TransactionScreen({Key? key});
+
+  static Future<List<ListItem>> loadJsonData() async {
+    String jsonData = await rootBundle.loadString('lib/data/user.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonData);
+
+    // Assuming the transaction data is stored under the 'transactions' key in the JSON
+    List<dynamic> transactionsJson = jsonMap['transactions'];
+    List<ListItem> transactions = transactionsJson.map((item) => ListItem.fromJson(item)).toList();
+
+    return transactions;
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -18,12 +33,12 @@ class TransactionScreen extends StatelessWidget {
         clipBehavior: Clip.none,
         children: [
           Image.asset(
-              "assets/images/shapes/gradHM.png",
-              fit: BoxFit.fill,
-              width: MediaQuery.of(context).size.width,
+            "assets/images/shapes/gradHM.png",
+            fit: BoxFit.fill,
+            width: MediaQuery.of(context).size.width,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 70.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
@@ -87,89 +102,63 @@ class TransactionScreen extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 16.0),
-                const TransactionItem(
-                  logo: Icon(Icons.account_balance),
-                  payeeName: 'John Doe',
-                  accountNumber: '1234 5678 9012',
-                  amount: '\$500.00',
-                ),
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
-                ),
-                // Add more transaction items here
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
-                ),
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
-                ),
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
-                ),
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
-                ),
-                const TransactionItem(
-                  logo: Icon(Icons.attach_money),
-                  payeeName: 'Jane Smith',
-                  accountNumber: '9876 5432 1098',
-                  amount: '\$250.00',
+                Expanded(
+                  child: FutureBuilder<List<ListItem>>(
+                    future: loadJsonData(), // Replace with your own future function
+                    builder: (context, snapshot) {
+                      if (snapshot.connectionState == ConnectionState.waiting) {
+                        // While the future is loading, show a progress indicator
+                        return Center(child: CircularProgressIndicator());
+                      } else if (snapshot.hasError) {
+                        // If an error occurred while fetching the data, display an error message
+                        return Center(child: Text('Error: ${snapshot.error}'));
+                      } else {
+                        // If the data is successfully fetched, build the ListView.builder
+                        return ListView.builder(
+                          padding: EdgeInsets.zero,
+                          itemCount: snapshot.data?.length,
+                          itemBuilder: (context, index) {
+                            ListItem item = snapshot.data![index];
+                            return ListTile(
+                              leading: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AssetImage(item.userImage),
+                              ),
+                              title: Text(
+                                item.name,
+                                style: TextStyle(
+                                  color: AppColors.textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              subtitle: Text(
+                                item.date,
+                                style: TextStyle(
+                                  color: AppColors.textColor,
+                                  fontSize: 14,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              trailing: Text(
+                                item.amount,
+                                style: TextStyle(
+                                  color: AppColors.textColor,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            );
+                          },
+                        );
+                      }
+                    },
+                  ),
                 ),
               ],
             ),
           ),
         ],
-      ),
-    );
-  }
-}
-
-class TransactionItem extends StatelessWidget {
-  final Widget logo;
-  final String payeeName;
-  final String accountNumber;
-  final String amount;
-
-  const TransactionItem({
-    required this.logo,
-    required this.payeeName,
-    required this.accountNumber,
-    required this.amount,
-  });
-
-  @override
-  Widget build(BuildContext context) {
-    return ListTile(
-      leading: logo,
-      title: Text(
-        payeeName,
-        style: const TextStyle(color: AppColors.textColor),
-      ),
-      subtitle: Text(
-        accountNumber,
-        style: const TextStyle(color: AppColors.textColor),
-      ),
-      trailing: Text(
-        amount,
-        style: const TextStyle(
-          color: AppColors.textColor,
-          fontWeight: FontWeight.bold,
-        ),
       ),
     );
   }

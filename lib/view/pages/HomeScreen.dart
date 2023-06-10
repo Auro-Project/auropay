@@ -7,7 +7,7 @@ import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../model/trxList.dart';
+import '../../model/UserData.dart';
 import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
@@ -24,15 +24,13 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
 
-  static Future<List<ListItem>> loadJsonData() async {
-    String jsonData = await rootBundle.loadString('lib/data/transactions.json');
-    List<dynamic> jsonList = json.decode(jsonData);
-    List<ListItem> items = jsonList.map((json) => ListItem.fromJson(json)).toList();
-    return items;
+  static Future<UserData> loadJsonData() async {
+    String jsonData = await rootBundle.loadString('lib/data/user.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonData);
+    return UserData.fromJson(jsonMap);
   }
 
-
-  static Widget _homepage(BuildContext context) {
+  static Widget _homepage(BuildContext context, UserData userData) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
     final themeProvider = Provider.of<ThemeProvider>(context);
@@ -63,7 +61,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Text(
-                          "Hi, Zara",
+                          "Hi, ${userData.name}",
                           style: TextStyle(
                             color: AppColors.textColor,
                             fontSize: 20,
@@ -103,7 +101,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.005),
                           Text(
-                            "₹2,500.00",
+                              userData.balance,
                             style: TextStyle(
                               color: AppColors.textColor,
                               fontSize: 36,
@@ -134,7 +132,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       ),
                                     ),
                                     Text(
-                                      "MM/YY",
+                                      userData.expireDate,
                                       style: TextStyle(
                                         color: AppColors.textColor,
                                         fontSize: 20,
@@ -204,55 +202,43 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.01),
                           Expanded(
-                            child: FutureBuilder<List<ListItem>>(
-                              future: loadJsonData(),
-                              builder: (context, snapshot) {
-                                if (snapshot.hasData) {
-                                  return ListView.builder(
-                                    padding: EdgeInsets.zero,
-                                    itemCount: snapshot.data!.length,
-                                    itemBuilder: (context, index) {
-                                      ListItem item = snapshot.data![index];
-                                      return ListTile(
-                                        leading: CircleAvatar(
-                                          radius: 20,
-                                          backgroundImage:AssetImage(item.userImage),
-                                        ),
-                                        title: Text(
-                                          item.name,
-                                          style: TextStyle(
-                                            color: AppColors.textColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        subtitle: Text(
-                                          item.date,
-                                          style: TextStyle(
-                                            color: AppColors.textColor,
-                                            fontSize: 14,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                        trailing: Text(
-                                          item.amount,
-                                          style: TextStyle(
-                                            color: AppColors.textColor,
-                                            fontSize: 16,
-                                            fontWeight: FontWeight.w400,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                  );
-                                } else if (snapshot.hasError) {
-                                  return Text("Error: ${snapshot.error}");
-                                } else {
-                                  return CircularProgressIndicator();
-                                }
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: userData.transactions.length,
+                              itemBuilder: (context, index) {
+                                ListItem item = userData.transactions[index];
+                                return ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: AssetImage(item.userImage),
+                                  ),
+                                  title: Text(
+                                    item.name,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    item.date,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    item.amount,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                );
                               },
-                            )
-                            ,
+                            ),
                           ),
                         ],
                       ),
@@ -315,7 +301,18 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      _homepage(context),
+    FutureBuilder<UserData>(
+      future: loadJsonData(),
+      builder: (context, snapshot) {
+        if (snapshot.hasData) {
+          return _homepage(context, snapshot.data!);
+        } else if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        } else {
+          return CircularProgressIndicator();
+        }
+      },
+    ),
       AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),

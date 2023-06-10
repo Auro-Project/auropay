@@ -48,7 +48,7 @@ flutter:
     - assets/images/
     - assets/images/icons/
     - assets/images/shapes/
-    - lib/data/transactions.json
+    - lib/data/
 
   # example:
   fonts:
