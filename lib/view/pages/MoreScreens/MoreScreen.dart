@@ -1,5 +1,7 @@
 import 'package:auropay/view/widgets/Constants.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:provider/provider.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
 import '../../Theme/appColors.dart';
@@ -82,14 +84,20 @@ class MoreScreen extends StatelessWidget {
                         Container(
                           decoration: gradient(context),
                           child: ElevatedButton(
-                            onPressed: () {
+                            onPressed: () async {
                               // Perform the logout action
-                              // ...
+                              FirebaseAuth auth = FirebaseAuth.instance;
+                              await auth.signOut();
+
+                              // Remove the user login state
+                              final storage = FlutterSecureStorage();
+                              await storage.delete(key: 'isSignedIn');
+
                               // Close all screens and go back to the login screen
-                              Navigator.of(context).popUntil((route) => route.isFirst);
+                              Navigator.of(context).pushNamedAndRemoveUntil('/account', (Route<dynamic> route) => false);
                             },
                             style: ElevatedButton.styleFrom(
-                              primary: Colors.transparent,
+                              backgroundColor: Colors.transparent,
                               elevation: 0,
                               minimumSize: Size(150, 50),
                               shape: RoundedRectangleBorder(

@@ -1,5 +1,4 @@
 import 'dart:convert';
-
 import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
@@ -70,13 +69,15 @@ class _HomeScreenState extends State<HomeScreen> {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                         Padding(
-                          padding: EdgeInsets.only(left: 20),
+                        Padding(
+                          padding: const EdgeInsets.only(left: 20),
                           child: CircleAvatar(
                             radius: 30,
                             backgroundImage: profilePhotoUrl != null
-                                ? NetworkImage(profilePhotoUrl) as ImageProvider<Object>?
-                                : AssetImage("assets/images/avatar.png") as ImageProvider<Object>?,
+                                ? NetworkImage(profilePhotoUrl)
+                                    as ImageProvider<Object>?
+                                : AssetImage("assets/images/avatar.png")
+                                    as ImageProvider<Object>?,
                             //AssetImage("assets/images/avatar.png"),
                           ),
                         ),
@@ -121,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.005),
                           Text(
-                              userData.balance,
+                            userData.balance,
                             style: TextStyle(
                               color: AppColors.textColor,
                               fontSize: 36,
@@ -274,11 +275,11 @@ class _HomeScreenState extends State<HomeScreen> {
   }
 
   static Widget _homeButton(
-      BuildContext context,
-      String icon,
-      String text,
-      String route,
-      ) {
+    BuildContext context,
+    String icon,
+    String text,
+    String route,
+  ) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
       width: 140,
@@ -286,12 +287,11 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-              backgroundColor: AppColors.textColor.withOpacity(0.9),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-              ),
-                minimumSize: const Size(200, 50)
-            ),
+                backgroundColor: AppColors.textColor.withOpacity(0.9),
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                ),
+                minimumSize: const Size(200, 50)),
             child: Padding(
               padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 17),
               child: SvgPicture.asset(
@@ -320,20 +320,19 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     final List<Widget> screens = [
-    FutureBuilder<UserData>(
-      future: loadJsonData(),
-      builder: (context, snapshot) {
-        if (snapshot.hasData) {
-          return _homepage(context, snapshot.data!);
-        } else if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        } else {
-          return CircularProgressIndicator();
-        }
-      },
-    ),
+      FutureBuilder<UserData>(
+        future: loadJsonData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _homepage(context, snapshot.data!);
+          } else if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      ),
       AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),

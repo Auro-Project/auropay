@@ -1,6 +1,7 @@
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
 import '../../../view/pages/Routes.dart';
 import '../../../view/pages/SplashScreen.dart';
@@ -16,11 +17,10 @@ Future<void> main() async {
 
   final storage = FlutterSecureStorage();
   String? isSignedIn = await storage.read(key: 'isSignedIn');
-  bool isUserSignedIn = isSignedIn != null && isSignedIn == true;
+  bool isUserSignedIn = isSignedIn != null && isSignedIn == 'false';
 
   runApp(MyApp(isUserSignedIn: isUserSignedIn));
 
-  // runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
@@ -30,9 +30,32 @@ Future<void> main() async {
   );
 }
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
   final bool isUserSignedIn;
   const MyApp({Key? key, required this.isUserSignedIn}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoggedIn();
+  }
+
+  void checkUserLoggedIn() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != _user) {
+      setState(() {
+        _user = user;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -46,12 +69,10 @@ class MyApp extends StatelessWidget {
           theme: AppColors.lightTheme,
           darkTheme: AppColors.darkTheme,
           themeMode: themeProvider.currentTheme,
-          // home: const SplashScreen(),
-          initialRoute: isUserSignedIn ? '/signedUser' : '/splashScreen',
-          routes: routes, // Use the routes from the routes.dart file
+          initialRoute: _user != null ? '/signedUser' : '/splashScreen',
+          routes: routes,
         );
       },
     );
   }
 }
-

@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
@@ -71,7 +70,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
       try {
-        await FirebaseFirestore.instance.collection('users').doc(userId).update({
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
           'fullname': _fullNameController.text,
           'phonenumber': _phoneNumberController.text,
         });
@@ -105,7 +107,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
@@ -141,37 +142,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   foregroundColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  shape:CircleBorder(
+                  shape: CircleBorder(
                     side: BorderSide(color: Colors.white, width: 1),
-                  )
-              ),
+                  )),
               child: CircleAvatar(
-
                 radius: 80,
                 backgroundImage: _profilePhoto != null
                     ? FileImage(_profilePhoto!) as ImageProvider<Object>?
                     : (profilePhotoUrl != null
-                    ? NetworkImage(profilePhotoUrl) as ImageProvider<Object>?
-                    : null),
+                        ? NetworkImage(profilePhotoUrl)
+                            as ImageProvider<Object>?
+                        : null),
               ),
             ),
             const SizedBox(height: 16),
-
-
             myField(context, 'Full Name', _fullNameController, false),
-
             myField(context, 'Email address', _emailController, false),
             myField(context, 'phone number', _phoneNumberController, false),
-
-
             const SizedBox(height: 20),
             Expanded(
               child: Align(
                   alignment: Alignment.bottomCenter,
-                  child: appButtonFunc(context, gradient(context), 'Save profile', _saveProfile)),
+                  child: appButtonFunc(context, gradient(context),
+                      margin: const EdgeInsets.only(bottom: 20)  ,
+                      'Save profile', _saveProfile)),
             ),
-            
-
           ],
         ),
       ),
