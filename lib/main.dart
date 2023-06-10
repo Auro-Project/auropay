@@ -1,4 +1,6 @@
 import 'package:auropay/view/Theme/appColors.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../view/pages/Routes.dart';
 import '../../../view/pages/SplashScreen.dart';
@@ -12,18 +14,25 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  runApp(MyApp());
+  final storage = FlutterSecureStorage();
+  String? isSignedIn = await storage.read(key: 'isSignedIn');
+  bool isUserSignedIn = isSignedIn != null && isSignedIn == true;
+
+  runApp(MyApp(isUserSignedIn: isUserSignedIn));
+
+  // runApp(MyApp());
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
       statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.dark,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
     ),
   );
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+  final bool isUserSignedIn;
+  const MyApp({Key? key, required this.isUserSignedIn}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -37,10 +46,12 @@ class MyApp extends StatelessWidget {
           theme: AppColors.lightTheme,
           darkTheme: AppColors.darkTheme,
           themeMode: themeProvider.currentTheme,
-          home: const SplashScreen(),
+          // home: const SplashScreen(),
+          initialRoute: isUserSignedIn ? '/signedUser' : '/splashScreen',
           routes: routes, // Use the routes from the routes.dart file
         );
       },
     );
   }
 }
+

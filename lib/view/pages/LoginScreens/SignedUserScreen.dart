@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import '../../widgets/Constants.dart';
 import '../../Theme/theme_provider.dart';
 
@@ -39,6 +40,12 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     String passcode = passcodeControllers.map((controller) => controller.text).join();
     String? savedPasscode = await storage.read(key: 'passcode');
     return passcode == savedPasscode;
+  }
+
+  void signOut() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isSignedIn', false);
+    // Perform any other sign-out related actions
   }
 
   void focusNextPasscodeField() {

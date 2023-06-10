@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -13,6 +14,20 @@ class _SplashScreenState extends State<SplashScreen>
   late AnimationController _animationController;
 
   @override
+  // void initState() {
+  //   super.initState();
+  //   _animationController = AnimationController(
+  //     vsync: this,
+  //     duration: const Duration(milliseconds: 1500),
+  //   );
+  //   _animationController.forward();
+  //
+  //   _animationController.addStatusListener((status) {
+  //     if (status == AnimationStatus.completed) {
+  //       Navigator.pushReplacementNamed(context, '/onBoarding');
+  //     }
+  //   });
+  // }
   void initState() {
     super.initState();
     _animationController = AnimationController(
@@ -23,7 +38,15 @@ class _SplashScreenState extends State<SplashScreen>
 
     _animationController.addStatusListener((status) {
       if (status == AnimationStatus.completed) {
-        Navigator.pushReplacementNamed(context, '/onBoarding');
+        SharedPreferences.getInstance().then((prefs) {
+          bool isUserSignedIn = prefs.getBool('isSignedIn') ?? false;
+          if (isUserSignedIn) {
+            prefs.setBool('isSignedIn', true);
+            Navigator.pushReplacementNamed(context, '/signedUserScreen');
+          } else {
+            Navigator.pushReplacementNamed(context, '/onBoarding');
+          }
+        });
       }
     });
   }

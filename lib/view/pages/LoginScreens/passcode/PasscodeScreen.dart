@@ -1,4 +1,6 @@
+import 'package:auropay/view/pages/LoginScreens/LoginStatus.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../../Theme/appColors.dart';
@@ -193,6 +195,13 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
         passcodeControllers.map((controller) => controller.text).join();
     String? savedPasscode = await storage.read(key: 'passcode');
     return passcode == savedPasscode;
+  }
+  Future<void> signIn(String email, String password) async {
+    // This is just an example, your actual sign-in code may look different
+    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+
+    // When sign-in is successful, save to secure storage
+    await FlutterSecureStorage().write(key: 'isSignedIn', value: 'true');
   }
 
   void focusNextPasscodeField() {

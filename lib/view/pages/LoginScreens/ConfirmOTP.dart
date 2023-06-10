@@ -1,3 +1,5 @@
+import 'package:auropay/view/Theme/appColors.dart';
+
 import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
@@ -97,7 +99,7 @@ class _confirmOTPState extends State<confirmOTP> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.textColor,
               ),
             ),
             const SizedBox(height: 10),
@@ -106,7 +108,7 @@ class _confirmOTPState extends State<confirmOTP> {
               style: const TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: Colors.white,
+                color: AppColors.textColor,
               ),
             ),
             const SizedBox(height: 30),
@@ -166,7 +168,7 @@ class _confirmOTPState extends State<confirmOTP> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color: Colors.white,
+                  color:AppColors.textColor,
                 ),
               ),
             ),

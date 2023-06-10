@@ -27,6 +27,7 @@ import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:flutter/material.dart';
 
 final Map<String, WidgetBuilder> routes = {
+  '/splashScreen': (context) => const SplashScreen(),
   '/onBoarding': (context) => const OnBoardingScreen(),
   '/signedUser': (context) => const SignedUserScreen(),
   '/account': (context) => const AccountScreen(),

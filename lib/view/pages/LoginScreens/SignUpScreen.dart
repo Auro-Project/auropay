@@ -41,6 +41,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           },
           verificationFailed: (FirebaseAuthException e) {
             print('Failed to send OTP: ${e.message}');
+            showGlobalSnackBar(context, 'Failed to send OTP: ${e.message}');
             // Handle the error if OTP sending fails
           },
           codeSent: (String verificationId, int? resendToken) {
@@ -60,7 +61,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
         );
       } catch (e) {
         print('Send OTP Error: $e');
-        showGlobalSnackBar(context, 'Failed to send OTP');
+        showGlobalSnackBar(context, 'Send OTP Error: $e');
         // Handle the send OTP error
       }
     }
@@ -103,13 +104,17 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'phoneNumber': phoneNumber,
         });
 
+
         Navigator.push(
           context,
           MaterialPageRoute(builder: (context) => confirmOTP(phoneNumber: '', countryCode: '', verificationId: '', onVerificationComplete: (PhoneAuthCredential ) {  },)),
         );
+        showGlobalSnackBar(context, 'Verification Complete');
+
       } catch (e) {
         if (kDebugMode) {
           print('Signup failed: $e');
+          showGlobalSnackBar(context, 'Signup failed: $e');
         }
       }
     }
@@ -122,29 +127,44 @@ class _SignUpScreenState extends State<SignUpScreen> {
       backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
-        child: Form(
-          key: _formKey,
-          child: ListView(
-              children: [
-                myField(context, 'Full Name', _fullNameController, false,
-                    truePhrase: 'Please enter your full name', falsePhrase: null),
-                myField(context, 'Email', _emailController, false,
-                    truePhrase: 'Please enter an email address', falsePhrase: null),
-                myField(context, 'Password', _passwordController, true,
-                    truePhrase: 'Please enter a password', falsePhrase: null),
-                myField(context, 'Confirm Password', _confirmPasswordController, true,
-                    truePhrase: 'Passwords do not match', falsePhrase: null),
-                myField(context, 'Phone Number', _phoneNumberController, false,
-                    truePhrase: 'Please enter a phone number', falsePhrase: null),
-
-                Align(
-                  alignment: Alignment.bottomCenter,
-                  child: appButtonFunc(context, gradient(context), 'Sign Up',  () {
+        child: Column(
+          children: [
+            Expanded(
+              child: ListView(
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
+                      children: [
+                        myField(context, 'Full Name', _fullNameController, false,
+                            truePhrase: 'Please enter your full name', falsePhrase: null),
+                        myField(context, 'Email', _emailController, false,
+                            truePhrase: 'Please enter an email address', falsePhrase: null),
+                        myField(context, 'Password', _passwordController, true,
+                            truePhrase: 'Please enter a password', falsePhrase: null),
+                        myField(context, 'Confirm Password', _confirmPasswordController, true,
+                            truePhrase: 'Passwords do not match', falsePhrase: null),
+                        myField(context, 'Phone Number', _phoneNumberController, false,
+                            truePhrase: 'Please enter a phone number', falsePhrase: null),
+                      ],
+                    ),
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: appButtonFunc(context, gradient(context), 'Sign Up', () {
+                  if (_formKey.currentState?.validate() ?? false) {
                     _sendOtp(context);
                     _signUp(context);
-                  }),
-                ),
-              ]),
+                  }
+                }),
+              ),
+            ),
+          ],
         ),
       ),
     );

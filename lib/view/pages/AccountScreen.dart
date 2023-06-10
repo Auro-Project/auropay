@@ -15,7 +15,7 @@ class AccountScreen extends StatelessWidget {
       body: Stack(
         children: [
           Image.asset("assets/images/shapes/gradAC.png",
-              fit: BoxFit.cover,
+              width: MediaQuery.of(context).size.width,
           ),
           Center(
             child: Column(
