@@ -1,8 +1,13 @@
+import 'dart:convert';
+
+import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import '../../model/trxList.dart';
 import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
@@ -18,6 +23,14 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+
+  static Future<List<ListItem>> loadJsonData() async {
+    String jsonData = await rootBundle.loadString('lib/data/transactions.json');
+    List<dynamic> jsonList = json.decode(jsonData);
+    List<ListItem> items = jsonList.map((json) => ListItem.fromJson(json)).toList();
+    return items;
+  }
+
 
   static Widget _homepage(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
@@ -191,43 +204,55 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                           SizedBox(height: height * 0.01),
                           Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: 6,
-                              itemBuilder: (context, index) {
-                                return ListTile(
-                                  leading: const CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage:
-                                    AssetImage("assets/images/avatar.png"),
-                                  ),
-                                  title: Text(
-                                    "Zara Doe",
-                                    style: TextStyle(
-                                      color: AppColors.textColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  subtitle: const Text(
-                                    "12 Jub, 12:00 PM",
-                                    style: TextStyle(
-                                      color: AppColors.textColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    "-₹200.00",
-                                    style: TextStyle(
-                                      color: AppColors.textColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                );
+                            child: FutureBuilder<List<ListItem>>(
+                              future: loadJsonData(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return ListView.builder(
+                                    padding: EdgeInsets.zero,
+                                    itemCount: snapshot.data!.length,
+                                    itemBuilder: (context, index) {
+                                      ListItem item = snapshot.data![index];
+                                      return ListTile(
+                                        leading: CircleAvatar(
+                                          radius: 20,
+                                          backgroundImage:AssetImage(item.userImage),
+                                        ),
+                                        title: Text(
+                                          item.name,
+                                          style: TextStyle(
+                                            color: AppColors.textColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        subtitle: Text(
+                                          item.date,
+                                          style: TextStyle(
+                                            color: AppColors.textColor,
+                                            fontSize: 14,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                        trailing: Text(
+                                          item.amount,
+                                          style: TextStyle(
+                                            color: AppColors.textColor,
+                                            fontSize: 16,
+                                            fontWeight: FontWeight.w400,
+                                          ),
+                                        ),
+                                      );
+                                    },
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text("Error: ${snapshot.error}");
+                                } else {
+                                  return CircularProgressIndicator();
+                                }
                               },
-                            ),
+                            )
+                            ,
                           ),
                         ],
                       ),
