@@ -1,28 +1,28 @@
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:charts_flutter/flutter.dart' as charts;
+// import 'package:charts_flutter/flutter.dart' as charts;
 
 class AnalyticsScreen extends StatelessWidget {
-  final List<charts.Series<PaymentData, int>> data = [
-    charts.Series<PaymentData, int>(
-      id: 'payments',
-      colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
-      domainFn: (PaymentData data, _) => data.month,
-      measureFn: (PaymentData data, _) => data.value,
-      data: [
-        PaymentData(1, 500), // Replace with your data
-        PaymentData(2, 1800),
-        PaymentData(3, 5000),
-        PaymentData(4, 4000),
-        PaymentData(5, 2000),
-        PaymentData(6, 8000),
-        PaymentData(7, 9000),
-        PaymentData(8, 2000),
-        PaymentData(9, 6000),
-      ],
-    ),
-  ];
+  // final List<charts.Series<PaymentData, int>> data = [
+  //   charts.Series<PaymentData, int>(
+  //     id: 'payments',
+  //     colorFn: (_, __) => charts.MaterialPalette.teal.shadeDefault,
+  //     domainFn: (PaymentData data, _) => data.month,
+  //     measureFn: (PaymentData data, _) => data.value,
+  //     data: [
+  //       PaymentData(1, 500), // Replace with your data
+  //       PaymentData(2, 1800),
+  //       PaymentData(3, 5000),
+  //       PaymentData(4, 4000),
+  //       PaymentData(5, 2000),
+  //       PaymentData(6, 8000),
+  //       PaymentData(7, 9000),
+  //       PaymentData(8, 2000),
+  //       PaymentData(9, 6000),
+  //     ],
+  //   ),
+  // ];
 
   @override
   Widget build(BuildContext context) {
@@ -72,7 +72,9 @@ class AnalyticsScreen extends StatelessWidget {
                   padding: const EdgeInsets.all(30.0),
                   child: SizedBox(
                     height: 300,
-                    child: charts.LineChart(data),
+                    child:
+                    // charts.LineChart(data),
+                    Container(),
                   ),
                 ),
               ],
