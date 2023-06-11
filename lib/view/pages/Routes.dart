@@ -15,6 +15,7 @@ import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/Send/TopUpScreen.dart';
+import 'package:auropay/view/pages/Send/WithdrawScreen.dart';
 import 'package:auropay/view/pages/SplashScreen.dart';
 import 'package:auropay/view/pages/TransactionScreen.dart';
 import 'package:auropay/view/pages/onBoardScreen.dart';
@@ -43,6 +44,7 @@ final Map<String, WidgetBuilder> routes = {
   '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
   '/home': (context) => const HomeScreen(),
   '/topup': (context) => PaymentTopUpScreen(),
+  '/withdraw': (context) =>  WithdrawalScreen(),
   '/qrscreen': (context) => const QRScreen(),
   '/confirmpay': (context) => const ConfirmPayScreen(),
   '/progress': (context) => const ProgressScreen(),

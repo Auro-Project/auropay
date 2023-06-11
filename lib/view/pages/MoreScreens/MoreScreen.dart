@@ -215,121 +215,135 @@ class MoreScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
       appBar: myAppBar(context, ''),
-      body: Column(
+      extendBodyBehindAppBar: true,
+      body: Stack(
         children: [
-          // SizedBox(height: 100.0),
-          Stack(
+          Image.asset(
+            'assets/images/shapes/gradHM.png',
+            fit: BoxFit.cover,
+
+          ),
+          Column(
             children: [
-              Center(
-                heightFactor: 1.5,
-                child: Container(
-                  width: 350,
-                  height: 210,
-                  decoration: gradient(context),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.start,
-                    children: [
-                      SizedBox(height: 60.0),
-                      Text(
-                        'John Doe',
-                        style: TextStyle(
-                          fontSize: 26,
-                          fontFamily: 'SF-Pro-Display',
-                          fontWeight: FontWeight.bold,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 10.0),
-                      Text('FCW-675325',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'SF-Pro-Display',
-                          fontWeight: FontWeight.normal,
-                          color: AppColors.primaryColor,
-                        ),
-                      ),
-                      SizedBox(height: 20.0),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              SizedBox(height: 100.0),
+              Stack(
+                children: [
+                  Center(
+                    heightFactor: 1.5,
+                    child: Container(
+                      width: 340,
+                      height: 210,
+                      decoration: gradient(context,borderColor: AppColors.accent1.shade100),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          iconButton(iconSize:20, color: AppColors.primaryColor, size:50,'assets/images/icons/report.svg', '/analytics'),
-                          iconButton(iconSize:18, color: AppColors.primaryColor,size:50,'assets/images/icons/notify.svg', '/analytics'),
-                          iconButton(iconSize:18,color: AppColors.primaryColor, size:50,'assets/images/icons/settings.svg', '/analytics'),
-                          iconButtonFunc(iconSize:18,
-                              color: AppColors.primaryColor, size:50,
-                              'assets/images/icons/logout.svg', onPressed: (){
-                            _showLogoutConfirmationBottomSheet(context);
-                          })
+                          SizedBox(height: 60.0),
+                          Text(
+                            'John Doe',
+                            style: TextStyle(
+                              fontSize: 26,
+                              fontFamily: 'SF-Pro-Display',
+                              fontWeight: FontWeight.bold,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(height: 10.0),
+                          Text('FCW-675325',
+                            style: TextStyle(
+                              fontSize: 16,
+                              fontFamily: 'SF-Pro-Display',
+                              fontWeight: FontWeight.normal,
+                              color: AppColors.primaryColor,
+                            ),
+                          ),
+                          SizedBox(height: 20.0),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              iconButton(iconSize:20, color: AppColors.primaryColor, size:50,'assets/images/icons/report.svg', '/analytics'),
+                              iconButton(iconSize:18, color: AppColors.primaryColor,size:50,'assets/images/icons/notify.svg', '/analytics'),
+                              iconButton(iconSize:18,color: AppColors.primaryColor, size:50,'assets/images/icons/settings.svg', '/analytics'),
+                              iconButtonFunc(iconSize:18,
+                                  color: AppColors.primaryColor, size:50,
+                                  'assets/images/icons/logout.svg', onPressed: (){
+                                _showLogoutConfirmationBottomSheet(context);
+                              })
+                            ],
+                          ),
                         ],
                       ),
-                    ],
-                  ),
-                ),
-              ),
-              Center(
-                child: Container(
-                  width: 100,
-                  height: 100,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.primaryColor,
-                    image: DecorationImage(
-                      image: AssetImage('assets/images/avatar.png'),
-                      fit: BoxFit.cover,
                     ),
                   ),
+                  Center(
+                    child: Container(
+                      width: 100,
+                      height: 100,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.primaryColor,
+                        border: Border.all(
+                          color: AppColors.accent1.shade400,
+                          width: 2,
+                        ),
+                        image: DecorationImage(
+                          image: AssetImage('assets/images/avatar.png'),
+                          fit: BoxFit.cover,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              // SizedBox(height: 10.0),
+              buildRow('Information', 'assets/images/icons/user.svg', '/proflie'),
+              buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
+              buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
+              buildRow('Chat Support', 'assets/images/icons/support.svg', '/proflie'),
+              //create a same way row but dark mode should be there with theme toggle from cupertinao
+              Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                child: Row(
+                  children: [
+                    Container(
+                      width: 42,
+                      height: 42,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: AppColors.accent1.shade200,
+                      ),
+                      child: IconButton(
+                        icon: SvgPicture.asset(
+                          'assets/images/icons/dark.svg',
+                          height: 15.0,
+                          color: AppColors.textColor,
+                        ),
+                        onPressed: () {
+                          Navigator.pushNamed(context, '/profile');
+                        },
+                      ),
+                    ),
+                    SizedBox(width: 20.0),
+                    Text(
+                      'Dark Mode',
+                      style: TextStyle(
+                        fontSize: 20,
+                        fontFamily: 'SF-Pro-Display',
+                        fontWeight: FontWeight.w600,
+
+                      ),
+                    ),
+                    Spacer(),
+                    CupertinoSwitch(
+                      value: themeProvider.getThemeMode() == ThemeMode.dark,
+                      onChanged: (value) {
+                        themeProvider.toggleTheme();
+                      },
+                    )
+
+                  ],
                 ),
               ),
             ],
-          ),
-          // SizedBox(height: 10.0),
-          buildRow('Information', 'assets/images/icons/user.svg', '/proflie'),
-          buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
-          buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-          buildRow('Chat Support', 'assets/images/icons/support.svg', '/proflie'),
-          //create a same way row but dark mode should be there with theme toggle from cupertinao
-          Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-            child: Row(
-              children: [
-                Container(
-                  width: 42,
-                  height: 42,
-                  decoration: BoxDecoration(
-                    shape: BoxShape.circle,
-                    color: AppColors.accent1.shade200,
-                  ),
-                  child: IconButton(
-                    icon: SvgPicture.asset(
-                      'assets/images/icons/dark.svg',
-                      height: 15.0,
-                      color: AppColors.textColor,
-                    ),
-                    onPressed: () {
-                      Navigator.pushNamed(context, '/profile');
-                    },
-                  ),
-                ),
-                SizedBox(width: 20.0),
-                Text(
-                  'Dark Mode',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontFamily: 'SF-Pro-Display',
-                    fontWeight: FontWeight.w600,
-                    
-                  ),
-                ),
-                Spacer(),
-                CupertinoSwitch(
-                  value: themeProvider.getThemeMode() == ThemeMode.dark,
-                  onChanged: (value) {
-                    themeProvider.toggleTheme();
-                  },
-                )
-
-              ],
-            ),
           ),
         ],
       ),

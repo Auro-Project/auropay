@@ -104,7 +104,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'phoneNumber': phoneNumber,
         });
 
-        showGlobalSnackBar(context, 'Verification Complete');
+        showGlobalSnackBar(context, 'OTP Sent');
 
       } catch (e) {
         if (kDebugMode) {

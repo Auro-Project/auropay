@@ -71,13 +71,12 @@ class _HomeScreenState extends State<HomeScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Padding(
-                          padding: const EdgeInsets.only(left: 20),
+                          padding: const EdgeInsets.only(left: 30),
                           child: CircleAvatar(
-                            radius: 30,
+                            radius: 20,
                             backgroundImage: profilePhotoUrl != null
                                 ? NetworkImage(profilePhotoUrl)
-                                    as ImageProvider<Object>?
-                                : AssetImage("assets/images/avatar.png")
+                                : const AssetImage("assets/images/avatar.png")
                                     as ImageProvider<Object>?,
                             //AssetImage("assets/images/avatar.png"),
                           ),
@@ -91,11 +90,10 @@ class _HomeScreenState extends State<HomeScreen> {
                           ),
                         ),
                         Padding(
-                          padding: const EdgeInsets.only(right: 20),
-                          child: Icon(
-                            Icons.notifications,
-                            color: AppColors.textColor,
-                            size: 30,
+                          padding: const EdgeInsets.only(right: 30),
+                          child: SvgPicture.asset(
+                            "assets/images/icons/notify.svg",
+                            height: 23,
                           ),
                         ),
                       ],
@@ -184,7 +182,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         context,
                         'assets/images/icons/withdraw.svg',
                         'Withdraw',
-                        '/send',
+                        '/withdraw',
                       ),
                     ],
                   ),

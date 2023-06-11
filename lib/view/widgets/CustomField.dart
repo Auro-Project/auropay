@@ -6,7 +6,10 @@ import 'Constants.dart';
 
 Column myField(BuildContext context,
     String label, TextEditingController controller, bool obscure,
-    { String? truePhrase, String? falsePhrase }
+    { String? truePhrase,
+      String? falsePhrase,
+      bool isNumber = false,
+    }
     ) {
   final themeProvider = Provider.of<ThemeProvider>(context);
 
@@ -33,6 +36,7 @@ Column myField(BuildContext context,
         child: TextFormField(
           controller: controller,
           obscureText: obscure,
+          keyboardType: isNumber ? TextInputType.number : TextInputType.text,
           style: TextStyle(color: AppColors.textColor),
           decoration: const InputDecoration(
             border: InputBorder.none,
