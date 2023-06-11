@@ -1,63 +1,33 @@
-import 'package:auropay/view/pages/LoginScreens/LoginStatus.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import '../../../../responsive_widget.dart';
 import '../../../Theme/appColors.dart';
 import '../../../widgets/AppButtons.dart';
 import '../../../widgets/Constants.dart';
 import '../../../widgets/CustomError.dart';
-import '../../../Theme/theme_provider.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
-class CreatePasscodeScreen extends StatefulWidget {
+class CreatePasscodeScreen extends StatelessWidget {
   const CreatePasscodeScreen({Key? key}) : super(key: key);
 
-  @override
-  _CreatePasscodeScreenState createState() => _CreatePasscodeScreenState();
-}
-
-class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
-  List<TextEditingController> passcodeControllers = [];
-  int currentPasscodeIndex = 0;
-  final storage = const FlutterSecureStorage();
-
-  void savePasscode() async {
-    String passcode =
-        passcodeControllers.map((controller) => controller.text).join();
-    await storage.write(key: 'passcode', value: passcode);
-  }
-
-  @override
-  void initState() {
-    super.initState();
-    for (int i = 0; i < 4; i++) {
-      passcodeControllers.add(TextEditingController());
-    }
-  }
-
-  @override
-  void dispose() {
-    for (var controller in passcodeControllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  void focusNextPasscodeField() {
-    if (currentPasscodeIndex < passcodeControllers.length - 1) {
-      currentPasscodeIndex++;
-      FocusScope.of(context).nextFocus();
-    }
-  }
+  get passcodeControllers => null;
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Create Passcode'),
       backgroundColor: AppColors.primaryColor,
-      body: Column(
+      body: ResponsiveWidget(
+        largeScreen: _buildLargeScreen(context),
+        mediumScreen: _buildMediumScreen(context),
+        smallScreen: _buildSmallScreen(context),
+      ),
+    );
+  }
+
+  Widget _buildLargeScreen(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
         children: [
           const SizedBox(height: 40),
           Padding(
@@ -77,45 +47,13 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int i = 0; i < 4; i++)
-                      Container(
-                        width: 60,
-                        height: 60,
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.grey,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: TextField(
-                          controller: passcodeControllers[i],
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          obscureText: true,
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              focusNextPasscodeField();
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            counterText: '',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                  ],
+                  children: _buildTextFieldList(context),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 50),
-          Expanded(
+          Flexible(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: OutlinedButton(
@@ -142,14 +80,12 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
               ),
             ),
           ),
-          Expanded(
+          Flexible(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
                 padding: const EdgeInsets.only(bottom: 40),
-                child:
-                    // appButton(context, gradient(context), 'Proceed', '/confirmPasscode'),
-                    appButtonFunc(context, gradient(context), 'Proceed', () {
+                child: appButtonFunc(context, gradient(context), 'Proceed', () {
                   savePasscode();
                   Navigator.pushNamed(context, '/confirmPasscode');
                 }),
@@ -160,64 +96,98 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
       ),
     );
   }
+
+  Widget _buildMediumScreen(BuildContext context) {
+    return _buildLargeScreen(context); // Use the large screen layout for medium screens
+  }
+
+  Widget _buildSmallScreen(BuildContext context) {
+    return _buildLargeScreen(context); // Use the large screen layout for small screens
+  }
+
+  List<Widget> _buildTextFieldList(BuildContext context) {
+    const textFieldSize = 60.0; // Adjust this value based on your design
+    const textFieldMargin = 8.0; // Adjust this value based on your design
+    const textFieldCount = 4;
+
+    final List<TextEditingController> passcodeControllers = List.generate(
+      textFieldCount,
+          (_) => TextEditingController(),
+    );
+
+    void focusNextPasscodeField(int currentIndex) {
+      if (currentIndex < textFieldCount - 1) {
+        FocusScope.of(context).nextFocus();
+      }
+    }
+
+    return List.generate(textFieldCount, (index) {
+      return Container(
+        width: textFieldSize,
+        height: textFieldSize,
+        margin: const EdgeInsets.symmetric(horizontal: textFieldMargin),
+        decoration: BoxDecoration(
+          color: AppColors.grey,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: TextField(
+          controller: passcodeControllers[index],
+          keyboardType: TextInputType.number,
+          maxLength: 1,
+          obscureText: true,
+          style: const TextStyle(
+            color: AppColors.textColor,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              focusNextPasscodeField(index);
+            }
+          },
+          decoration: const InputDecoration(
+            counterText: '',
+            border: InputBorder.none,
+          ),
+        ),
+      );
+    });
+  }
+
+  void savePasscode() async {
+    final List<String> passcodes = passcodeControllers
+        .map((controller) => controller.text)
+        .where((text) => text.isNotEmpty)
+        .toList();
+
+    final String passcode = passcodes.join();
+    const storage = FlutterSecureStorage();
+    await storage.write(key: 'passcode', value: passcode);
+  }
 }
 
-class ConfirmPasscodeScreen extends StatefulWidget {
+class ConfirmPasscodeScreen extends StatelessWidget {
   const ConfirmPasscodeScreen({Key? key}) : super(key: key);
 
-  @override
-  _ConfirmPasscodeScreenState createState() => _ConfirmPasscodeScreenState();
-}
-
-class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
-  List<TextEditingController> passcodeControllers = [];
-  int currentPasscodeIndex = 0;
-  final storage = const FlutterSecureStorage();
-
-  @override
-  void initState() {
-    super.initState();
-    for (int i = 0; i < 4; i++) {
-      passcodeControllers.add(TextEditingController());
-    }
-  }
-
-  @override
-  void dispose() {
-    for (var controller in passcodeControllers) {
-      controller.dispose();
-    }
-    super.dispose();
-  }
-
-  Future<bool> confirmPasscode() async {
-    String passcode =
-        passcodeControllers.map((controller) => controller.text).join();
-    String? savedPasscode = await storage.read(key: 'passcode');
-    return passcode == savedPasscode;
-  }
-  Future<void> signIn(String email, String password) async {
-    // This is just an example, your actual sign-in code may look different
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
-
-    // When sign-in is successful, save to secure storage
-    await FlutterSecureStorage().write(key: 'isSignedIn', value: 'true');
-  }
-
-  void focusNextPasscodeField() {
-    if (currentPasscodeIndex < passcodeControllers.length - 1) {
-      currentPasscodeIndex++;
-      FocusScope.of(context).nextFocus();
-    }
-  }
+  get passcodeControllers => null;
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Confirm Passcode'),
       backgroundColor: AppColors.primaryColor,
-      body: Column(
+      body: ResponsiveWidget(
+        largeScreen: _buildLargeScreen(context),
+        mediumScreen: _buildMediumScreen(context),
+        smallScreen: _buildSmallScreen(context),
+      ),
+    );
+  }
+
+  Widget _buildLargeScreen(BuildContext context) {
+    return SingleChildScrollView(
+      child: Column(
         children: [
           const SizedBox(height: 40),
           Padding(
@@ -237,64 +207,106 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                 const SizedBox(height: 30),
                 Row(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    for (int i = 0; i < 4; i++)
-                      Container(
-                        width: 60,
-                        height: 60,
-                        margin: const EdgeInsets.symmetric(horizontal: 8),
-                        decoration: BoxDecoration(
-                          color: AppColors.grey,
-                          borderRadius: BorderRadius.circular(8),
-                        ),
-                        child: TextField(
-                          controller: passcodeControllers[i],
-                          keyboardType: TextInputType.number,
-                          maxLength: 1,
-                          obscureText: true,
-                          style: TextStyle(
-                            color: AppColors.textColor,
-                            fontSize: 24,
-                            fontWeight: FontWeight.bold,
-                          ),
-                          textAlign: TextAlign.center,
-                          onChanged: (value) {
-                            if (value.isNotEmpty) {
-                              focusNextPasscodeField();
-                            }
-                          },
-                          decoration: const InputDecoration(
-                            counterText: '',
-                            border: InputBorder.none,
-                          ),
-                        ),
-                      ),
-                  ],
+                  children: _buildTextFieldList(context),
                 ),
               ],
             ),
           ),
           const SizedBox(height: 50),
-          Expanded(
+          Flexible(
             child: Align(
               alignment: Alignment.bottomCenter,
               child: Padding(
-                  padding: const EdgeInsets.only(bottom: 40),
-                  child:
-                      // appButton(context, gradient(context), 'Proceed', '/home'),
-                      appButtonFunc(context, gradient(context), 'Done',
-                          () async {
+                padding: const EdgeInsets.only(bottom: 40),
+                child: appButtonFunc(
+                  context,
+                  gradient(context),
+                  'Done',
+                      () async {
                     if (await confirmPasscode()) {
                       Navigator.pushReplacementNamed(context, '/home');
                     } else {
-                      // Show an error message to the user
                       showGlobalSnackBar(context, 'Invalid passcode');
                     }
-                  })),
+                  },
+                ),
+              ),
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildMediumScreen(BuildContext context) {
+    return _buildLargeScreen(context); // Use the large screen layout for medium screens
+  }
+
+  Widget _buildSmallScreen(BuildContext context) {
+    return _buildLargeScreen(context); // Use the large screen layout for small screens
+  }
+
+  List<Widget> _buildTextFieldList(BuildContext context) {
+    const textFieldSize = 60.0; // Adjust this value based on your design
+    const textFieldMargin = 8.0; // Adjust this value based on your design
+    const textFieldCount = 4;
+
+    final List<TextEditingController> passcodeControllers = List.generate(
+      textFieldCount,
+          (_) => TextEditingController(),
+    );
+
+    void focusNextPasscodeField(int currentIndex) {
+      if (currentIndex < textFieldCount - 1) {
+        FocusScope.of(context).nextFocus();
+      }
+    }
+
+    return List.generate(textFieldCount, (index) {
+      return Container(
+        width: textFieldSize,
+        height: textFieldSize,
+        margin: const EdgeInsets.symmetric(horizontal: textFieldMargin),
+        decoration: BoxDecoration(
+          color: AppColors.grey,
+          borderRadius: BorderRadius.circular(8),
+        ),
+        child: TextField(
+          controller: passcodeControllers[index],
+          keyboardType: TextInputType.number,
+          maxLength: 1,
+          obscureText: true,
+          style: const TextStyle(
+            color: AppColors.textColor,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
+          ),
+          textAlign: TextAlign.center,
+          onChanged: (value) {
+            if (value.isNotEmpty) {
+              focusNextPasscodeField(index);
+            }
+          },
+          decoration: const InputDecoration(
+            counterText: '',
+            border: InputBorder.none,
+          ),
+        ),
+      );
+    });
+  }
+
+  Future<bool> confirmPasscode() async {
+    const storage = FlutterSecureStorage();
+    final savedPasscode = await storage.read(key: 'passcode');
+
+    final List<String> passcodes = passcodeControllers
+        .map((controller) => controller.text)
+        .where((text) => text.isNotEmpty)
+        .toList();
+
+    final String passcode = passcodes.join();
+
+    return passcode == savedPasscode;
   }
 }
