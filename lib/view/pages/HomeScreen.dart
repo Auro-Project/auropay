@@ -75,8 +75,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             radius: 30,
                             backgroundImage: profilePhotoUrl != null
                                 ? NetworkImage(profilePhotoUrl)
-                                    as ImageProvider<Object>?
-                                : AssetImage("assets/images/avatar.png")
+                                : const AssetImage("assets/images/avatar.png")
                                     as ImageProvider<Object>?,
                             //AssetImage("assets/images/avatar.png"),
                           ),
@@ -287,7 +286,7 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           ElevatedButton(
             style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.textColor.withOpacity(0.9),
+                backgroundColor: AppColors.grey,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(15),
                 ),
