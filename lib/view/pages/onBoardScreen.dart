@@ -43,7 +43,7 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
                   children: [
                     CustomButton(
                       onTap: () {
-                        Navigator.pushNamed(context, '/account');
+                        Navigator.pushReplacementNamed(context, '/account');
                       },
                     ),
                   ],

@@ -1,6 +1,7 @@
 import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/widgets/CustomError.dart';
 
-import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
 import '../../../view/widgets/CustomAppBar.dart';
@@ -36,15 +37,17 @@ class _confirmOTPState extends State<confirmOTP> {
     try {
       await auth.signInWithCredential(credential);
       print('Sign In Success');
-      Navigator.push(
-        context,
-        MaterialPageRoute(
-          builder: (context) => const CreatePasscodeScreen(),
-        ),
-      );
+      showGlobalSnackBar(context, 'Sent OTP successfully');
+      // Navigator.push(
+      //   context,
+      //   MaterialPageRoute(
+      //     builder: (context) => const LoginScreen(),
+      //   ),
+      // );
     } catch (e) {
       setState(() {
-        errorMessage = 'Enter the correct OTP'; // Display error message
+        errorMessage = 'Enter the correct OTP';// Display error message
+        showGlobalSnackBar(context, 'Enter the correct OTP');
       });
       print('Sign In Failed: $e');
     }
@@ -64,17 +67,19 @@ class _confirmOTPState extends State<confirmOTP> {
         // Verification successful
         // You can navigate to the next screen or perform any other actions
 
+        showGlobalSnackBar(context, 'Signed Up successfully');
         Navigator.push(
           context,
           MaterialPageRoute(
             builder: (context) =>
-                CreatePasscodeScreen(), // Replace with your desired next screen
+                LoginScreen(), // Replace with your desired next screen
           ),
         );
       } else {
         // Verification failed
         setState(() {
           errorMessage = 'Invalid OTP'; // Display error message
+          showGlobalSnackBar(context, errorMessage);
         });
       }
     } catch (e) {
@@ -82,6 +87,7 @@ class _confirmOTPState extends State<confirmOTP> {
       setState(() {
         errorMessage =
             'An error occurred during verification'; // Display error message
+        showGlobalSnackBar(context, errorMessage);
       });
     }
   }

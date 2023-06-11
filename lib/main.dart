@@ -19,11 +19,16 @@ Future<void> main() async {
   String? isSignedIn = await storage.read(key: 'isSignedIn');
   bool isUserSignedIn = isSignedIn != null && isSignedIn == 'false';
 
-  runApp(MyApp(isUserSignedIn: isUserSignedIn));
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(isUserSignedIn: isUserSignedIn),
+    ),
+  );
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
+      // statusBarColor: Colors.transparent,
       statusBarIconBrightness: Brightness.light,
       statusBarBrightness: Brightness.light,
     ),
@@ -59,20 +64,16 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-      builder: (context, child) {
-        final themeProvider = Provider.of<ThemeProvider>(context);
-        return MaterialApp(
-          debugShowCheckedModeBanner: false,
-          title: 'AuroPay',
-          theme: AppColors.lightTheme,
-          darkTheme: AppColors.darkTheme,
-          themeMode: themeProvider.currentTheme,
-          initialRoute: _user != null ? '/signedUser' : '/splashScreen',
-          routes: routes,
-        );
-      },
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final currentTheme = themeProvider.getTheme();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'AuroPay',
+      theme: currentTheme, // Use the current theme from the provider
+      darkTheme: AppColors.darkTheme,
+      themeMode: themeProvider.getThemeMode(), // Use the current theme mode from the provider
+      initialRoute: _user != null ? '/signedUser' : '/splashScreen',
+      routes: routes,
     );
   }
 }

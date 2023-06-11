@@ -44,7 +44,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 child: Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
+                  decoration: BoxDecoration(
                     color: AppColors.accent1,
                     shape: BoxShape.circle,
                   ),
@@ -87,9 +87,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 Center(
                   heightFactor: 0.2,
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.accent1,
+                      color: AppColors.accent1.shade300,
                       // gradient: LinearGradient(
                       //   begin: Alignment(0.00, -1.00),
                       //   end: Alignment(1.00, 1.00),
@@ -101,7 +101,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: AppColors.accent1.shade300,
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(

@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
+import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -106,7 +107,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     width: width * 0.9,
                     child: CustomPaint(
                       painter: CustomShape(
-                        strokeColor: Colors.white.withOpacity(0.7),
+                        strokeColor: Colors.white.withOpacity(0.8),
                         fillColor: Colors.white54.withOpacity(0.01),
                       ),
                       child: Column(
@@ -282,25 +283,29 @@ class _HomeScreenState extends State<HomeScreen> {
   ) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
-      width: 140,
+      width: 150,
       child: Column(
         children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-                backgroundColor: AppColors.textColor.withOpacity(0.9),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(15),
+          Container(
+            decoration: gradient(context),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  minimumSize: const Size(200, 50)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                child: SvgPicture.asset(
+                  icon,
+                  height: 30,
+                  color: AppColors.primaryColor,
                 ),
-                minimumSize: const Size(200, 50)),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 30, vertical: 17),
-              child: SvgPicture.asset(
-                icon,
-                height: 30,
-                color: AppColors.primaryColor,
               ),
+              onPressed: () => Navigator.pushNamed(context, route),
             ),
-            onPressed: () => Navigator.pushNamed(context, route),
           ),
           const SizedBox(height: 10),
           Text(
@@ -337,6 +342,7 @@ class _HomeScreenState extends State<HomeScreen> {
       const TransactionScreen(),
       const MoreScreen(),
     ];
+
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: BottomNavBar(

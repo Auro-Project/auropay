@@ -2,6 +2,7 @@ import 'dart:io';
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
+import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:auropay/view/widgets/CustomField.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
@@ -78,18 +79,10 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'phonenumber': _phoneNumberController.text,
         });
 
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Profile updated successfully!'),
-          ),
-        );
+        showGlobalSnackBar(context, 'Profile updated successfully!');
       } catch (e) {
         print('Error updating profile: $e');
-        ScaffoldMessenger.of(context).showSnackBar(
-          const SnackBar(
-            content: Text('Failed to update profile.'),
-          ),
-        );
+        showGlobalSnackBar(context, 'Failed to update profile.');
       }
     }
   }
@@ -145,14 +138,34 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   shape: CircleBorder(
                     side: BorderSide(color: Colors.white, width: 1),
                   )),
-              child: CircleAvatar(
-                radius: 80,
-                backgroundImage: _profilePhoto != null
-                    ? FileImage(_profilePhoto!) as ImageProvider<Object>?
-                    : (profilePhotoUrl != null
-                        ? NetworkImage(profilePhotoUrl)
-                            as ImageProvider<Object>?
-                        : null),
+              child: Stack(
+                children: [
+                  CircleAvatar(
+                    radius: 80,
+                    backgroundImage: _profilePhoto != null
+                        ? FileImage(_profilePhoto!) as ImageProvider<Object>?
+                        : (profilePhotoUrl != null
+                            ? NetworkImage(profilePhotoUrl)
+                                as ImageProvider<Object>?
+                            : null),
+                  ),
+                  Positioned(
+                    bottom: 0,
+                    right: 0,
+                    child: Container(
+                      height: 60,
+                      width: 60,
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Colors.white,
+                      ),
+                      child: const Icon(
+                        Icons.camera_alt,
+                        color: Colors.black,
+                      ),
+                    ),
+                  ),
+                ],
               ),
             ),
             const SizedBox(height: 16),

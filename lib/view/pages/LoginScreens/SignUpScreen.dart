@@ -45,7 +45,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
             // Handle the error if OTP sending fails
           },
           codeSent: (String verificationId, int? resendToken) {
-            Navigator.push(
+            Navigator.pushReplacement(
               context,
               MaterialPageRoute(
                 builder: (context) => confirmOTP(
@@ -104,11 +104,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
           'phoneNumber': phoneNumber,
         });
 
-
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => confirmOTP(phoneNumber: '', countryCode: '', verificationId: '', onVerificationComplete: (PhoneAuthCredential ) {  },)),
-        );
         showGlobalSnackBar(context, 'Verification Complete');
 
       } catch (e) {

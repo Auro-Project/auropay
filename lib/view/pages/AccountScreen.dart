@@ -32,16 +32,16 @@ class AccountScreen extends StatelessWidget {
                       children: [
                         SvgPicture.asset(
                           "assets/images/icons/APxl.svg",
-                          height: 150,
                           width: 150,
+                          color: AppColors.textColor.shade300,
                         ),
                         const SizedBox(height: 20.0),
-                        const Text(
+                         Text(
                           textAlign: TextAlign.center,
                           ' Start your financial \nactivity at Auro with\n Convenience',
                           style: TextStyle(
-                            fontSize: 18,
-                            color: AppColors.textColor,
+                            fontSize: 16,
+                            color: AppColors.textColor.shade300,
                           ),
                         ),
                         const SizedBox(height: 10.0),
@@ -51,7 +51,8 @@ class AccountScreen extends StatelessWidget {
                 const SizedBox(height: 150.0),
                 appButton(context, gradient(context),'Sign In', '/login'),
                 const SizedBox(height: 20.0),
-                appButton(context, border(context), 'Sign Up', '/signup'),
+                appButton(context,
+                    border(context), 'Sign Up', '/signup'),
                 const SizedBox(height: 40.0),
               ],
             ),

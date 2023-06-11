@@ -3,7 +3,8 @@ import 'package:flutter/material.dart';
 BoxDecoration gradient(BuildContext context) => BoxDecoration(
       borderRadius: const BorderRadius.all(Radius.circular(20)),
       gradient: const LinearGradient(
-        colors: [Color(0xFFA4AAEE),
+        colors: [
+          Color(0xFFA4AAEE),
           Color(0xFF8FB4EC)],
         stops: [0.5, 1],
       ),

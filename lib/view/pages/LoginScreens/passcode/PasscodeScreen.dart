@@ -1,4 +1,3 @@
-import 'package:auropay/view/pages/LoginScreens/LoginStatus.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -55,7 +54,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: myAppBar(context, 'Create Passcode'),
+      appBar: myAppBar(context, 'Create Passcode',showLeadingIcon: false),
       backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
@@ -215,7 +214,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      appBar: myAppBar(context, 'Confirm Passcode'),
+      appBar: myAppBar(context, 'Confirm Passcode',showLeadingIcon: false),
       backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
