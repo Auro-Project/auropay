@@ -1,3 +1,4 @@
+import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -38,10 +39,16 @@ class MoreScreen extends StatelessWidget {
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
+                    Divider(
+                      thickness: 6.0,
+                      indent: 130.0,
+                      endIndent: 130.0,
+                    ),
+                    SizedBox(height: 30.0),
                     Text(
                       'Log Out',
                       style: TextStyle(
-                        fontSize: 20,
+                        fontSize: 30,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.w600,
                       ),
@@ -56,67 +63,27 @@ class MoreScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 50.0),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          decoration: border(context),
-                          child: Padding(
-                            padding:
-                                const EdgeInsets.symmetric(horizontal: 20.0),
-                            child: TextButton(
-                              child: Text(
-                                'Cancel',
-                                style: TextStyle(
-                                  fontSize: 18,
-                                  fontFamily: 'SF-Pro-Display',
-                                  fontWeight: FontWeight.normal,
-                                  
-                                ),
-                              ),
-                              onPressed: () {
-                                Navigator.of(context).pop();
-                              },
-                            ),
-                          ),
-                        ),
-                        Container(
-                          decoration: gradient(context),
-                          child: ElevatedButton(
-                            onPressed: () async {
-                              // Perform the logout action
-                              FirebaseAuth auth = FirebaseAuth.instance;
-                              await auth.signOut();
+                    appButtonFunc(context, gradient(context),
+                        'Logout', () async {
+                          // Perform the logout action
+                          FirebaseAuth auth = FirebaseAuth.instance;
+                          await auth.signOut();
 
-                              // Remove the user login state
-                              final storage = FlutterSecureStorage();
-                              await storage.delete(key: 'isSignedIn');
+                          // Remove the user login state
+                          final storage = FlutterSecureStorage();
+                          await storage.delete(key: 'isSignedIn');
 
-                              // Close all screens and go back to the login screen
-                              Navigator.of(context).pushNamedAndRemoveUntil(
-                                  '/account', (Route<dynamic> route) => false);
-                            },
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.transparent,
-                              elevation: 0,
-                              minimumSize: Size(150, 50),
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10.0),
-                              ),
-                            ),
-                            child: const Text(
-                              'Log Out',
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontFamily: 'SF-Pro-Display',
-                                fontWeight: FontWeight.normal,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                        ),
-                      ],
+                          // Close all screens and go back to the login screen
+                          Navigator.of(context).pushNamedAndRemoveUntil(
+                              '/account', (Route<dynamic> route) => false);
+                        }
                     ),
+                    appButtonFunc(margin: EdgeInsets.only(top: 20.0),
+                        context, border(context), 'Cancel',
+                            () {
+                          Navigator.of(context).pop();
+                        }),
+
                   ],
                 ),
               ),
