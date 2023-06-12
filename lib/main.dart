@@ -33,19 +33,19 @@ Future<void> main() async {
 
 
 
-  // runApp(
-  //     MyApp(isUserSignedIn: isUserSignedIn)
-  // );
   runApp(
-    DevicePreview(
-      enabled: true,
-      tools: [
-        ...DevicePreview.defaultTools,
-        // const CustomPlugin(),
-      ],
-      builder: (context) => MyApp(isUserSignedIn: isUserSignedIn),
-    ),
+      MyApp(isUserSignedIn: isUserSignedIn)
   );
+  // runApp(
+  //   DevicePreview(
+  //     enabled: true,
+  //     tools: const [
+  //       ...DevicePreview.defaultTools,
+  //       // const CustomPlugin(),
+  //     ],
+  //     builder: (context) => MyApp(isUserSignedIn: isUserSignedIn),
+  //   ),
+  // );
 
   SystemChrome.setSystemUIOverlayStyle(
     const SystemUiOverlayStyle(
