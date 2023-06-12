@@ -40,57 +40,9 @@ class QRScreen extends StatelessWidget {
                 ),
               ],
             ),
-            Container(
-              width: 370.0,
-              height: 650.0,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/qrimage.png'),
-                  fit: BoxFit.cover,
-                ),
-                color: Colors.white38,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 580),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildButton(Icons.qr_code_scanner_sharp, 'Scan'),
-                    _buildButton(Icons.payment, 'Pay'),
-                  ],
-                ),
-              ),
-            ),
             _buildInfoContainer(),
           ],
         ),
-      ),
-    );
-  }
-
-  Widget _buildButton(IconData icon, String label) {
-    return Container(
-      width: 170.0,
-      height: 40.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-      ),
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          elevation: 0,
-        ),
-        icon: Icon(icon),
-        label: Text(label),
       ),
     );
   }

@@ -103,7 +103,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     child: FloatingActionButton(
                       backgroundColor: Colors.transparent,
                       elevation: 0.1,
-                      onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
+                      onPressed: ()=> Navigator.pushNamed(context, '/qrgenerator') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
                         color: AppColors.primaryColor,

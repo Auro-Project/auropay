@@ -15,16 +15,16 @@ import 'package:firebase_core/firebase_core.dart';
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
-    options: FirebaseOptions(
-        apiKey: "AIzaSyBkyFiXnScJEbnZGiuN9BRKyPYxy83wcgA",
-        authDomain: "auropay-47531.firebaseapp.com",
-        databaseURL: "https://auropay-47531-default-rtdb.firebaseio.com",
-        projectId: "auropay-47531",
-        storageBucket: "auropay-47531.appspot.com",
-        messagingSenderId: "475540638444",
-        appId: "1:475540638444:web:23f2abc194cd1840f533c9",
-        measurementId: "G-GNBRJCX941"
-    )
+    // options: const FirebaseOptions(
+    //     apiKey: "AIzaSyBkyFiXnScJEbnZGiuN9BRKyPYxy83wcgA",
+    //     authDomain: "auropay-47531.firebaseapp.com",
+    //     databaseURL: "https://auropay-47531-default-rtdb.firebaseio.com",
+    //     projectId: "auropay-47531",
+    //     storageBucket: "auropay-47531.appspot.com",
+    //     messagingSenderId: "475540638444",
+    //     appId: "1:475540638444:web:23f2abc194cd1840f533c9",
+    //     measurementId: "G-GNBRJCX941"
+    // )
   );
 
   final storage = FlutterSecureStorage();

@@ -26,6 +26,8 @@ import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:flutter/material.dart';
 
+import 'QR Code/qr_generator.dart';
+
 final Map<String, WidgetBuilder> routes = {
   '/splashScreen': (context) => const SplashScreen(),
   '/onBoarding': (context) => const OnBoardingScreen(),
@@ -59,4 +61,5 @@ final Map<String, WidgetBuilder> routes = {
   '/notifications': (context) => const NotificationScreen(),
   '/notifs': (context) => const NotifScreen(),
   '/send': (context) => const SendScreen(),
+  '/qrgenerator': (context) => const QRScannerScreen(),
 };
