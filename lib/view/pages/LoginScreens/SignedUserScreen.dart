@@ -1,10 +1,12 @@
 
 import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import '../../../services/local_auth_api.dart';
 import '../../widgets/Constants.dart';
 import '../../Theme/theme_provider.dart';
 
@@ -19,6 +21,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
   final storage = const FlutterSecureStorage();
+  bool authenticated = false;
 
   @override
   void initState() {
@@ -47,6 +50,18 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     prefs.setBool('isSignedIn', false);
     // Perform any other sign-out related actions
   }
+
+  void resetPasscode() async {
+    // Clear the existing passcode
+    await storage.delete(key: 'passcode');
+
+    // Perform any additional steps required for resetting the passcode
+
+    Navigator.pushNamed(context, '/createPasscode');
+    // Show a success message or navigate to a passcode setup screen
+    showGlobalSnackBar(context, 'Now reset your passcode');
+  }
+
 
   void focusNextPasscodeField() {
     if (currentPasscodeIndex < passcodeControllers.length - 1) {
@@ -171,7 +186,9 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                          onPressed: (){},
+                          onPressed: () {
+                            resetPasscode();
+                          },
                           child: Text('Forgot MPIN?',style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
@@ -184,7 +201,20 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                 ),
                 const SizedBox(height: 50),
                 IconButton(
-                  onPressed: () => Navigator.pushNamed(context, '/home'),
+                  onPressed: () async {
+                    final authenticate = await LocalAuthApi.authenticate();
+                    setState(() {
+                      authenticated = authenticate;
+                    });
+
+                    if (authenticated) {
+                      Navigator.pushNamed(context, '/home');
+                    } else {
+                      // Authentication failed, display an error message or handle accordingly.
+                      showGlobalSnackBar(context, 'Authentication failed');
+                    }
+                  },
+
                   icon: SvgPicture.asset(
                     'assets/images/icons/faceid.svg',
                     width: 40,
