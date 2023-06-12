@@ -57,8 +57,7 @@ class ConfirmPayScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const Text(
-                    "₹ 100",
+                  const TextField(
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -66,7 +65,26 @@ class ConfirmPayScreen extends StatelessWidget {
                       fontSize: 22,
                       fontFamily: 'SF Pro Display',
                     ),
+                    decoration: InputDecoration(
+                      hintText: 'Enter amount',
+                      hintStyle: TextStyle(
+                        color: Colors.white70,
+                      ),
+                      enabledBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1.0,
+                        ),
+                      ),
+                      focusedBorder: UnderlineInputBorder(
+                        borderSide: BorderSide(
+                            color: Colors.white,
+                            width: 1.0,
+                        ),
+                      ),
+                    ),
                   ),
+
                   const SizedBox(
                     height: 20,
                   ),

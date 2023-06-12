@@ -22,7 +22,7 @@ class SendScreen extends StatelessWidget {
         context: context,
         isScrollControlled: true,
         builder: (BuildContext context) {
-          return ContactScreen();
+          return const ContactScreen();
         },
       );
     }

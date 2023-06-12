@@ -1,84 +1,79 @@
-import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/NotificationScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
-import 'package:auropay/view/pages/ReceiptScreen.dart';
-import 'package:auropay/view/pages/Send/SendScreen.dart';
-import 'package:auropay/view/pages/SplashScreen.dart';
-import 'package:auropay/view/pages/TransactionScreen.dart';
-import 'package:auropay/view/pages/onBoardScreen.dart';
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+
+import '../../../view/pages/Routes.dart';
+import '../../../view/pages/SplashScreen.dart';
+import 'view/Theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
-import 'package:auropay/view/pages/providers/theme_provider.dart';
-import 'package:auropay/view/pages/AnalyticsScreen.dart';
-import 'package:auropay/view/pages/HomeScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/AccountScreen.dart';
-import 'package:auropay/view/pages/QR Code/QRCodeScreen1.dart';
-import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
-import 'package:auropay/view/pages/Send/ProgressScreen.dart';
-import 'package:auropay/view/pages/Send/SuccessScreen.dart';
+import 'package:firebase_core/firebase_core.dart';
 
-void main() {
-  SystemChrome.setSystemUIOverlayStyle(
-    const SystemUiOverlayStyle(
-      statusBarColor: Colors.transparent,
-      statusBarIconBrightness: Brightness.dark,
-      statusBarBrightness: Brightness.dark,
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
+
+  final storage = FlutterSecureStorage();
+  String? isSignedIn = await storage.read(key: 'isSignedIn');
+  bool isUserSignedIn = isSignedIn != null && isSignedIn == 'false';
+
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => ThemeProvider(),
+      child: MyApp(isUserSignedIn: isUserSignedIn),
     ),
   );
 
-  runApp(
-    ChangeNotifierProvider<ThemeProvider>(
-      create: (_) => ThemeProvider(),
-      child: const MyApp(),
+  SystemChrome.setSystemUIOverlayStyle(
+    const SystemUiOverlayStyle(
+      // statusBarColor: Colors.transparent,
+      statusBarIconBrightness: Brightness.light,
+      statusBarBrightness: Brightness.light,
     ),
   );
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({Key? key}) : super(key: key);
+class MyApp extends StatefulWidget {
+  final bool isUserSignedIn;
+  const MyApp({Key? key, required this.isUserSignedIn}) : super(key: key);
+
+  @override
+  State<MyApp> createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  User? _user;
+
+  @override
+  void initState() {
+    super.initState();
+    checkUserLoggedIn();
+  }
+
+  void checkUserLoggedIn() async {
+    FirebaseAuth auth = FirebaseAuth.instance;
+    User? user = auth.currentUser;
+    if (user != _user) {
+      setState(() {
+        _user = user;
+      });
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
-        builder: (context,child) {
-          final provider = Provider.of<ThemeProvider>(context);
-          return MaterialApp(
-            debugShowCheckedModeBanner: false,
-            title: 'AuroPay',
-            theme: provider.theme,
-            home: const SplashScreen(),
-            routes: {
-              '/onBoarding': (context) => const OnBoardingScreen(),
-              '/login': (context) => const LoginScreen(),
-              '/signup': (context) => const SignUpScreen(),
-              '/home': (context) => const HomeScreen(),
-              '/transactions': (context) => const TransactionScreen(),
-              '/analytics': (context) => const AnalyticsScreen(),
-              '/more': (context) => const MoreScreen(),
-              '/send': (context) => const SendScreen(),
-              '/progress': (context) => const ProgressScreen(),
-              '/success': (context) => const SuccessScreen(),
-              '/account': (context) => const AccountScreen(),
-              '/qrscreen': (context) => const QRCodeScreen(),
-              '/confirmpay': (context) => const ConfirmPayScreen(),
-              '/receipt': (context) => ReceiptScreen(),
-              '/profile' : (context) => const ProfileScreen(),
-              '/help' : (context) => const HelpScreen(),
-              '/support' : (context) => const SupportScreen(),
-              '/contact' : (context) => const ContactScreen(),
-              '/settings' : (context) => const SettingScreen(),
-              '/notifications' : (context) => const NotificationScreen(),
-            },
-          );
-        }
+    final themeProvider = Provider.of<ThemeProvider>(context);
+    final currentTheme = themeProvider.getTheme();
+    return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      title: 'AuroPay',
+      theme: currentTheme, // Use the current theme from the provider
+      darkTheme: AppColors.darkTheme,
+      themeMode: themeProvider.getThemeMode(), // Use the current theme mode from the provider
+      initialRoute: _user != null ? '/signedUser' : '/splashScreen',
+      routes: routes,
     );
   }
 }

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 class SupportScreen extends StatelessWidget {
   const SupportScreen({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class SupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
           Container(
@@ -29,7 +30,7 @@ class SupportScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor,
+                    color: AppColors.textColor,
                   ),
                 ),
                 PopupMenuButton(
@@ -72,37 +73,37 @@ class SupportScreen extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.camera_alt_rounded),
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
                 onPressed: () {
                   // Handle camera icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.attach_file),
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
                 onPressed: () {
                   // Handle document icon press
                 },
               ),
               Expanded(
                 child: TextFormField(
-                  style: TextStyle(color: themeProvider.textColor),
+                  style: TextStyle(color: AppColors.textColor),
                   decoration: InputDecoration(
                     hintText: 'Type your message...',
-                    hintStyle: TextStyle(color: themeProvider.textColor.withOpacity(0.54)),
+                    hintStyle: TextStyle(color: AppColors.textColor.withOpacity(0.54)),
                   ),
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.keyboard_voice),
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
                 onPressed: () {
                   // Handle voice input icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.send),
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
                 onPressed: () {
                   // Handle send icon press
                 },
@@ -146,14 +147,14 @@ class TextBubble extends StatelessWidget {
                 sender,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: themeProvider.textColor,
+                  color: AppColors.textColor,
                 ),
               ),
               const SizedBox(height: 4.0),
               Text(
                 message,
                 style: TextStyle(
-                  color: themeProvider.textColor,
+                  color: AppColors.textColor,
                 ),
               ),
             ],
@@ -164,18 +165,3 @@ class TextBubble extends StatelessWidget {
   }
 }
 
-void main() {
-  runApp(
-    ChangeNotifierProvider<ThemeProvider>(
-      create: (_) => ThemeProvider(),
-      child: Consumer<ThemeProvider>(
-        builder: (_, themeProvider, __) {
-          return MaterialApp(
-            theme: themeProvider.theme,
-            home: SupportScreen(),
-          );
-        },
-      ),
-    ),
-  );
-}

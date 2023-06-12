@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../providers/theme_provider.dart';
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 class HelpScreen extends StatelessWidget {
   const HelpScreen({Key? key}) : super(key: key);
@@ -9,7 +10,7 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context); // Access the ThemeProvider
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor, // Apply the background color from the theme
+      backgroundColor: AppColors.primaryColor, // Apply the background color from the theme
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -30,7 +31,7 @@ class HelpScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor, // Apply the text color from the theme
+                    color: AppColors.textColor, // Apply the text color from the theme
                   ),
                 ),
                 PopupMenuButton(
@@ -91,7 +92,7 @@ class HelpScreen extends StatelessWidget {
         padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
         child: Row(
           children: [
-            Icon(icon, color: themeProvider.textColor), // Apply the text color from the theme
+            Icon(icon, color: AppColors.textColor), // Apply the text color from the theme
             const SizedBox(width: 12),
             Text(
               title,
@@ -99,7 +100,7 @@ class HelpScreen extends StatelessWidget {
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
                 fontFamily: 'SF Pro Display',
-                color: themeProvider.textColor, // Apply the text color from the theme
+                color: AppColors.textColor, // Apply the text color from the theme
               ),
             ),
             const Spacer(),

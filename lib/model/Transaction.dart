@@ -1,16 +1,18 @@
-enum TransactionType { send, request }
 
-class Transaction {
-  String userImage;
-  String userName;
-  String dateTime;
-  double amount;
-  TransactionType transactionType;
+class ListItem {
+  final String userImage;
+  final String name;
+  final String date;
+  final String amount;
 
-  Transaction(
-      {required this.userImage,
-        required this.userName,
-        required this.dateTime,
-        required this.amount,
-        required this.transactionType});
+  ListItem( {required this.userImage ,required this.name, required this.date, required this.amount});
+
+  factory ListItem.fromJson(Map<String, dynamic> json) {
+    return ListItem(
+      userImage: json['userImage'],
+      name: json['name'],
+      date: json['date'],
+      amount: json['amount'],
+    );
+  }
 }

@@ -1,5 +1,14 @@
+import 'package:auropay/view/Theme/appColors.dart';
+
+import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomError.dart';
+import '../../../view/widgets/CustomField.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'ConfirmActivationCode.dart';
+import 'dart:async';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -9,159 +18,72 @@ class LoginScreen extends StatefulWidget {
 }
 
 class _LoginScreenState extends State<LoginScreen> {
-  TextEditingController phoneNumberController = TextEditingController();
-  String countryCode = '91'; // Default country code
+  final GlobalKey<ScaffoldState> _scaffoldKey = GlobalKey<ScaffoldState>();
+  TextEditingController emailController = TextEditingController();
+  TextEditingController passwordController = TextEditingController();
 
-  @override
-  void dispose() {
-    phoneNumberController.dispose();
-    super.dispose();
+  Future<void> login() async {
+    String email = emailController.text.trim();
+    String password = passwordController.text.trim();
+
+    try {
+      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: email,
+        password: password,
+      );
+      // User signed in successfully
+      // You can perform any additional actions here
+      // print('Logged in successfully. User ID: ${userCredential.user?.uid}');
+
+      // Navigate to the next screen (CreatePasscode screen)
+      Timer(const Duration(seconds: 0), () {
+        showGlobalSnackBar(context, 'Logged in successfully');
+        Navigator.pushReplacement(
+          context,
+          MaterialPageRoute(builder: (context) => const CreatePasscodeScreen()),
+        );
+      });
+    } catch (e) {
+      if (e is FirebaseAuthException) {
+        if (e.code == 'user-not-found') {
+          // User with the specified email doesn't exist
+          showGlobalSnackBar(context,'Please sign up first.');
+        } else if (e.code == 'wrong-password') {
+          // User with the specified email exists but entered the wrong password
+          showGlobalSnackBar(context,'Incorrect password.');
+        } else {
+          // Other login errors
+          showGlobalSnackBar(context,'Login failed. Error: ${e.message}');
+        }
+      } else {
+        // Other errors
+        showGlobalSnackBar(context,'Login failed. Error: $e');
+      }
+    }
   }
+
+
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54,
-      body: Center(
+      key: _scaffoldKey,
+      appBar: myAppBar(context, 'Sign In'),
+      backgroundColor: AppColors.primaryColor,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'Log in',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Phone number',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white38,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Row(
-                  children: [
-                    Container(
-                      width: 100,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: Center(
-                        child: CountryCodePicker(
-                          countryCode: countryCode,
-                          onChanged: (String? newValue) {
-                            setState(() {
-                              countryCode = newValue!;
-                            });
-                          },
-                        ),
-                      ),
-                    ),
-                    const SizedBox(width: 10),
-                    Container(
-                      width: 250,
-                      height: 40,
-                      decoration: BoxDecoration(
-                        color: Colors.grey,
-                        borderRadius: BorderRadius.circular(8),
-                      ),
-                      child: TextField(
-                        controller: phoneNumberController,
-                        keyboardType: TextInputType.phone,
-                        style: const TextStyle(color: Colors.black),
-                        decoration: const InputDecoration(
-                          border: InputBorder.none,
-                          contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-                const SizedBox(height: 10),
-                const Text(
-                  'Please confirm the country code and enter your phone number',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontFamily: 'SF-Pro-Display',
-                    fontWeight: FontWeight.w500,
-                    color: Colors.white38,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Container(
-                  width: 200,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    gradient: const LinearGradient(
-                      colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                      begin: Alignment.centerLeft,
-                      end: Alignment.centerRight,
-                    ),
-                  ),
-                  child: ElevatedButton(
-                    onPressed: () {
-                      String phoneNumber = phoneNumberController.text;
-                      // Process the user's input here
-                      // For example, pass the data to the next screen
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => ConfirmActivationCode(
-                            phoneNumber: phoneNumber,
-                            countryCode: countryCode,
-                          ),
-                        ),
-                      );
-                    },
-                    style: ElevatedButton.styleFrom(
-                      foregroundColor: Colors.transparent,
-                      backgroundColor: Colors.transparent,
-                      elevation: 0,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(30),
-                      ),
-                    ),
-                    child: const Text(
-                      'Send Code',
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17.0,
-                        fontFamily: 'SF Pro Display'
-                      ),
-                    ),
-                  ),
-                ),
-              ],
-            ),
+            myField(context, 'Email', emailController, false),
+            myField(context, 'Password', passwordController, true),
+            const SizedBox(height: 16.0),
+            Expanded(
+              child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: appButtonFunc(context,margin: const EdgeInsets.only(bottom: 10.0),
+                      gradient(context), 'Sign In', login)),
+            )
           ],
         ),
       ),
@@ -169,32 +91,4 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 }
 
-class CountryCodePicker extends StatelessWidget {
-  final String countryCode;
-  final ValueChanged<String?> onChanged;
 
-  const CountryCodePicker({
-    Key? key,
-    required this.countryCode,
-    required this.onChanged,
-  }) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-    return DropdownButton<String>(
-      value: countryCode,
-      onChanged: onChanged,
-      items: <String>[
-        '91',
-        '44',
-        '86',
-        // Add more country codes as needed
-      ].map<DropdownMenuItem<String>>((String value) {
-        return DropdownMenuItem<String>(
-          value: value,
-          child: Text(value),
-        );
-      }).toList(),
-    );
-  }
-}

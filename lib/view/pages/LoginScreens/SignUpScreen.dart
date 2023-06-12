@@ -1,5 +1,15 @@
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/widgets/CustomError.dart';
+
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomField.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
-import 'ConfirmAccountScreen.dart';
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
+import 'ConfirmOTP.dart';
 
 class SignUpScreen extends StatefulWidget {
   const SignUpScreen({Key? key}) : super(key: key);
@@ -9,214 +19,145 @@ class SignUpScreen extends StatefulWidget {
 }
 
 class _SignUpScreenState extends State<SignUpScreen> {
-  TextEditingController nameController = TextEditingController();
-  TextEditingController phoneNumberController = TextEditingController();
-  String countryCode = '+1'; // Default country code
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final TextEditingController _fullNameController = TextEditingController();
+  final TextEditingController _emailController = TextEditingController();
+  final TextEditingController _passwordController = TextEditingController();
+  final TextEditingController _confirmPasswordController = TextEditingController();
+  final TextEditingController _phoneNumberController = TextEditingController();
+  final FirebaseAuth _auth = FirebaseAuth.instance;
+  final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  void _sendOtp(BuildContext context) async {
+    // final String phoneNumber = _phoneNumberController.text.trim();
+    final String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    if (_formKey.currentState!.validate()) {
+      try {
+        await FirebaseAuth.instance.verifyPhoneNumber(
+          phoneNumber: phoneNumber,
+          verificationCompleted: (PhoneAuthCredential credential) {
+            // Auto-verification if the device automatically detects the SMS code
+            FirebaseAuth.instance.signInWithCredential(credential);
+          },
+          verificationFailed: (FirebaseAuthException e) {
+            print('Failed to send OTP: ${e.message}');
+            showGlobalSnackBar(context, 'Failed to send OTP: ${e.message}');
+            // Handle the error if OTP sending fails
+          },
+          codeSent: (String verificationId, int? resendToken) {
+            Navigator.pushReplacement(
+              context,
+              MaterialPageRoute(
+                builder: (context) => confirmOTP(
+                  verificationId: verificationId,
+                  phoneNumber: phoneNumber, countryCode: '', onVerificationComplete: (PhoneAuthCredential ) {  },
+                ),
+              ),
+            );
+          },
+          codeAutoRetrievalTimeout: (String verificationId) {
+            // Handle code auto-retrieval timeout
+          },
+        );
+      } catch (e) {
+        print('Send OTP Error: $e');
+        showGlobalSnackBar(context, 'Send OTP Error: $e');
+        // Handle the send OTP error
+      }
+    }
+  }
   @override
   void dispose() {
-    nameController.dispose();
-    phoneNumberController.dispose();
+    _fullNameController.dispose();
+    _emailController.dispose();
+    _passwordController.dispose();
+    _confirmPasswordController.dispose();
+    _phoneNumberController.dispose();
     super.dispose();
+  }
+
+  String? _validatePassword(String? value) {
+    if (value != _passwordController.text) {
+      return 'Passwords do not match';
+    }
+    return null;
+  }
+
+  void _signUp(BuildContext context) async {
+    final String fullName = _fullNameController.text.trim();
+    final String email = _emailController.text.trim();
+    final String password = _passwordController.text;
+    final String confirmPassword = _confirmPasswordController.text;
+    final String phoneNumber = _phoneNumberController.text.trim();
+
+    if (_formKey.currentState!.validate()) {
+      try {
+        final UserCredential userCredential = await _auth.createUserWithEmailAndPassword(
+          email: email,
+          password: password,
+        );
+
+        final CollectionReference users = _firestore.collection('users');
+        await users.doc(userCredential.user!.uid).set({
+          'fullName': fullName,
+          'email': email,
+          'phoneNumber': phoneNumber,
+        });
+
+        showGlobalSnackBar(context, 'OTP Sent');
+
+      } catch (e) {
+        if (kDebugMode) {
+          print('Signup failed: $e');
+          showGlobalSnackBar(context, 'Signup failed: $e');
+        }
+      }
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black54,
-      body: Center(
+      appBar: myAppBar(context, 'Sign Up'),
+      backgroundColor: AppColors.primaryColor,
+      body: Padding(
+        padding: const EdgeInsets.all(24.0),
         child: Column(
           children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'Sign Up',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                const Align(
-                  alignment: Alignment.centerLeft,
-                  child: Text(
-                    'Full Name',
-                    style: TextStyle(
-                      fontSize: 16,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w500,
-                      color: Colors.white38,
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Container(
-                  width: 250,
-                  height: 40,
-                  decoration: BoxDecoration(
-                    color: Colors.grey,
-                    borderRadius: BorderRadius.circular(8),
-                  ),
-                  child: TextField(
-                    controller: nameController,
-                    style: const TextStyle(color: Colors.black),
-                    decoration: const InputDecoration(
-                      border: InputBorder.none,
-                      contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                    ),
-                  ),
-                ),
-                const SizedBox(height: 10),
-                Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    const Align(
-                      alignment: Alignment.centerLeft,
-                      child: Text(
-                        'Phone number',
-                        style: TextStyle(
-                          fontSize: 16,
-                          fontFamily: 'SF-Pro-Display',
-                          fontWeight: FontWeight.w500,
-                          color: Colors.white38,
-                        ),
-                      ),
-                    ),
-                    const SizedBox(height: 10),
-                    Row(
+            Expanded(
+              child: ListView(
+                children: [
+                  Form(
+                    key: _formKey,
+                    child: Column(
                       children: [
-                        Container(
-                          width: 100,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: Center(
-                            child: DropdownButton<String>(
-                              value: countryCode,
-                              dropdownColor: Colors.grey,
-                              elevation: 0,
-                              underline: const SizedBox(),
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  countryCode = newValue!;
-                                });
-                              },
-                              items: <String>[
-                                '+1',
-                                '+91',
-                                '+44',
-                                '+86',
-                                // Add more country codes as needed
-                              ].map<DropdownMenuItem<String>>((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(
-                                    value,
-                                    style: const TextStyle(color: Colors.black),
-                                  ),
-                                );
-                              }).toList(),
-                            ),
-                          ),
-                        ),
-                        const SizedBox(width: 10),
-                        Container(
-                          width: 250,
-                          height: 40,
-                          decoration: BoxDecoration(
-                            color: Colors.grey,
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          child: TextField(
-                            controller: phoneNumberController,
-                            keyboardType: TextInputType.phone,
-                            style: const TextStyle(color: Colors.black),
-                            decoration: const InputDecoration(
-                              border: InputBorder.none,
-                              contentPadding: EdgeInsets.symmetric(horizontal: 10),
-                            ),
-                          ),
-                        ),
+                        myField(context, 'Full Name', _fullNameController, false,
+                            truePhrase: 'Please enter your full name', falsePhrase: null),
+                        myField(context, 'Email', _emailController, false,
+                            truePhrase: 'Please enter an email address', falsePhrase: null),
+                        myField(context, 'Password', _passwordController, true,
+                            truePhrase: 'Please enter a password', falsePhrase: null),
+                        myField(context, 'Confirm Password', _confirmPasswordController, true,
+                            truePhrase: 'Passwords do not match', falsePhrase: null),
+                        myField(context, 'Phone Number', _phoneNumberController, false,
+                            truePhrase: 'Please enter a phone number', falsePhrase: null),
                       ],
                     ),
-                    const SizedBox(height: 10),
-                    const Text(
-                      'Please confirm the country code and enter your phone number',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontFamily: 'SF-Pro-Display',
-                        fontWeight: FontWeight.w500,
-                        color: Colors.white38,
-                      ),
-                    ),
-                    const SizedBox(height: 20),
-                    Container(
-                      width: 200,
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: const LinearGradient(
-                          colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment.centerRight,
-                        ),
-                      ),
-                      child: ElevatedButton(
-                        onPressed: () {
-                          String name = nameController.text;
-                          String phoneNumber = phoneNumberController.text;
-                          // Process the user's input here
-                          // For example, pass the data to the next screen
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => ConfirmAccountScreen(
-                                name: name,
-                                phoneNumber: phoneNumber,
-                                countryCode: countryCode,
-                              ),
-                            ),
-                          );
-                        },
-                        style: ElevatedButton.styleFrom(
-                          foregroundColor: Colors.transparent,
-                          backgroundColor: Colors.transparent,
-                          elevation: 0,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(30),
-                          ),
-                        ),
-                        child: const Text(
-                          'Sign Up',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 17.0,
-                          ),
-                        ),
-                      ),
-                    ),
-                  ],
-                ),
-              ],
+                  ),
+                ],
+              ),
+            ),
+            Align(
+              alignment: Alignment.bottomCenter,
+              child: Padding(
+                padding: const EdgeInsets.only(bottom: 20.0),
+                child: appButtonFunc(context, gradient(context), 'Sign Up', () {
+                  if (_formKey.currentState?.validate() ?? false) {
+                    _sendOtp(context);
+                    _signUp(context);
+                  }
+                }),
+              ),
             ),
           ],
         ),

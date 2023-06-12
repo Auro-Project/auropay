@@ -1,9 +1,13 @@
 import 'package:flutter/material.dart';
 
-BoxDecoration gradient(BuildContext context) => BoxDecoration(
-      borderRadius: const BorderRadius.all(Radius.circular(10)),
+BoxDecoration gradient(BuildContext context,{
+  Color borderColor = Colors.transparent,
+}) => BoxDecoration(
+      borderRadius: const BorderRadius.all(Radius.circular(20)),
+      border: Border.all( color: borderColor, width: 1,),
       gradient: const LinearGradient(
-        colors: [Color(0xFFA4AAEE),
+        colors: [
+          Color(0xFFA4AAEE),
           Color(0xFF8FB4EC)],
         stops: [0.5, 1],
       ),
@@ -17,11 +21,16 @@ BoxDecoration gradient(BuildContext context) => BoxDecoration(
       ],
     );
 
-BoxDecoration border(BuildContext context, {double borderRadius = 10}) => BoxDecoration(
-  color: Colors.black.withOpacity(0.1),
+BoxDecoration border(BuildContext context,
+{
+  double borderRadius = 20,
+  Color borderColor = Colors.white70,
+  Color colorbg = Colors.black12,
+}) => BoxDecoration(
+  color: colorbg,
   borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
   border: Border.all(
-    color: Colors.white70,
+    color: borderColor,
     width: 1,
   ),
 );

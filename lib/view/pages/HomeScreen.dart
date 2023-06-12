@@ -1,14 +1,24 @@
+import 'dart:convert';
+import 'package:auropay/model/Transaction.dart';
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/Theme/theme_provider.dart';
+import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
-import 'package:flutter/gestures.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
-import '../../view/pages/AnalyticsScreen.dart';
+import '../../model/UserData.dart';
+import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
-import '../widgets/nav_bar/BottomNavBar.dart';
+import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
+import 'package:provider/provider.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class HomeScreen extends StatefulWidget {
-  const HomeScreen({super.key});
+  const HomeScreen({Key? key}) : super(key: key);
 
   @override
   _HomeScreenState createState() => _HomeScreenState();
@@ -16,253 +26,292 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
+  Future<String> fetchCurrentUserFullName() async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user != null) {
+      final userData = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .get();
+      return userData['fullName'];
+    }
+    return '';
+  }
 
-  static Widget _homepage(BuildContext context) {
+  static Future<UserData> loadJsonData() async {
+    String jsonData = await rootBundle.loadString('lib/data/user.json');
+    Map<String, dynamic> jsonMap = json.decode(jsonData);
+    return UserData.fromJson(jsonMap);
+  }
+
+  static Widget _homepage(BuildContext context, UserData userData) {
     final height = MediaQuery.of(context).size.height;
-    final double width = MediaQuery.of(context).size.width;
+    final width = MediaQuery.of(context).size.width;
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
+    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    final String? profilePhotoUrl = currentUser?.photoURL;
+
     return Scaffold(
-      body: Stack(
-        children: [
-          Image.asset("assets/images/HomePage.png"),
-          Center(
-            child: Column(
-              children: [
-                SizedBox(height: height * 0.08),
-                //create top status bar with avatar with name and notification button on right corner
-                const SizedBox(
-                  height: 50,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Padding(
-                        padding: EdgeInsets.only(left: 20),
-                        child: CircleAvatar(
-                          radius: 30,
-                          backgroundImage:
-                              AssetImage("assets/images/avatar.png"),
-                        ),
-                      ),
-                      Text(
-                        "Hi, Zara",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.only(right: 20),
-                        child: Icon(
-                          Icons.notifications,
-                          color: Colors.white,
-                          size: 30,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-                //create reactangle card with balance and currency, logo left bottom of card, expiry right bottom corner
-                SizedBox(
-                  height: height * 0.02,
-                ),
-                SizedBox(
-                  height: height * 0.25,
-                  width: width * 0.9,
-                  child: CustomPaint(
-                    painter: CustomShape(
-                      strokeColor: Colors.white.withOpacity(0.7),
-                      fillColor: Colors.white54.withOpacity(0.01)
-                    ),
-                    child: Column(
+      backgroundColor: AppColors.primaryColor,
+      body: SingleChildScrollView(
+        child: Stack(
+          children: [
+            Image.asset("assets/images/shapes/gradHM.png"),
+            Padding(
+              padding: EdgeInsets.symmetric(
+                // horizontal: width * 0.02,
+                vertical: height * 0.08,
+              ),
+              child: Column(
+                children: [
+                  SizedBox(
+                    height: 50,
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        SizedBox(height: height * 0.05),
-                        const Text(
-                          "Your Balance",
-                          style: TextStyle(
-                            color: Colors.white54,
-                            fontSize: 20,
-                            fontWeight: FontWeight.w400,
+                        Padding(
+                          padding: const EdgeInsets.only(left: 30),
+                          child: CircleAvatar(
+                            radius: 20,
+                            backgroundImage: profilePhotoUrl != null
+                                ? NetworkImage(profilePhotoUrl)
+                                : const AssetImage("assets/images/avatar.png")
+                                    as ImageProvider<Object>?,
+                            //AssetImage("assets/images/avatar.png"),
                           ),
                         ),
-                        SizedBox(height: height * 0.005),
-                        const Text(
-                          "₹2,500.00",
+                        Text(
+                          "Hi, ${userData.name}",
                           style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 36,
+                            color: AppColors.textColor,
+                            fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
                         ),
-                        SizedBox(height: height * 0.03),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Padding(
-                              padding: const EdgeInsets.only(left: 20),
-                              child: SvgPicture.asset(
-                                "assets/images/icons/Logo.svg",
-                                height: 45,
-                              ),
-                            ),
-                            const Padding(
-                              padding: EdgeInsets.only(right: 30),
-                              child: Column(
-                                children: [
-                                  Text(
-                                    "Valid Thru",
-                                    style: TextStyle(
-                                      color: Colors.white38,
-                                      fontSize: 16,
-                                    ),
-                                  ),
-                                  Text(
-                                    "MM/YY",
-                                    style: TextStyle(
-                                      color: Colors.white,
-                                      fontSize: 20,
-                                      fontWeight: FontWeight.bold,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
-                //create 4 cards with icons and text
-                SizedBox(height: height * 0.04),
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _homeButton(context, 'assets/images/icons/add.svg', 'TopUp',
-                        '/send'),
-                    _homeButton(context, 'assets/images/icons/send.svg', 'Send',
-                        '/send'),
-                    _homeButton(context, 'assets/images/icons/request.svg',
-                        'Request', '/send'),
-                    _homeButton(context, 'assets/images/icons/withdraw.svg',
-                        'Withdraw', '/send'),
-                  ],
-                ),
-                SizedBox(height: height * 0.02),
-                //create a ListBuilder for recent transactions
-                SizedBox(
-                  height: height * 0.42,
-                  width: width * 1,
-                  child: Card(
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    color: const Color(0xff1E1E1E),
-                    child: Column(
-                      children: [
-                        SizedBox(height: height * 0.02),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                          children: [
-                            const Text(
-                              "Recent Transactions",
-                              style: TextStyle(
-                                color: Colors.white54,
-                                fontSize: 20,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                            SizedBox(width: width * 0.2),
-                            const Text(
-                              "View All",
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 16,
-                                fontWeight: FontWeight.w400,
-                              ),
-                            ),
-                          ],
-                        ),
-                        SizedBox(height: height * 0.01),
-                        Expanded(
-                          child: ListView.builder(
-                            padding: EdgeInsets.zero,
-                            itemCount: 6,
-                            itemBuilder: (context, index) {
-                              return const ListTile(
-                                leading: CircleAvatar(
-                                  radius: 20,
-                                  backgroundImage:
-                                      AssetImage("assets/images/avatar.png"),
-                                ),
-                                title: Text(
-                                  "Zara Doe",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                subtitle: Text(
-                                  "12 Jub, 12:00 PM",
-                                  style: TextStyle(
-                                    color: Colors.white54,
-                                    fontSize: 14,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                                trailing: Text(
-                                  "-₹200.00",
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              );
-                            },
+                        Padding(
+                          padding: const EdgeInsets.only(right: 30),
+                          child: SvgPicture.asset(
+                            "assets/images/icons/notify.svg",
+                            height: 23,
                           ),
                         ),
                       ],
                     ),
                   ),
-                ),
-              ],
+                  SizedBox(height: height * 0.02),
+                  SizedBox(
+                    height: height * 0.25,
+                    width: width * 0.9,
+                    child: CustomPaint(
+                      painter: CustomShape(
+                        strokeColor: Colors.white.withOpacity(0.8),
+                        fillColor: Colors.white54.withOpacity(0.01),
+                      ),
+                      child: Column(
+                        children: [
+                          SizedBox(height: height * 0.05),
+                          Text(
+                            "Your Balance",
+                            style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 20,
+                              fontWeight: FontWeight.w400,
+                            ),
+                          ),
+                          SizedBox(height: height * 0.005),
+                          Text(
+                            userData.balance,
+                            style: TextStyle(
+                              color: AppColors.textColor,
+                              fontSize: 36,
+                              fontWeight: FontWeight.bold,
+                            ),
+                          ),
+                          SizedBox(height: height * 0.03),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            children: [
+                              Padding(
+                                padding: const EdgeInsets.only(left: 20),
+                                child: SvgPicture.asset(
+                                  "assets/images/icons/Logo.svg",
+                                  height: 45,
+                                  color: AppColors.textColor,
+                                ),
+                              ),
+                              Padding(
+                                padding: const EdgeInsets.only(right: 30),
+                                child: Column(
+                                  children: [
+                                    const Text(
+                                      "Valid Thru",
+                                      style: TextStyle(
+                                        color: AppColors.textColor,
+                                        fontSize: 16,
+                                      ),
+                                    ),
+                                    Text(
+                                      userData.expireDate,
+                                      style: TextStyle(
+                                        color: AppColors.textColor,
+                                        fontSize: 20,
+                                        fontWeight: FontWeight.bold,
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                  SizedBox(height: height * 0.04),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                    children: [
+                      _homeButton(
+                        context,
+                        'assets/images/icons/add.svg',
+                        'TopUp',
+                        '/topup',
+                      ),
+                      _homeButton(
+                        context,
+                        'assets/images/icons/withdraw.svg',
+                        'Withdraw',
+                        '/withdraw',
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: height * 0.02),
+                  SizedBox(
+                    height: height * 0.42,
+                    width: width * 1,
+                    child: Card(
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      color: AppColors.primaryColor.withOpacity(0.85),
+                      child: Column(
+                        children: [
+                          SizedBox(height: height * 0.02),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                            children: [
+                              const Text(
+                                "Recent Transactions",
+                                style: TextStyle(
+                                  color: AppColors.textColor,
+                                  fontSize: 20,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                              SizedBox(width: width * 0.08),
+                              Text(
+                                "View All",
+                                style: TextStyle(
+                                  color: AppColors.accent1,
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                ),
+                              ),
+                            ],
+                          ),
+                          SizedBox(height: height * 0.01),
+                          Expanded(
+                            child: ListView.builder(
+                              padding: EdgeInsets.zero,
+                              itemCount: userData.transactions.length,
+                              itemBuilder: (context, index) {
+                                ListItem item = userData.transactions[index];
+                                return ListTile(
+                                  leading: CircleAvatar(
+                                    radius: 20,
+                                    backgroundImage: AssetImage(item.userImage),
+                                  ),
+                                  title: Text(
+                                    item.name,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  subtitle: Text(
+                                    item.date,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 14,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                  trailing: Text(
+                                    item.amount,
+                                    style: TextStyle(
+                                      color: AppColors.textColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                );
+                              },
+                            ),
+                          ),
+                        ],
+                      ),
+                    ),
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 
   static Widget _homeButton(
-      BuildContext context, String icon, String text, String route) {
+    BuildContext context,
+    String icon,
+    String text,
+    String route,
+  ) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
-      width: 90,
+      width: 150,
       child: Column(
         children: [
-          ElevatedButton(
-            style: ElevatedButton.styleFrom(
-              backgroundColor: const Color(0x12ffffff),
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
+          Container(
+            decoration: gradient(context),
+            child: ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                elevation: 0,
+                  backgroundColor: Colors.transparent,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(20),
+                  ),
+                  minimumSize: const Size(200, 50)),
+              child: Padding(
+                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                child: SvgPicture.asset(
+                  icon,
+                  height: 30,
+                  color: AppColors.primaryColor,
+                ),
               ),
+              onPressed: () => Navigator.pushNamed(context, route),
             ),
-            child: Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 2, vertical: 17),
-              child: SvgPicture.asset(
-                icon,
-                height: 30,
-                color: Colors.white70,
-              ),
-            ),
-            onPressed: () => Navigator.pushNamed(context, route),
           ),
           const SizedBox(height: 10),
           Text(
             text,
             maxLines: 2,
-            style: const TextStyle(
-              color: Colors.white,
+            textAlign: TextAlign.center,
+            style: TextStyle(
+              color: AppColors.textColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),
@@ -275,11 +324,23 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      _homepage(context),
-      const AnalyticsScreen(),
+      FutureBuilder<UserData>(
+        future: loadJsonData(),
+        builder: (context, snapshot) {
+          if (snapshot.hasData) {
+            return _homepage(context, snapshot.data!);
+          } else if (snapshot.hasError) {
+            return Text("Error: ${snapshot.error}");
+          } else {
+            return CircularProgressIndicator();
+          }
+        },
+      ),
+      AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),
     ];
+
     return Scaffold(
       extendBody: true,
       bottomNavigationBar: BottomNavBar(

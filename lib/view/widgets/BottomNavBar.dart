@@ -1,5 +1,6 @@
 import 'dart:ui';
 
+import 'package:auropay/view/Theme/appColors.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -30,8 +31,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               iconPath,
               color: widget.currentIndex == index
-                  ? const Color(0xFFB8B6FB)
-                  : Colors.grey.shade400,
+                  ? AppColors.accent1
+                  : AppColors.textColor
             ),
             onPressed: () => widget.onTap(index),
             splashColor: Colors.transparent,
@@ -43,8 +44,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 child: Container(
                   width: 8,
                   height: 8,
-                  decoration: const BoxDecoration(
-                    color: Color(0xFFB8B6FB),
+                  decoration: BoxDecoration(
+                    color: AppColors.accent1,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -67,7 +68,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             clipBehavior: Clip.none,
             color: Colors.transparent,
             width: size.width,
-            height: 100,
+            height: size.height * 0.11,
             child: Stack(
               children: [
                 ClipPath(
@@ -76,9 +77,9 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     filter: ImageFilter.blur(sigmaX: 18, sigmaY: 18),
                     child: Container(
                       width: size.width,
-                      height: 120,
+                      height: size.height * 0.14,
                       decoration: BoxDecoration(
-                        color: Color(0xFFFFFFFF).withOpacity(0.025),
+                        color: Color(0xFFACA9D5).withOpacity(0.15),
                       ),
                     ),
                   ),
@@ -86,25 +87,26 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 Center(
                   heightFactor: 0.2,
                   child: Container(
-                    decoration: const BoxDecoration(
+                    decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      gradient: LinearGradient(
-                        begin: Alignment(0.00, -1.00),
-                        end: Alignment(1.00, 1.00),
-                        colors: [
-                          Color.fromRGBO(184, 182, 251, 1.0),
-                          Color.fromRGBO(233, 234, 250, 1.0)
-                        ],
-                        stops: [0.00, 1.00],
-                      ),
+                      color: AppColors.accent1.shade300,
+                      // gradient: LinearGradient(
+                      //   begin: Alignment(0.00, -1.00),
+                      //   end: Alignment(1.00, 1.00),
+                      //   colors: [
+                      //     Color(0xFFBBB9FF),
+                      //     Color(0xFFDCE5FC),
+                      //   ],
+                      //   stops: [0.00, 0.60],
+                      // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: Colors.transparent,
+                      backgroundColor: AppColors.accent1.shade300,
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
-                        color: const Color(0xF2FFFFFF),
+                        color: AppColors.primaryColor,
                       ),
                     ),
                   ),

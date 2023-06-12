@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "475540638444",
+    "firebase_url": "https://auropay-47531-default-rtdb.firebaseio.com",
+    "project_id": "auropay-47531",
+    "storage_bucket": "auropay-47531.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:475540638444:android:07cb252e53662ea9f533c9",
+        "android_client_info": {
+          "package_name": "com.auropaybeta.app.auropay"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "475540638444-ees2rmtiiufugjnbd4uqt97opnn6k08a.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyChivKyyQUIjyY1Sik7mb5k7C0yMSAXnOA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "475540638444-ees2rmtiiufugjnbd4uqt97opnn6k08a.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "475540638444-6vemlv5rekkabldi0he2trtef12p3dk3.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.auropaybeta.app.auropay"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

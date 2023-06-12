@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:auropay/view/pages/providers/theme_provider.dart';
+import 'package:auropay/view/Theme/theme_provider.dart';
+
+import '../../Theme/appColors.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);
@@ -16,7 +18,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: themeProvider.backgroundColor,
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -27,7 +29,7 @@ class _SettingScreenState extends State<SettingScreen> {
               children: [
                 IconButton(
                   icon: const Icon(Icons.arrow_back),
-                  color: themeProvider.textColor,
+                  color: AppColors.textColor,
                   onPressed: () {
                     Navigator.pop(context);
                   },
@@ -38,7 +40,7 @@ class _SettingScreenState extends State<SettingScreen> {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'SF Pro Display',
-                    color: themeProvider.textColor,
+                    color: AppColors.textColor,
                   ),
                 ),
                 PopupMenuButton(
@@ -63,7 +65,7 @@ class _SettingScreenState extends State<SettingScreen> {
           ListTile(
             leading: Icon(
               Icons.notifications,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Notifications',
@@ -71,7 +73,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             onTap: () {
@@ -79,14 +81,14 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.language,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Language: $selectedLanguage', // Display the selected language
@@ -94,7 +96,7 @@ class _SettingScreenState extends State<SettingScreen> {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             onTap: () {
@@ -107,7 +109,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         fontSize: 18,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.normal,
-                        color: themeProvider.textColor,
+                        color: AppColors.textColor,
                       ),),
                     content: SingleChildScrollView(
                       child: ListBody(
@@ -124,7 +126,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                                color: themeProvider.textColor,
+                                color: AppColors.textColor,
                               ),),
                           ),
                           const SizedBox(height: 20,),
@@ -140,7 +142,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                                color: themeProvider.textColor,
+                                color: AppColors.textColor,
                               ),),
                           ),
                           // Add more language options as needed
@@ -153,14 +155,14 @@ class _SettingScreenState extends State<SettingScreen> {
             },
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.privacy_tip_sharp,
-              color: themeProvider.textColor,
+              color: AppColors.textColor,
             ),
             title: Text(
               'Privacy Policy',
@@ -168,13 +170,13 @@ class _SettingScreenState extends State<SettingScreen> {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: themeProvider.textColor,
+                color: AppColors.textColor,
               ),
             ),
             onTap: () {},
           ),
           Divider(
-            color: themeProvider.textColor,
+            color: AppColors.textColor,
             indent: 16,
             endIndent: 16,
           ),
