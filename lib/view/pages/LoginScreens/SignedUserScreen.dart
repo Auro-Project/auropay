@@ -57,7 +57,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
 
     // Perform any additional steps required for resetting the passcode
 
-    Navigator.pushNamed(context, '/createPasscode');
+    Navigator.pushReplacementNamed(context, '/createPasscode');
     // Show a success message or navigate to a passcode setup screen
     showGlobalSnackBar(context, 'Now reset your passcode');
   }
@@ -73,7 +73,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
   void checkPasscode(int index, String value) async {
     if (index == 3 && value.isNotEmpty) { // If it's the last field and it's filled
       if (await confirmPasscode()) {
-        Navigator.pushNamed(context, '/home');
+        Navigator.pushReplacementNamed(context, '/home');
       } else {
         // Show an error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
@@ -208,7 +208,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                     });
 
                     if (authenticated) {
-                      Navigator.pushNamed(context, '/home');
+                      Navigator.pushReplacementNamed(context, '/home');
                     } else {
                       // Authentication failed, display an error message or handle accordingly.
                       showGlobalSnackBar(context, 'Authentication failed');
