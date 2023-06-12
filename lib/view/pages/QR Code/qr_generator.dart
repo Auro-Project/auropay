@@ -1,50 +1,83 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:qr_code_scanner/qr_code_scanner.dart';
+import 'package:mobile_scanner/mobile_scanner.dart';
 
-import '../../widgets/CustomAppBar.dart';
-
-class QRScannerScreen extends StatefulWidget {
-  const QRScannerScreen({super.key});
+class QRScanner extends StatefulWidget {
+  const QRScanner({super.key});
 
   @override
-  _QRScannerScreenState createState() => _QRScannerScreenState();
+  State<QRScanner> createState() => _QRScannerState();
 }
 
-class _QRScannerScreenState extends State<QRScannerScreen> {
-  QRViewController? controller;
-  final GlobalKey qrKey = GlobalKey(debugLabel: 'QR');
+class _QRScannerState extends State<QRScanner> {
 
-  @override
-  void dispose() {
-    controller?.dispose();
-    super.dispose();
+  bool isScanCompleted = false;
+
+  void closeScreen() {
+    isScanCompleted = false;
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, 'QR Scan'),
-      body: Column(
-        children: [
-          Expanded(
-            flex: 5,
-            child: QRView(
-              key: qrKey,
-              onQRViewCreated: _onQRViewCreated,
+      appBar: myAppBar(context, 'QR Code Scanner'),
+      body: Container(
+        width: double.infinity,
+        padding: EdgeInsets.all(24),
+        child: Column(
+          children: [
+            const Expanded(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      "Place the QR code in the area",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Display",
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                    Text(
+                      "Scanning will start automatically",
+                      style: TextStyle(
+                        fontFamily: "SF Pro Display",
+                        fontSize: 16,
+                      ),
+                    ),
+                  ],
+                )
             ),
-          ),
-        ],
+            Expanded(
+              flex: 4,
+                child: Stack(
+                  children: [
+                    MobileScanner(
+                      allowDuplicates: true,
+                      onDetect: (barcode, args) {
+                        if(!isScanCompleted) {
+                          String code = barcode.rawValue ?? '---';
+                          isScanCompleted = true;
+                          Navigator.pushNamed(context, '/qramount');
+                        }
+                      },),
+                  ]
+                ),
+            ),
+            const SizedBox(height: 20,),
+            const Expanded(
+                child: Text(
+                  "Wait till the scan completes",
+                  style: TextStyle(
+                    fontFamily: "SF Pro Display",
+                    fontSize: 16,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+            ),
+          ],
+        ),
       ),
     );
-  }
-
-  void _onQRViewCreated(QRViewController controller) {
-    setState(() {
-      this.controller = controller;
-    });
-    controller.scannedDataStream.listen((scanData) {
-      // Handle the scanned QR code data
-      print(scanData.code);
-    });
   }
 }

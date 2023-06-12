@@ -11,7 +11,7 @@ import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
 import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
-import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
+import 'package:auropay/view/pages/QR%20Code/QRAmount.dart';
 import 'package:auropay/view/pages/ReceiptScreen.dart';
 import 'package:auropay/view/pages/Send/SendScreen.dart';
 import 'package:auropay/view/pages/Send/TopUpScreen.dart';
@@ -45,7 +45,6 @@ final Map<String, WidgetBuilder> routes = {
   '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
   '/home': (context) => const HomeScreen(),
   '/topup': (context) => PaymentTopUpScreen(),
-  '/qrscreen': (context) => const QRScreen(),
   '/confirmpay': (context) => const ConfirmPayScreen(),
   '/progress': (context) => const ProgressScreen(),
   '/success': (context) => const SuccessScreen(),
@@ -61,5 +60,6 @@ final Map<String, WidgetBuilder> routes = {
   '/notifications': (context) => const NotificationScreen(),
   '/notifs': (context) => const NotifScreen(),
   '/send': (context) => const SendScreen(),
-  '/qrgenerator': (context) => const QRScannerScreen(),
+  '/qrgenerator': (context) =>  QRScanner(),
+  '/qramount' : (context) => const QRAmount(code: '',),
 };

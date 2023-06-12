@@ -3,7 +3,7 @@
 
     <uses-permission android:name="android.permission.INTERNET" /> <!-- Add INTERNET permission -->
     <uses-permission android:name="android.permission.RECEIVE_SMS" /> <!-- Add RECEIVE_SMS permission -->
-
+    <uses-permission android:name="android.permission.CAMERA" />
     <application
         android:label="auropay"
         android:name="${applicationName}"
