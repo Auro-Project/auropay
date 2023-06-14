@@ -195,8 +195,9 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: gradient(context,
-                          borderColor: AppColors.accent1.shade100),
+                      decoration: border(context,
+                          borderColor: AppColors.accent1.shade100
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
