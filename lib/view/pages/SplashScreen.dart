@@ -28,28 +28,6 @@ class _SplashScreenState extends State<SplashScreen>
       }
     });
   }
-  // void initState() {
-  //   super.initState();
-  //   _animationController = AnimationController(
-  //     vsync: this,
-  //     duration: const Duration(milliseconds: 1500),
-  //   );
-  //   _animationController.forward();
-  //
-  //   _animationController.addStatusListener((status) {
-  //     if (status == AnimationStatus.completed) {
-  //       SharedPreferences.getInstance().then((prefs) {
-  //         bool isUserSignedIn = prefs.getBool('isSignedIn') ?? false;
-  //         if (isUserSignedIn) {
-  //           prefs.setBool('isSignedIn', true);
-  //           Navigator.pushReplacementNamed(context, '/signedUserScreen');
-  //         } else {
-  //           Navigator.pushReplacementNamed(context, '/onBoarding');
-  //         }
-  //       });
-  //     }
-  //   });
-  // }
 
   @override
   void dispose() {
@@ -64,8 +42,9 @@ class _SplashScreenState extends State<SplashScreen>
       body: Container(
         decoration: const BoxDecoration(
           image: DecorationImage(
-              image: AssetImage("assets/images/shapes/gradSP.png"),
-              fit: BoxFit.cover),
+              image: AssetImage("assets/images/shapes/gradSP.png",),
+              fit: BoxFit.cover,
+          ),
         ),
         child: FadeTransition(
           opacity: _animationController,

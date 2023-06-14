@@ -16,7 +16,6 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    
 
     void _showLogoutConfirmationBottomSheet(BuildContext context) {
       showModalBottomSheet(
@@ -63,27 +62,27 @@ class MoreScreen extends StatelessWidget {
                       ),
                     ),
                     SizedBox(height: 50.0),
-                    appButtonFunc(context, gradient(context),
-                        'Logout', () async {
-                          // Perform the logout action
-                          FirebaseAuth auth = FirebaseAuth.instance;
-                          await auth.signOut();
+                    appButtonFunc(context, gradient(context), 'Logout',
+                        () async {
+                      // Perform the logout action
+                      FirebaseAuth auth = FirebaseAuth.instance;
+                      await auth.signOut();
 
-                          // Remove the user login state
-                          final storage = FlutterSecureStorage();
-                          await storage.delete(key: 'isSignedIn');
+                      // Remove the user login state
+                      final storage = FlutterSecureStorage();
+                      await storage.delete(key: 'isSignedIn');
 
-                          // Close all screens and go back to the login screen
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/account', (Route<dynamic> route) => false);
-                        }
-                    ),
-                    appButtonFunc(margin: EdgeInsets.only(top: 20.0),
-                        context, border(context), 'Cancel',
-                            () {
-                          Navigator.of(context).pop();
-                        }),
-
+                      // Close all screens and go back to the login screen
+                      Navigator.of(context).pushNamedAndRemoveUntil(
+                          '/account', (Route<dynamic> route) => false);
+                    }),
+                    appButtonFunc(
+                        margin: EdgeInsets.only(top: 20.0),
+                        context,
+                        border(context),
+                        'Cancel', () {
+                      Navigator.of(context).pop();
+                    }),
                   ],
                 ),
               ),
@@ -92,13 +91,14 @@ class MoreScreen extends StatelessWidget {
         },
       );
     }
-    
-    Widget iconButton( String icon, String route,
-        {double size = 42,
-          Color? color ,
-          double iconSize= 15,
-        }
-    ) {
+
+    Widget iconButton(
+      String icon,
+      String route, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+    }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -119,14 +119,14 @@ class MoreScreen extends StatelessWidget {
         ),
       );
     }
+
     Widget iconButtonFunc(
-        String iconPath,
-        {double size = 42,
-          Color? color,
-          double iconSize= 15,
-          required Function() onPressed,
-        }
-        ) {
+      String iconPath, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+      required Function() onPressed,
+    }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -146,8 +146,6 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-
-
     Widget buildRow(String title, String iconPath, String route) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
@@ -161,14 +159,12 @@ class MoreScreen extends StatelessWidget {
                 fontSize: 20,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.w600,
-                
               ),
             ),
             Spacer(),
             IconButton(
               icon: Icon(
                 Icons.arrow_forward_ios,
-                
               ),
               onPressed: () {
                 Navigator.pushNamed(context, route);
@@ -181,14 +177,13 @@ class MoreScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, ''),
+      appBar: myAppBar(context, '',showLeadingIcon: false ),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Image.asset(
             'assets/images/shapes/gradHM.png',
             fit: BoxFit.cover,
-
           ),
           Column(
             children: [
@@ -200,7 +195,8 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: gradient(context,borderColor: AppColors.accent1.shade100),
+                      decoration: gradient(context,
+                          borderColor: AppColors.accent1.shade100),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -215,7 +211,8 @@ class MoreScreen extends StatelessWidget {
                             ),
                           ),
                           SizedBox(height: 10.0),
-                          Text('FCW-675325',
+                          Text(
+                            'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'SF-Pro-Display',
@@ -227,12 +224,30 @@ class MoreScreen extends StatelessWidget {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              iconButton(iconSize:20, color: AppColors.primaryColor, size:50,'assets/images/icons/report.svg', '/analytics'),
-                              iconButton(iconSize:18, color: AppColors.primaryColor,size:50,'assets/images/icons/notify.svg', '/analytics'),
-                              iconButton(iconSize:18,color: AppColors.primaryColor, size:50,'assets/images/icons/settings.svg', '/analytics'),
-                              iconButtonFunc(iconSize:18,
-                                  color: AppColors.primaryColor, size:50,
-                                  'assets/images/icons/logout.svg', onPressed: (){
+                              iconButton(
+                                  iconSize: 20,
+                                  color: AppColors.primaryColor,
+                                  size: 50,
+                                  'assets/images/icons/report.svg',
+                                  '/analytics'),
+                              iconButton(
+                                  iconSize: 18,
+                                  color: AppColors.primaryColor,
+                                  size: 50,
+                                  'assets/images/icons/notify.svg',
+                                  '/analytics'),
+                              iconButton(
+                                  iconSize: 18,
+                                  color: AppColors.primaryColor,
+                                  size: 50,
+                                  'assets/images/icons/settings.svg',
+                                  '/analytics'),
+                              iconButtonFunc(
+                                  iconSize: 18,
+                                  color: AppColors.primaryColor,
+                                  size: 50,
+                                  'assets/images/icons/logout.svg',
+                                  onPressed: () {
                                 _showLogoutConfirmationBottomSheet(context);
                               })
                             ],
@@ -262,13 +277,18 @@ class MoreScreen extends StatelessWidget {
                 ],
               ),
               // SizedBox(height: 10.0),
-              buildRow('Information', 'assets/images/icons/user.svg', '/proflie'),
-              buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
-              buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-              buildRow('Chat Support', 'assets/images/icons/support.svg', '/proflie'),
+              buildRow(
+                  'Information', 'assets/images/icons/user.svg', '/proflie'),
+              buildRow(
+                  'Security', 'assets/images/icons/secure.svg', '/proflie'),
+              buildRow(
+                  'Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
+              buildRow('Chat Support', 'assets/images/icons/support.svg',
+                  '/proflie'),
               //create a same way row but dark mode should be there with theme toggle from cupertinao
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
                 child: Row(
                   children: [
                     Container(
@@ -296,7 +316,6 @@ class MoreScreen extends StatelessWidget {
                         fontSize: 20,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.w600,
-
                       ),
                     ),
                     Spacer(),
@@ -306,7 +325,6 @@ class MoreScreen extends StatelessWidget {
                         themeProvider.toggleTheme();
                       },
                     )
-
                   ],
                 ),
               ),
@@ -319,7 +337,7 @@ class MoreScreen extends StatelessWidget {
 }
 
 //here is old code to give navigation
- /*{
+/*{
 
 Widget  list (// Optional named parameter
     ) {

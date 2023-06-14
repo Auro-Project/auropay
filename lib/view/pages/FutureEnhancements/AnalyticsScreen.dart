@@ -29,7 +29,7 @@ class AnalyticsScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, "Payment Analytics"),
+      appBar: myAppBar(context, "Payment Analytics", showLeadingIcon: false),
       body: Stack(
         children: [
           Image.asset(

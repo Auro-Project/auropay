@@ -1,18 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 import '../Theme/appColors.dart';
-import '../Theme/theme_provider.dart';
 import 'Constants.dart';
 
-Column myField(BuildContext context,
-    String label, TextEditingController controller, bool obscure,
-    { String? truePhrase,
-      String? falsePhrase,
-      bool isNumber = false,
-    }
-    ) {
-  final themeProvider = Provider.of<ThemeProvider>(context);
-
+Column myField(
+  BuildContext context,
+  String label,
+  TextEditingController controller,
+  bool obscure, {
+  String? truePhrase,
+  String? falsePhrase,
+  bool isNumber = false,
+}) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -51,7 +49,6 @@ Column myField(BuildContext context,
         ),
       ),
       const SizedBox(height: 20),
-
     ],
   );
 }
