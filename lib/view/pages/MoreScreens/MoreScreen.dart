@@ -278,16 +278,23 @@ class MoreScreen extends StatelessWidget {
                 ],
               ),
               //SizedBox(height: 10.0),
-              buildRow(
-                  'Settings', 'assets/images/icons/settings.svg', '/settings'),
-              buildRow(
-                  'Security', 'assets/images/icons/secure.svg', '/proflie'),
-              buildRow(
-                  'Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-              buildRow(
-                  'Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
-              buildRow('Chat Support', 'assets/images/icons/support.svg',
-                  '/help'),
+              SizedBox(
+                height: 400,
+                child: SingleChildScrollView(
+                  child: ListView(
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    children: [
+                      buildRow('Settings', 'assets/images/icons/settings.svg', '/settings'),
+                      buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
+                      buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
+                      buildRow('Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
+                      buildRow('Chat Support', 'assets/images/icons/support.svg', '/support'),
+                      buildRow('FAQ', 'assets/images/icons/support.svg', '/support'),
+                    ],
+                  ),
+                ),
+              ),
               //create a same way row but dark mode should be there with theme toggle from cupertinao
               Padding(
                 padding:
