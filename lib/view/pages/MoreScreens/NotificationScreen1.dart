@@ -1,4 +1,9 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../Theme/appColors.dart';
+import '../../Theme/theme_provider.dart';
 
 class NotifScreen extends StatefulWidget {
   const NotifScreen({Key? key}) : super(key: key);
@@ -95,25 +100,14 @@ class _NotifScreenState extends State<NotifScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: Colors.black54,
+      appBar: myAppBar(context, 'Notifications'),
+      backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const Padding(
-            padding: EdgeInsets.all(70.0),
-            child: Center(
-              child: Text(
-                'Notifications',
-                style: TextStyle(
-                  fontSize: 20,
-                  fontFamily: 'SF-Pro-Display',
-                  fontWeight: FontWeight.w600,
-                  color: Colors.white,
-                ),
-              ),
-            ),
-          ),
+          const SizedBox(height: 20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Row(
@@ -163,7 +157,7 @@ class NotificationCategory extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: isSelected ? Colors.white : Colors.white70,
+          color: isSelected ? AppColors.textColor : AppColors.textColor,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -191,14 +185,14 @@ class NotificationItem extends StatelessWidget {
       ),
       title: Text(
         message,
-        style: const TextStyle(color: Colors.white),
+        style: const TextStyle(color: AppColors.textColor),
       ),
     );
   }
 }
 
 void main() {
-  runApp(MaterialApp(
+  runApp(const MaterialApp(
     home: NotifScreen(),
   ));
 }

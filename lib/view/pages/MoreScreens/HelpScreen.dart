@@ -1,3 +1,4 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Theme/appColors.dart';
@@ -10,49 +11,12 @@ class HelpScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context); // Access the ThemeProvider
     return Scaffold(
+      appBar: myAppBar(context, 'Help'),
       backgroundColor: AppColors.primaryColor, // Apply the background color from the theme
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Text(
-                  'Help',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Display',
-                    color: AppColors.textColor, // Apply the text color from the theme
-                  ),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        child: Text('Menu Item 1'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 2'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 3'),
-                      ),
-                    ];
-                  },
-                ),
-              ],
-            ),
-          ),
-          SizedBox(height: 30),
+          const SizedBox(height: 20),
           Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -64,7 +28,7 @@ class HelpScreen extends StatelessWidget {
                 },
                 themeProvider: themeProvider, // Pass the themeProvider to the _buildHelpItem function
               ),
-              SizedBox(height: 14),
+              const SizedBox(height: 14),
               _buildHelpItem(
                 icon: Icons.chat_bubble,
                 title: 'Chat with Support',
@@ -96,7 +60,7 @@ class HelpScreen extends StatelessWidget {
             const SizedBox(width: 12),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 17,
                 fontWeight: FontWeight.w500,
                 fontFamily: 'SF Pro Display',

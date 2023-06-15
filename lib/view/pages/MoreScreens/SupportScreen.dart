@@ -1,3 +1,4 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Theme/appColors.dart';
@@ -10,47 +11,10 @@ class SupportScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      appBar: myAppBar(context, 'Support'),
       backgroundColor: AppColors.primaryColor,
       body: Column(
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Text(
-                  'Support',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Display',
-                    color: AppColors.textColor,
-                  ),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        child: Text('Menu Item 1'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 2'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 3'),
-                      ),
-                    ];
-                  },
-                ),
-              ],
-            ),
-          ),
           const SizedBox(height: 200),
           Expanded(
             child: ListView(

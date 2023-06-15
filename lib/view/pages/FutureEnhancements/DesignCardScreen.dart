@@ -1,3 +1,4 @@
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 
 class DesignCardScreen extends StatefulWidget {
@@ -24,13 +25,7 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Design Card',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-      ),
+      appBar: myAppBar(context, 'Design Card'),
       backgroundColor: Colors.black,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
@@ -45,8 +40,8 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(12.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
+                child: const Padding(
+                  padding: EdgeInsets.all(16.0),
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [

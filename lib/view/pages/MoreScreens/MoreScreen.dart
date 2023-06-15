@@ -33,18 +33,18 @@ class MoreScreen extends StatelessWidget {
                     0.5, // Set desired height here
               ),
               child: Container(
-                padding: EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Divider(
+                    const Divider(
                       thickness: 6.0,
                       indent: 130.0,
                       endIndent: 130.0,
                     ),
-                    SizedBox(height: 30.0),
-                    Text(
+                    const SizedBox(height: 30.0),
+                    const Text(
                       'Log Out',
                       style: TextStyle(
                         fontSize: 30,
@@ -52,8 +52,8 @@ class MoreScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 16.0),
-                    Text(
+                    const SizedBox(height: 16.0),
+                    const Text(
                       'Are you sure you want to log out?',
                       style: TextStyle(
                         fontSize: 16,
@@ -61,7 +61,7 @@ class MoreScreen extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    SizedBox(height: 50.0),
+                    const SizedBox(height: 50.0),
                     appButtonFunc(context, gradient(context), 'Logout',
                         () async {
                       // Perform the logout action
@@ -69,7 +69,7 @@ class MoreScreen extends StatelessWidget {
                       await auth.signOut();
 
                       // Remove the user login state
-                      final storage = FlutterSecureStorage();
+                      const storage = FlutterSecureStorage();
                       await storage.delete(key: 'isSignedIn');
 
                       // Close all screens and go back to the login screen
@@ -77,7 +77,7 @@ class MoreScreen extends StatelessWidget {
                           '/account', (Route<dynamic> route) => false);
                     }),
                     appButtonFunc(
-                        margin: EdgeInsets.only(top: 20.0),
+                        margin: const EdgeInsets.only(top: 20.0),
                         context,
                         border(context),
                         'Cancel', () {
@@ -152,18 +152,18 @@ class MoreScreen extends StatelessWidget {
         child: Row(
           children: [
             iconButton(iconPath, route),
-            SizedBox(width: 20.0),
+            const SizedBox(width: 20.0),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.w600,
               ),
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_forward_ios,
               ),
               onPressed: () {
@@ -187,7 +187,7 @@ class MoreScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              SizedBox(height: 100.0),
+              const SizedBox(height: 100.0),
               Stack(
                 children: [
                   Center(
@@ -201,8 +201,8 @@ class MoreScreen extends StatelessWidget {
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: 60.0),
-                          Text(
+                          const SizedBox(height: 60.0),
+                          const Text(
                             'John Doe',
                             style: TextStyle(
                               fontSize: 26,
@@ -211,8 +211,8 @@ class MoreScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          SizedBox(height: 10.0),
-                          Text(
+                          const SizedBox(height: 10.0),
+                          const Text(
                             'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
@@ -221,7 +221,7 @@ class MoreScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
@@ -229,20 +229,20 @@ class MoreScreen extends StatelessWidget {
                                   iconSize: 20,
                                   color: AppColors.primaryColor,
                                   size: 50,
-                                  'assets/images/icons/report.svg',
-                                  '/analytics'),
+                                  'assets/images/icons/user.svg',
+                                  '/profile'),
+                              iconButton(
+                                  iconSize: 18,
+                                  color: AppColors.primaryColor,
+                                  size: 50,
+                                  'assets/images/icons/designcard.svg',
+                                  '/designcard'),
                               iconButton(
                                   iconSize: 18,
                                   color: AppColors.primaryColor,
                                   size: 50,
                                   'assets/images/icons/notify.svg',
-                                  '/analytics'),
-                              iconButton(
-                                  iconSize: 18,
-                                  color: AppColors.primaryColor,
-                                  size: 50,
-                                  'assets/images/icons/settings.svg',
-                                  '/analytics'),
+                                  '/notifs'),
                               iconButtonFunc(
                                   iconSize: 18,
                                   color: AppColors.primaryColor,
@@ -268,7 +268,7 @@ class MoreScreen extends StatelessWidget {
                           color: AppColors.accent1.shade400,
                           width: 2,
                         ),
-                        image: DecorationImage(
+                        image: const DecorationImage(
                           image: AssetImage('assets/images/avatar.png'),
                           fit: BoxFit.cover,
                         ),
@@ -277,15 +277,17 @@ class MoreScreen extends StatelessWidget {
                   ),
                 ],
               ),
-              // SizedBox(height: 10.0),
+              //SizedBox(height: 10.0),
               buildRow(
-                  'Information', 'assets/images/icons/user.svg', '/proflie'),
+                  'Settings', 'assets/images/icons/settings.svg', '/settings'),
               buildRow(
                   'Security', 'assets/images/icons/secure.svg', '/proflie'),
               buildRow(
                   'Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
+              buildRow(
+                  'Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
               buildRow('Chat Support', 'assets/images/icons/support.svg',
-                  '/proflie'),
+                  '/help'),
               //create a same way row but dark mode should be there with theme toggle from cupertinao
               Padding(
                 padding:
@@ -310,8 +312,8 @@ class MoreScreen extends StatelessWidget {
                         },
                       ),
                     ),
-                    SizedBox(width: 20.0),
-                    Text(
+                    const SizedBox(width: 20.0),
+                    const Text(
                       'Dark Mode',
                       style: TextStyle(
                         fontSize: 20,
@@ -319,7 +321,7 @@ class MoreScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    Spacer(),
+                    const Spacer(),
                     CupertinoSwitch(
                       value: themeProvider.getThemeMode() == ThemeMode.dark,
                       onChanged: (value) {
