@@ -1,3 +1,6 @@
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 
@@ -26,7 +29,7 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Design Card'),
-      backgroundColor: Colors.black,
+      backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -102,7 +105,7 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
             SizedBox(height: 16),
             Text(
               'Select Color:',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: AppColors.textColor, fontSize: 16),
             ),
             SizedBox(height: 8),
             Row(
@@ -130,10 +133,12 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
               ],
             ),
             SizedBox(height: 16),
-            Center( // Center the "Save" button
-              child: ElevatedButton(
-                onPressed: saveCardColor,
-                child: Text('Save'),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter ,
+                child: appButtonFunc(
+                  margin:EdgeInsets.only(bottom: 20) ,
+                    context, gradient(context), 'Save', saveCardColor),
               ),
             ),
           ],

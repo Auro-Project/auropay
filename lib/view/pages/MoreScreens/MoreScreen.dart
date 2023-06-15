@@ -9,6 +9,8 @@ import 'package:provider/provider.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
 import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -148,7 +150,7 @@ class MoreScreen extends StatelessWidget {
 
     Widget buildRow(String title, String iconPath, String route) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
         child: Row(
           children: [
             iconButton(iconPath, route),
@@ -174,10 +176,13 @@ class MoreScreen extends StatelessWidget {
         ),
       );
     }
+    final height = MediaQuery.of(context).size.height;
+    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    final String? profilePhotoUrl = currentUser?.photoURL;
 
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, '',showLeadingIcon: false ),
+      appBar: myAppBar(context, '', showLeadingIcon: false),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
@@ -187,7 +192,7 @@ class MoreScreen extends StatelessWidget {
           ),
           Column(
             children: [
-              const SizedBox(height: 100.0),
+              const SizedBox(height: 80.0),
               Stack(
                 children: [
                   Center(
@@ -196,8 +201,7 @@ class MoreScreen extends StatelessWidget {
                       width: 340,
                       height: 210,
                       decoration: border(context,
-                          borderColor: AppColors.accent1.shade100
-                      ),
+                          borderColor: AppColors.accent1.shade100),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -268,10 +272,14 @@ class MoreScreen extends StatelessWidget {
                           color: AppColors.accent1.shade400,
                           width: 2,
                         ),
-                        image: const DecorationImage(
-                          image: AssetImage('assets/images/avatar.png'),
-                          fit: BoxFit.cover,
-                        ),
+                      ),
+                      child: CircleAvatar(
+                        radius: 20,
+                        backgroundImage: profilePhotoUrl != null
+                            ? NetworkImage(profilePhotoUrl)
+                            : const AssetImage("assets/images/avatar.png")
+                        as ImageProvider<Object>?,
+                        //AssetImage("assets/images/avatar.png"),
                       ),
                     ),
                   ),
@@ -279,63 +287,64 @@ class MoreScreen extends StatelessWidget {
               ),
               //SizedBox(height: 10.0),
               SizedBox(
-                height: 400,
+                height: height*0.5,
                 child: SingleChildScrollView(
                   child: ListView(
+                    padding: EdgeInsets.all(0),
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      buildRow('Settings', 'assets/images/icons/settings.svg', '/settings'),
+                      Padding(
+                        padding:
+                        const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
+                        child: Row(
+                          children: [
+                            Container(
+                              width: 42,
+                              height: 42,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: AppColors.accent1.shade200,
+                              ),
+                              child: IconButton(
+                                icon: SvgPicture.asset(
+                                  'assets/images/icons/dark.svg',
+                                  height: 15.0,
+                                  color: AppColors.textColor,
+                                ),
+                                onPressed: () {
+                                  Navigator.pushNamed(context, '/profile');
+                                },
+                              ),
+                            ),
+                            const SizedBox(width: 20.0),
+                            const Text(
+                              'Dark Mode',
+                              style: TextStyle(
+                                fontSize: 20,
+                                fontFamily: 'SF-Pro-Display',
+                                fontWeight: FontWeight.w600,
+                              ),
+                            ),
+                            const Spacer(),
+                            CupertinoSwitch(
+                              value: themeProvider.getThemeMode() == ThemeMode.dark,
+                              onChanged: (value) {
+                                themeProvider.toggleTheme();
+                              },
+                            )
+                          ],
+                        ),
+                      ),
+                      buildRow('App Settings', 'assets/images/icons/settings.svg', '/settings'),
                       buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
                       buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
                       buildRow('Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
                       buildRow('Chat Support', 'assets/images/icons/support.svg', '/support'),
                       buildRow('FAQ', 'assets/images/icons/support.svg', '/support'),
+
                     ],
                   ),
-                ),
-              ),
-              //create a same way row but dark mode should be there with theme toggle from cupertinao
-              Padding(
-                padding:
-                    const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.accent1.shade200,
-                      ),
-                      child: IconButton(
-                        icon: SvgPicture.asset(
-                          'assets/images/icons/dark.svg',
-                          height: 15.0,
-                          color: AppColors.textColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/profile');
-                        },
-                      ),
-                    ),
-                    const SizedBox(width: 20.0),
-                    const Text(
-                      'Dark Mode',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'SF-Pro-Display',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                    const Spacer(),
-                    CupertinoSwitch(
-                      value: themeProvider.getThemeMode() == ThemeMode.dark,
-                      onChanged: (value) {
-                        themeProvider.toggleTheme();
-                      },
-                    )
-                  ],
                 ),
               ),
             ],
@@ -346,133 +355,3 @@ class MoreScreen extends StatelessWidget {
   }
 }
 
-//here is old code to give navigation
-/*{
-
-Widget  list (// Optional named parameter
-    ) {
-  return Column(
-    children: [
-      ListTile(
-        leading: Icon(
-          Icons.person,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/profile');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.help,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Help',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/help');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.settings,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Settings',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/settings');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.nightlight_round,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Dark Mode',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        trailing: Switch(
-          value: themeProvider.currentTheme == ThemeMode.dark,
-          onChanged: (value) {
-            themeProvider.toggleTheme();
-          },
-          activeColor: Colors.deepPurpleAccent,
-          inactiveTrackColor: Colors.grey,
-        ),
-        onTap: () {
-          themeProvider.toggleTheme();
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.logout,
-          color: Colors.red,
-        ),
-        title: const Text(
-          'Logout',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            color: Colors.red,
-          ),
-        ),
-        onTap: () {
-          _showLogoutConfirmationBottomSheet(context);
-        },
-      ),
-    ],
-  );
-}
- }
-  */

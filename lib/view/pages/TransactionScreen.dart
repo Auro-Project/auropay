@@ -85,7 +85,7 @@ class TransactionScreen extends StatelessWidget {
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
-                      label: const Text('Withdrawal'),
+                      label: const Text('Credit'),
                       onSelected: (isSelected) {
                         // TODO: Implement chip selection action
                       },
@@ -95,9 +95,10 @@ class TransactionScreen extends StatelessWidget {
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
-                      label: const Text('Paid'),
+                      label: const Text('Debit'),
                       onSelected: (isSelected) {
                         // TODO: Implement chip selection action
+
                       },
                       selected: false,
                       backgroundColor: Colors.white,
