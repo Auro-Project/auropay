@@ -11,6 +11,8 @@ import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
+import '../../widgets/CustomTile.dart';
+
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -94,88 +96,7 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-    Widget iconButton(
-      String icon,
-      String route, {
-      double size = 42,
-      Color? color,
-      double iconSize = 15,
-    }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            icon,
-            height: iconSize,
-            color: AppColors.textColor,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, route);
-          },
-        ),
-      );
-    }
 
-    Widget iconButtonFunc(
-      String iconPath, {
-      double size = 42,
-      Color? color,
-      double iconSize = 15,
-      required Function() onPressed,
-    }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            iconPath,
-            height: iconSize,
-            color: AppColors.textColor,
-          ),
-          onPressed: onPressed,
-        ),
-      );
-    }
-
-    Widget buildRow(String title, String iconPath, String route) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
-        child: Row(
-          children: [
-            iconButton(iconPath, route),
-            const SizedBox(width: 20.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontFamily: 'SF-Pro-Display',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, route);
-              },
-            ),
-          ],
-        ),
-      );
-    }
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;
@@ -230,18 +151,21 @@ class MoreScreen extends StatelessWidget {
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
                               iconButton(
+                                context,
                                   iconSize: 20,
                                   color: AppColors.primaryColor,
                                   size: 50,
                                   'assets/images/icons/user.svg',
                                   '/profile'),
                               iconButton(
+                                  context,
                                   iconSize: 18,
                                   color: AppColors.primaryColor,
                                   size: 50,
                                   'assets/images/icons/designcard.svg',
                                   '/designcard'),
                               iconButton(
+                                  context,
                                   iconSize: 18,
                                   color: AppColors.primaryColor,
                                   size: 50,
@@ -294,54 +218,19 @@ class MoreScreen extends StatelessWidget {
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     children: [
-                      Padding(
-                        padding:
-                        const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
-                        child: Row(
-                          children: [
-                            Container(
-                              width: 42,
-                              height: 42,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: AppColors.accent1.shade200,
-                              ),
-                              child: IconButton(
-                                icon: SvgPicture.asset(
-                                  'assets/images/icons/dark.svg',
-                                  height: 15.0,
-                                  color: AppColors.textColor,
-                                ),
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/profile');
-                                },
-                              ),
-                            ),
-                            const SizedBox(width: 20.0),
-                            const Text(
-                              'Dark Mode',
-                              style: TextStyle(
-                                fontSize: 20,
-                                fontFamily: 'SF-Pro-Display',
-                                fontWeight: FontWeight.w600,
-                              ),
-                            ),
-                            const Spacer(),
-                            CupertinoSwitch(
-                              value: themeProvider.getThemeMode() == ThemeMode.dark,
-                              onChanged: (value) {
-                                themeProvider.toggleTheme();
-                              },
-                            )
-                          ],
-                        ),
+                      switchRow(
+                          context, 'Dark Mode', 'assets/images/icons/dark.svg',
+                        valueDefault : themeProvider.getThemeMode() == ThemeMode.dark,
+                        changedValue: (valueDefault) {
+                          themeProvider.toggleTheme();
+                        },
                       ),
-                      buildRow('App Settings', 'assets/images/icons/settings.svg', '/settings'),
-                      buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
-                      buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-                      buildRow('Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
-                      buildRow('Chat Support', 'assets/images/icons/support.svg', '/support'),
-                      buildRow('FAQ', 'assets/images/icons/support.svg', '/support'),
+                      buildRow(context,'App Settings', 'assets/images/icons/settings.svg', '/settings'),
+                      buildRow(context,'Security', 'assets/images/icons/secure.svg', '/proflie'),
+                      buildRow(context,'Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
+                      buildRow(context,'Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
+                      buildRow(context,'Chat Support', 'assets/images/icons/support.svg', '/support'),
+                      buildRow(context,'FAQ', 'assets/images/icons/support.svg', '/support'),
 
                     ],
                   ),

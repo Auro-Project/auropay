@@ -1,7 +1,7 @@
 import 'package:auropay/view/widgets/CustomAppBar.dart';
+import 'package:auropay/view/widgets/CustomTile.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import 'package:auropay/view/Theme/theme_provider.dart';
 
 import '../../Theme/appColors.dart';
 
@@ -17,96 +17,74 @@ class _SettingScreenState extends State<SettingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Settings'),
       backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SizedBox(height: 20),
-          ListTile(
-            leading: const Icon(
-              Icons.notifications,
-              color: AppColors.textColor,
-            ),
-            title: const Text(
-              'Notifications',
-              style: TextStyle(
-                fontSize: 17,
-                fontFamily: 'SF-Pro-Display',
-                fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
-              ),
-            ),
-            onTap: () {
-              Navigator.pushNamed(context, '/notifications');
-            },
-          ),
-          const Divider(
-            color: AppColors.textColor,
-            indent: 16,
-            endIndent: 16,
-          ),
-          ListTile(
-            leading: const Icon(
-              Icons.language,
-              color: AppColors.textColor,
-            ),
-            title: Text(
-              'Language: $selectedLanguage', // Display the selected language
-              style: const TextStyle(
-                fontSize: 17,
-                fontFamily: 'SF-Pro-Display',
-                fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
-              ),
-            ),
-            onTap: () {
+          // const SizedBox(height: 20),
+          buildRow(context, 'Notifications', 'assets/images/icons/notify.svg',
+              '/notifications'),
+          buildRowFunc(
+            context,
+            'Language',
+            'assets/images/icons/notify.svg',
+            onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text('Select Language',
+                    title: const Text(
+                      'Select Language',
                       style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.normal,
                         color: AppColors.textColor,
-                      ),),
+                      ),
+                    ),
                     content: SingleChildScrollView(
                       child: ListBody(
                         children: [
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedLanguage = 'English'; // Update selected language
+                                selectedLanguage =
+                                    'English'; // Update selected language
                               });
                               Navigator.pop(context); // Close the dialog
                             },
-                            child: const Text('English',
+                            child: const Text(
+                              'English',
                               style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
                                 color: AppColors.textColor,
-                              ),),
+                              ),
+                            ),
                           ),
-                          const SizedBox(height: 20,),
+                          const SizedBox(
+                            height: 20,
+                          ),
                           GestureDetector(
                             onTap: () {
                               setState(() {
-                                selectedLanguage = 'Spanish'; // Update selected language
+                                selectedLanguage =
+                                    'Spanish'; // Update selected language
                               });
                               Navigator.pop(context); // Close the dialog
                             },
-                            child: const Text('Spanish',
+                            child: const Text(
+                              'Spanish',
                               style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
                                 color: AppColors.textColor,
-                              ),),
+                              ),
+                            ),
                           ),
                           // Add more language options as needed
                         ],
@@ -117,12 +95,9 @@ class _SettingScreenState extends State<SettingScreen> {
               );
             },
           ),
-          const Divider(
-            color: AppColors.textColor,
-            indent: 16,
-            endIndent: 16,
-          ),
-
+          switchRow(context, 'ScreenShot Protection',
+              'assets/images/icons/notify.svg',
+              valueDefault: false, changedValue: (valueDefault) {})
         ],
       ),
     );
