@@ -1,6 +1,7 @@
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:auropay/view/widgets/CustomTile.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 import '../../Theme/appColors.dart';

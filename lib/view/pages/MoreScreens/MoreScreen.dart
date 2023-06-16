@@ -96,7 +96,88 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
+    Widget iconButton(
+      String icon,
+      String route, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+    }) {
+      color ??= AppColors.accent1.shade200;
+      return Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+        ),
+        child: IconButton(
+          icon: SvgPicture.asset(
+            icon,
+            height: iconSize,
+            color: AppColors.textColor,
+          ),
+          onPressed: () {
+            Navigator.pushNamed(context, route);
+          },
+        ),
+      );
+    }
 
+    Widget iconButtonFunc(
+      String iconPath, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+      required Function() onPressed,
+    }) {
+      color ??= AppColors.accent1.shade200;
+      return Container(
+        width: size,
+        height: size,
+        decoration: BoxDecoration(
+          shape: BoxShape.circle,
+          color: color,
+        ),
+        child: IconButton(
+          icon: SvgPicture.asset(
+            iconPath,
+            height: iconSize,
+            color: AppColors.textColor,
+          ),
+          onPressed: onPressed,
+        ),
+      );
+    }
+
+    Widget buildRow(String title, String iconPath, String route) {
+      return Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
+        child: Row(
+          children: [
+            iconButton(iconPath, route),
+            const SizedBox(width: 20.0),
+            Text(
+              title,
+              style: const TextStyle(
+                fontSize: 20,
+                fontFamily: 'SF-Pro-Display',
+                fontWeight: FontWeight.w600,
+              ),
+            ),
+            const Spacer(),
+            IconButton(
+              icon: const Icon(
+                Icons.arrow_forward_ios,
+              ),
+              onPressed: () {
+                Navigator.pushNamed(context, route);
+              },
+            ),
+          ],
+        ),
+      );
+    }
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;

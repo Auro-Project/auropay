@@ -83,7 +83,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           "Hi, ${userData.name}",
-                          style: TextStyle(
+                          style: const TextStyle(
                             color: AppColors.textColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
@@ -91,10 +91,16 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 30),
-                          child: SvgPicture.asset(
-                            "assets/images/icons/notify.svg",
-                            height: 23,
+                          child:IconButton(
+                            onPressed: () {
+                              Navigator.pushNamed(context, '/notifs');
+                            },
+                            icon: SvgPicture.asset(
+                              "assets/images/icons/notify.svg",
+                              height: 23,
+                            ),
                           ),
+
                         ),
                       ],
                     ),
@@ -111,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.05),
-                          Text(
+                          const Text(
                             "Your Balance",
                             style: TextStyle(
                               color: AppColors.textColor,
@@ -122,7 +128,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: height * 0.005),
                           Text(
                             userData.balance,
-                            style: TextStyle(
+                            style: const TextStyle(
                               color: AppColors.textColor,
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
@@ -153,7 +159,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     ),
                                     Text(
                                       userData.expireDate,
-                                      style: TextStyle(
+                                      style: const TextStyle(
                                         color: AppColors.textColor,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
@@ -210,14 +216,20 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               SizedBox(width: width * 0.08),
-                              Text(
-                                "View All",
-                                style: TextStyle(
-                                  color: AppColors.accent1,
-                                  fontSize: 16,
-                                  fontWeight: FontWeight.w400,
+                              TextButton(
+                                onPressed: () {
+                                  Navigator.pushNamed(context,'/transactions');
+                                },
+                                child: const Text(
+                                  "View All",
+                                  style: TextStyle(
+                                    color: AppColors.accent1,
+                                    fontSize: 16,
+                                    fontWeight: FontWeight.w400,
+                                  ),
                                 ),
-                              ),
+                              )
+
                             ],
                           ),
                           SizedBox(height: height * 0.01),
@@ -234,7 +246,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   title: Text(
                                     item.name,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: AppColors.textColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -242,7 +254,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   subtitle: Text(
                                     item.date,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: AppColors.textColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
@@ -250,7 +262,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   trailing: Text(
                                     item.amount,
-                                    style: TextStyle(
+                                    style: const TextStyle(
                                       color: AppColors.textColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
@@ -310,7 +322,7 @@ class _HomeScreenState extends State<HomeScreen> {
             text,
             maxLines: 2,
             textAlign: TextAlign.center,
-            style: TextStyle(
+            style: const TextStyle(
               color: AppColors.textColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
@@ -332,7 +344,7 @@ class _HomeScreenState extends State<HomeScreen> {
           } else if (snapshot.hasError) {
             return Text("Error: ${snapshot.error}");
           } else {
-            return CircularProgressIndicator();
+            return const CircularProgressIndicator();
           }
         },
       ),

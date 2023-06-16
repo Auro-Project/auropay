@@ -43,15 +43,15 @@ class AnalyticsScreen extends StatelessWidget {
               children: [
                 const SizedBox(height: 20),
                 const Text(
-                  'Total Expenses',
+                  'Upcoming Screen',
                   style: TextStyle(
-                    fontSize: 22,
+                    fontSize: 24,
                     fontWeight: FontWeight.w600,
                     color: AppColors.textColor,
                   ),
                 ),
                 const Text(
-                  '\$10,000',
+                  'Rs.5,000',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
