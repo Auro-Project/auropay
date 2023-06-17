@@ -47,7 +47,6 @@ class _HomeScreenState extends State<HomeScreen> {
   static Widget _homepage(BuildContext context, UserData userData) {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
-    final themeProvider = Provider.of<ThemeProvider>(context);
 
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;
@@ -91,7 +90,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Padding(
                           padding: const EdgeInsets.only(right: 30),
-                          child:IconButton(
+                          child: IconButton(
                             onPressed: () {
                               Navigator.pushNamed(context, '/notifs');
                             },
@@ -100,7 +99,6 @@ class _HomeScreenState extends State<HomeScreen> {
                               height: 23,
                             ),
                           ),
-
                         ),
                       ],
                     ),
@@ -218,7 +216,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               SizedBox(width: width * 0.08),
                               TextButton(
                                 onPressed: () {
-                                  Navigator.pushNamed(context,'/transactions');
+                                  Navigator.pushNamed(context, '/transactions');
                                 },
                                 child: const Text(
                                   "View All",
@@ -229,7 +227,6 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                 ),
                               )
-
                             ],
                           ),
                           SizedBox(height: height * 0.01),
@@ -291,7 +288,6 @@ class _HomeScreenState extends State<HomeScreen> {
     String text,
     String route,
   ) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return SizedBox(
       width: 150,
       child: Column(
@@ -300,14 +296,15 @@ class _HomeScreenState extends State<HomeScreen> {
             decoration: gradient(context),
             child: ElevatedButton(
               style: ElevatedButton.styleFrom(
-                elevation: 0,
+                  elevation: 0,
                   backgroundColor: Colors.transparent,
                   shape: RoundedRectangleBorder(
                     borderRadius: BorderRadius.circular(20),
                   ),
                   minimumSize: const Size(200, 50)),
               child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                 child: SvgPicture.asset(
                   icon,
                   height: 30,

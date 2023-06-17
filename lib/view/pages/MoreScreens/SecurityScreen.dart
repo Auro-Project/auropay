@@ -13,7 +13,7 @@ class SecurityScreen extends StatelessWidget {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, "Contact Us"),
+      appBar: myAppBar(context, "Security"),
       body: Column(
         children: [
           const SizedBox(height: 120,),
