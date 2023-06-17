@@ -25,8 +25,9 @@ class _SettingScreenState extends State<SettingScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           // const SizedBox(height: 20),
-          buildRow(context, 'Notifications', 'assets/images/icons/notify.svg',
-              '/notifications'),
+          buildRow(context,
+              'Notifications', 'assets/images/icons/notify.svg',
+              '/notifications',),
           buildRowFunc(
             context, 'Language', 'assets/images/icons/notify.svg', onPressed: () {
               showDialog(

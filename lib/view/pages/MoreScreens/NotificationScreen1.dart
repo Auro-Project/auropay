@@ -15,88 +15,326 @@ class NotifScreen extends StatefulWidget {
 class _NotifScreenState extends State<NotifScreen> {
   int selectedCategoryIndex = 0;
 
-  final List<String> categories = ['All', 'Payments', 'Balance', 'Alerts'];
+  final List<String> categories = [
+    'All', 'Payments', 'Balance', 'Alerts',
+  ];
 
-  final List<List<NotificationItem>> notifications = const [
+  final List<List<NotificationItem>> notifications = [
     [
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'You have a new payment of \$50.',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.payment,
         iconColor: Colors.red,
         message: 'Payment of \$25 was deducted from your account.',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.account_balance_wallet,
         iconColor: Colors.green,
         message: 'Your account balance is now \$100.',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.warning,
         iconColor: Colors.orange,
         message: 'Important: Please update your payment method.',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Notification message 1',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Notification message 2',
       ),
+      // Add more items to reach a size of 14
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 3',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 4',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 5',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 6',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 7',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 8',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 9',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 10',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 11',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 12',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 13',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Notification message 14',
+      ),
     ],
+    // Add more sublists to reach a size of 16
     [
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Payment notification 1',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Payment notification 2',
       ),
-      NotificationItem(
+      // Add more items to reach a size of 14
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Payment notification 3',
       ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 4',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 5',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 6',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 7',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 8',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 9',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 10',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 11',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 12',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 13',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Payment notification 14',
+      ),
     ],
     [
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Balance notification 1',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Balance notification 2',
       ),
+      // Add more items to reach a size of 14
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 3',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 4',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 5',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 6',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 7',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 8',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 9',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 10',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 11',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 12',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 13',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Balance notification 14',
+      ),
     ],
     [
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Alert notification 1',
       ),
-      NotificationItem(
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Alert notification 2',
       ),
-      NotificationItem(
+      // Add more items to reach a size of 14
+      const NotificationItem(
         icon: Icons.notifications,
         iconColor: Colors.blue,
         message: 'Alert notification 3',
       ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 4',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 5',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 6',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 7',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 8',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 9',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 10',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 11',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 12',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 13',
+      ),
+      const NotificationItem(
+        icon: Icons.notifications,
+        iconColor: Colors.blue,
+        message: 'Alert notification 14',
+      ),
     ],
   ];
+
 
   @override
   Widget build(BuildContext context) {

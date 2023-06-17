@@ -13,7 +13,6 @@ import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 import '../../widgets/CustomTile.dart';
 
-
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
 
@@ -66,27 +65,33 @@ class MoreScreen extends StatelessWidget {
                       ),
                     ),
                     const SizedBox(height: 50.0),
-                    appButtonFunc(context, gradient(context), 'Logout',
-                        () async {
-                      // Perform the logout action
-                      FirebaseAuth auth = FirebaseAuth.instance;
-                      await auth.signOut();
-
-                      // Remove the user login state
-                      const storage = FlutterSecureStorage();
-                      await storage.delete(key: 'isSignedIn');
-
-                      // Close all screens and go back to the login screen
-                      Navigator.of(context).pushNamedAndRemoveUntil(
-                          '/account', (Route<dynamic> route) => false);
-                    }),
                     appButtonFunc(
-                        margin: const EdgeInsets.only(top: 20.0),
-                        context,
-                        border(context),
-                        'Cancel', () {
-                      Navigator.of(context).pop();
-                    }),
+                      context,
+                      gradient(context),
+                      'Logout',
+                          () async {
+                        // Perform the logout action
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        await auth.signOut();
+
+                        // Remove the user login state
+                        const storage = FlutterSecureStorage();
+                        await storage.delete(key: 'isSignedIn');
+
+                        // Close all screens and go back to the login screen
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/account', (Route<dynamic> route) => false);
+                      },
+                    ),
+                    appButtonFunc(
+                      margin: const EdgeInsets.only(top: 20.0),
+                      context,
+                      border(context),
+                      'Cancel',
+                          () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -97,12 +102,13 @@ class MoreScreen extends StatelessWidget {
     }
 
     Widget iconButton(
-      String icon,
-      String route, {
-      double size = 42,
-      Color? color,
-      double iconSize = 15,
-    }) {
+        BuildContext context,
+        String icon,
+        String route, {
+          double size = 42,
+          Color? color,
+          double iconSize = 15,
+        }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -125,12 +131,12 @@ class MoreScreen extends StatelessWidget {
     }
 
     Widget iconButtonFunc(
-      String iconPath, {
-      double size = 42,
-      Color? color,
-      double iconSize = 15,
-      required Function() onPressed,
-    }) {
+        String iconPath, {
+          double size = 42,
+          Color? color,
+          double iconSize = 15,
+          required Function() onPressed,
+        }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -150,12 +156,12 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-    Widget buildRow(String title, String iconPath, String route) {
+    Widget buildRow(BuildContext context, String title, String iconPath, String route) {
       return Padding(
         padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
         child: Row(
           children: [
-            iconButton(iconPath, route),
+            iconButton(context, iconPath, route),
             const SizedBox(width: 20.0),
             Text(
               title,
@@ -178,6 +184,7 @@ class MoreScreen extends StatelessWidget {
         ),
       );
     }
+
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;
@@ -202,8 +209,7 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: border(context,
-                          borderColor: AppColors.accent1.shade100),
+                      decoration: border(context, borderColor: AppColors.accent1.shade100),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -233,33 +239,37 @@ class MoreScreen extends StatelessWidget {
                             children: [
                               iconButton(
                                 context,
-                                  iconSize: 20,
-                                  color: AppColors.primaryColor,
-                                  size: 50,
-                                  'assets/images/icons/user.svg',
-                                  '/profile'),
+                                'assets/images/icons/user.svg',
+                                '/profile',
+                                iconSize: 20,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
                               iconButton(
-                                  context,
-                                  iconSize: 18,
-                                  color: AppColors.primaryColor,
-                                  size: 50,
-                                  'assets/images/icons/designcard.svg',
-                                  '/designcard'),
+                                context,
+                                'assets/images/icons/designcard.svg',
+                                '/designcard',
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
                               iconButton(
-                                  context,
-                                  iconSize: 18,
-                                  color: AppColors.primaryColor,
-                                  size: 50,
-                                  'assets/images/icons/notify.svg',
-                                  '/notifs'),
+                                context,
+                                'assets/images/icons/notify.svg',
+                                '/notifs',
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
                               iconButtonFunc(
-                                  iconSize: 18,
-                                  color: AppColors.primaryColor,
-                                  size: 50,
-                                  'assets/images/icons/logout.svg',
-                                  onPressed: () {
-                                _showLogoutConfirmationBottomSheet(context);
-                              })
+                                'assets/images/icons/logout.svg',
+                                onPressed: () {
+                                  _showLogoutConfirmationBottomSheet(context);
+                                },
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
                             ],
                           ),
                         ],
@@ -278,41 +288,50 @@ class MoreScreen extends StatelessWidget {
                           width: 2,
                         ),
                       ),
-                      child: CircleAvatar(
+                      child: const CircleAvatar(
                         radius: 20,
-                        backgroundImage: profilePhotoUrl != null
-                            ? NetworkImage(profilePhotoUrl)
-                            : const AssetImage("assets/images/avatar.png")
-                        as ImageProvider<Object>?,
-                        //AssetImage("assets/images/avatar.png"),
+                        backgroundImage:
+                        AssetImage("assets/images/avatar.png"),
                       ),
                     ),
                   ),
                 ],
               ),
-              //SizedBox(height: 10.0),
               SizedBox(
-                height: height*0.5,
+                height: height * 0.5,
                 child: SingleChildScrollView(
                   child: ListView(
-                    padding: EdgeInsets.all(0),
+                    padding: const EdgeInsets.all(0),
                     shrinkWrap: true,
                     physics: const ClampingScrollPhysics(),
                     children: [
                       switchRow(
-                          context, 'Dark Mode', 'assets/images/icons/dark.svg',
-                        valueDefault : themeProvider.getThemeMode() == ThemeMode.dark,
+                        context,
+                        'Dark Mode',
+                        'assets/images/icons/dark.svg',
+                        valueDefault: themeProvider.getThemeMode() == ThemeMode.dark,
                         changedValue: (valueDefault) {
                           themeProvider.toggleTheme();
                         },
                       ),
-                      buildRow(context,'App Settings', 'assets/images/icons/settings.svg', '/settings'),
-                      buildRow(context,'Security', 'assets/images/icons/secure.svg', '/proflie'),
-                      buildRow(context,'Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-                      buildRow(context,'Privacy Policy', 'assets/images/icons/privacy.svg', '/proflie'),
-                      buildRow(context,'Chat Support', 'assets/images/icons/support.svg', '/support'),
-                      buildRow(context,'FAQ', 'assets/images/icons/support.svg', '/support'),
-
+                      buildRow(
+                        context,
+                        'App Settings',
+                        'assets/images/icons/settings.svg',
+                        '/settings',
+                      ),
+                      buildRow(
+                        context,
+                        'Security',
+                        'assets/images/icons/secure.svg',
+                        '/security',
+                      ),
+                      buildRow(
+                        context,
+                        'Contact Us',
+                        'assets/images/icons/contact.svg',
+                        '/contact',
+                      ),
                     ],
                   ),
                 ),
@@ -324,4 +343,3 @@ class MoreScreen extends StatelessWidget {
     );
   }
 }
-
