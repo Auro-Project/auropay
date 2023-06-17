@@ -18,7 +18,7 @@ class _SettingScreenState extends State<SettingScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, 'Settings'),
+      appBar: myAppBar(context, 'App Settings'),
       backgroundColor: AppColors.primaryColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -27,10 +27,7 @@ class _SettingScreenState extends State<SettingScreen> {
           buildRow(context, 'Notifications', 'assets/images/icons/notify.svg',
               '/notifications'),
           buildRowFunc(
-            context,
-            'Language',
-            'assets/images/icons/notify.svg',
-            onPressed: () {
+            context, 'Language', 'assets/images/icons/notify.svg', onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -95,8 +92,8 @@ class _SettingScreenState extends State<SettingScreen> {
               );
             },
           ),
-          switchRow(context, 'ScreenShot Protection',
-              'assets/images/icons/notify.svg',
+          switchRow(
+              context, 'ScreenShot Protection', 'assets/images/icons/notify.svg',
               valueDefault: false, changedValue: (valueDefault) {})
         ],
       ),

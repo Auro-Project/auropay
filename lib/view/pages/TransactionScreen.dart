@@ -6,17 +6,28 @@ import 'package:flutter/services.dart';
 import '../../model/Transaction.dart';
 import '../Theme/appColors.dart';
 
-class TransactionScreen extends StatelessWidget {
+class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key});
 
-  static Future<List<ListItem>> loadJsonData() async {
+  @override
+  _TransactionScreenState createState() => _TransactionScreenState();
+}
+
+class _TransactionScreenState extends State<TransactionScreen> {
+  String filter = 'all';
+
+  static Future<List<ListItem>> loadJsonData(String filter) async {
     String jsonData = await rootBundle.loadString('lib/data/user.json');
     Map<String, dynamic> jsonMap = json.decode(jsonData);
 
-    // Assuming the transaction data is stored under the 'transactions' key in the JSON
     List<dynamic> transactionsJson = jsonMap['transactions'];
     List<ListItem> transactions =
         transactionsJson.map((item) => ListItem.fromJson(item)).toList();
+
+    if (filter != 'all') {
+      transactions = transactions.where((item) => item.type == filter).toList();
+    }
+
     return transactions;
   }
 
@@ -77,51 +88,51 @@ class TransactionScreen extends StatelessWidget {
                     FilterChip(
                       label: const Text('All'),
                       onSelected: (isSelected) {
-                        // TODO: Implement chip selection action
+                        setState(() {
+                          filter = 'all';
+                        });
                       },
-                      selected: false,
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.blue,
+                      selected: filter == 'all',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
                       label: const Text('Credit'),
                       onSelected: (isSelected) {
-                        // TODO: Implement chip selection action
+                        setState(() {
+                          filter = 'credit';
+                        });
                       },
-                      selected: false,
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.blue,
+                      selected: filter == 'credit',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
                       label: const Text('Debit'),
                       onSelected: (isSelected) {
-                        // TODO: Implement chip selection action
-
+                        setState(() {
+                          filter = 'debit';
+                        });
                       },
-                      selected: false,
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.blue,
+                      selected: filter == 'debit',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
-                    // Add more transaction types here
                   ],
                 ),
                 const SizedBox(height: 16.0),
                 Expanded(
                   child: FutureBuilder<List<ListItem>>(
-                    future:
-                        loadJsonData(), // Replace with your own future function
+                    future: loadJsonData(filter),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        // While the future is loading, show a progress indicator
                         return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        // If an error occurred while fetching the data, display an error message
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else {
-                        // If the data is successfully fetched, build the ListView.builder
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: snapshot.data?.length,
