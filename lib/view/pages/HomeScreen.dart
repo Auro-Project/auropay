@@ -16,6 +16,13 @@ import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
 import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+// import 'package:amplify_flutter/amplify.dart';
+// import 'package:amplify_datastore/amplify_datastore.dart';
+// import 'package:amplify_datastore_plugin_interface/amplify_datastore_plugin_interface.dart';
+import 'package:amplify_flutter/amplify.dart';
+import 'package:amplify_datastore/amplify_datastore.dart';
+import 'package:amplify_auth_cognito/amplify_auth_cognito.dart';
+import '../../../amplifyconfiguration.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -36,6 +43,15 @@ class _HomeScreenState extends State<HomeScreen> {
       return userData['fullName'];
     }
     return '';
+  }
+
+  Future<User> fetchUserData() async {
+    final user = firebase_auth.FirebaseAuth.instance.currentUser;
+    List<User> users = await Amplify.DataStore.query(User.classType, where: User.ID.eq(user.uid));
+    if (users.isNotEmpty) {
+      return users.first;
+    }
+    throw Exception('User not found');
   }
 
   static Future<UserData> loadJsonData() async {
@@ -333,8 +349,8 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     final List<Widget> screens = [
-      FutureBuilder<UserData>(
-        future: loadJsonData(),
+      FutureBuilder<User>(
+        future: fetchUserData(),
         builder: (context, snapshot) {
           if (snapshot.hasData) {
             return _homepage(context, snapshot.data!);
