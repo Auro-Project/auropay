@@ -5,35 +5,23 @@ import '../../Theme/theme_provider.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomTile.dart';
 
-class ContactScreen extends StatelessWidget {
-  const ContactScreen({Key? key}) : super(key: key);
+class SecurityScreen extends StatelessWidget {
+  const SecurityScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, "Contact Us"),
+      appBar: myAppBar(context, "Security"),
       body: Column(
         children: [
           const SizedBox(height: 120,),
           buildRow(
             context,
-            'Privacy Policy',
-            'assets/images/icons/privacy.svg',
-            '/policy',
-          ),
-          buildRow(
-            context,
-            'Chat Support',
-            'assets/images/icons/support.svg',
-            '/support',
-          ),
-          buildRow(
-            context,
-            'FAQ',
-            'assets/images/icons/support.svg',
-            '/faq',
+            'Change Passcode',
+            'assets/images/icons/secure.svg',
+            '/createPasscode',
           ),
         ],
       ),

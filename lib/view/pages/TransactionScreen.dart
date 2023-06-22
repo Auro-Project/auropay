@@ -1,5 +1,4 @@
 import 'dart:convert';
-import 'package:auropay/model/UserData.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -7,28 +6,37 @@ import 'package:flutter/services.dart';
 import '../../model/Transaction.dart';
 import '../Theme/appColors.dart';
 
-class TransactionScreen extends StatelessWidget {
+class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key});
 
-  static Future<List<ListItem>> loadJsonData() async {
+  @override
+  _TransactionScreenState createState() => _TransactionScreenState();
+}
+
+class _TransactionScreenState extends State<TransactionScreen> {
+  String filter = 'all';
+
+  static Future<List<ListItem>> loadJsonData(String filter) async {
     String jsonData = await rootBundle.loadString('lib/data/user.json');
     Map<String, dynamic> jsonMap = json.decode(jsonData);
 
-    // Assuming the transaction data is stored under the 'transactions' key in the JSON
     List<dynamic> transactionsJson = jsonMap['transactions'];
-    List<ListItem> transactions = transactionsJson.map((item) => ListItem.fromJson(item)).toList();
+    List<ListItem> transactions =
+        transactionsJson.map((item) => ListItem.fromJson(item)).toList();
+
+    if (filter != 'all') {
+      transactions = transactions.where((item) => item.type == filter).toList();
+    }
 
     return transactions;
   }
-
-
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, 'Transaction'),
+      appBar: myAppBar(context, 'Transaction', showLeadingIcon: false),
       body: Stack(
         clipBehavior: Clip.none,
         children: [
@@ -38,12 +46,13 @@ class TransactionScreen extends StatelessWidget {
             width: MediaQuery.of(context).size.width,
           ),
           Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 70.0),
+            padding:
+                const EdgeInsets.symmetric(horizontal: 20.0, vertical: 70.0),
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                const SizedBox(height: 60.0),
+                const SizedBox(height: 50.0),
                 Container(
                   decoration: BoxDecoration(
                     color: Colors.white38,
@@ -52,7 +61,7 @@ class TransactionScreen extends StatelessWidget {
                   child: Row(
                     children: [
                       IconButton(
-                        icon: const Icon(Icons.mic),
+                        icon: const Icon(Icons.search),
                         onPressed: () {
                           // TODO: Implement microphone button action
                         },
@@ -61,6 +70,9 @@ class TransactionScreen extends StatelessWidget {
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Search',
+                            hintStyle: TextStyle(
+                              color: AppColors.textColor,
+                            ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
                           ),
@@ -69,51 +81,58 @@ class TransactionScreen extends StatelessWidget {
                     ],
                   ),
                 ),
-                const SizedBox(height: 16.0),
-                const Text(
-                  'All',
-                  style: TextStyle(color: AppColors.textColor, fontSize: 16.0),
-                ),
                 const SizedBox(height: 8.0),
                 Wrap(
                   spacing: 8.0,
                   children: [
                     FilterChip(
-                      label: const Text('Withdrawal'),
+                      label: const Text('All'),
                       onSelected: (isSelected) {
-                        // TODO: Implement chip selection action
+                        setState(() {
+                          filter = 'all';
+                        });
                       },
-                      selected: false,
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.blue,
+                      selected: filter == 'all',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
-                      label: const Text('Paid'),
+                      label: const Text('Credit'),
                       onSelected: (isSelected) {
-                        // TODO: Implement chip selection action
+                        setState(() {
+                          filter = 'credit';
+                        });
                       },
-                      selected: false,
-                      backgroundColor: Colors.white,
-                      selectedColor: Colors.blue,
+                      selected: filter == 'credit',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
-                    // Add more transaction types here
+                    FilterChip(
+                      label: const Text('Debit'),
+                      onSelected: (isSelected) {
+                        setState(() {
+                          filter = 'debit';
+                        });
+                      },
+                      selected: filter == 'debit',
+                      backgroundColor: AppColors.primaryColor,
+                      selectedColor: AppColors.accent1,
+                      labelStyle: const TextStyle(color: Colors.black),
+                    ),
                   ],
                 ),
                 const SizedBox(height: 16.0),
                 Expanded(
                   child: FutureBuilder<List<ListItem>>(
-                    future: loadJsonData(), // Replace with your own future function
+                    future: loadJsonData(filter),
                     builder: (context, snapshot) {
                       if (snapshot.connectionState == ConnectionState.waiting) {
-                        // While the future is loading, show a progress indicator
-                        return Center(child: CircularProgressIndicator());
+                        return const Center(child: CircularProgressIndicator());
                       } else if (snapshot.hasError) {
-                        // If an error occurred while fetching the data, display an error message
                         return Center(child: Text('Error: ${snapshot.error}'));
                       } else {
-                        // If the data is successfully fetched, build the ListView.builder
                         return ListView.builder(
                           padding: EdgeInsets.zero,
                           itemCount: snapshot.data?.length,

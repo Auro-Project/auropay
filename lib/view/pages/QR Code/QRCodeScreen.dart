@@ -1,127 +1,142 @@
-import 'package:flutter/material.dart';
-
-class QRScreen extends StatelessWidget {
-  const QRScreen({Key? key}) : super(key: key);
-
-  @override
-  Widget build(BuildContext context) {
-
-    Future.delayed(const Duration(seconds: 2), () {
-      Navigator.pushReplacementNamed(context, '/confirmpay');
-    });
-
-    return Scaffold(
-      backgroundColor: Colors.black54,
-      body: Center(
-        child: Column(
-          children: [
-            Row(
-              children: [
-                IconButton(
-                  icon: const Icon(
-                    Icons.arrow_back_ios_new,
-                    color: Colors.white,
-                  ),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                const Padding(
-                  padding: EdgeInsets.all(70.0),
-                  child: Text(
-                    'QR Code',
-                    style: TextStyle(
-                      fontSize: 20,
-                      fontFamily: 'SF-Pro-Display',
-                      fontWeight: FontWeight.w600,
-                      color: Colors.white,
-                    ),
-                  ),
-                ),
-              ],
-            ),
-            Container(
-              width: 370.0,
-              height: 650.0,
-              decoration: BoxDecoration(
-                image: const DecorationImage(
-                  image: AssetImage('assets/images/qrimage.png'),
-                  fit: BoxFit.cover,
-                ),
-                color: Colors.white38,
-                borderRadius: BorderRadius.circular(8.0),
-              ),
-              child: Padding(
-                padding: const EdgeInsets.only(bottom: 580),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    _buildButton(Icons.qr_code_scanner_sharp, 'Scan'),
-                    _buildButton(Icons.payment, 'Pay'),
-                  ],
-                ),
-              ),
-            ),
-            _buildInfoContainer(),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildButton(IconData icon, String label) {
-    return Container(
-      width: 170.0,
-      height: 40.0,
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(8.0),
-        gradient: const LinearGradient(
-          colors: [Color(0xFF9CA2E8), Color(0xFF7CABEC)],
-          begin: Alignment.centerLeft,
-          end: Alignment.centerRight,
-        ),
-      ),
-      child: ElevatedButton.icon(
-        onPressed: () {},
-        style: ElevatedButton.styleFrom(
-          foregroundColor: Colors.white,
-          backgroundColor: Colors.transparent,
-          padding: const EdgeInsets.symmetric(horizontal: 16.0),
-          elevation: 0,
-        ),
-        icon: Icon(icon),
-        label: Text(label),
-      ),
-    );
-  }
-
-  Widget _buildInfoContainer() {
-    return Container(
-      width: 200.0,
-      height: 10.0,
-      decoration: BoxDecoration(
-        color: Colors.grey,
-        borderRadius: BorderRadius.circular(8.0),
-      ),
-      child: const Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(
-            Icons.error_outline,
-            size: 24,
-            color: Colors.white,
-          ),
-          Text(
-            'Point your camera at the QR code to make a payment',
-            style: TextStyle(
-              fontSize: 14,
-              fontFamily: 'SF-Pro-Display',
-              fontWeight: FontWeight.w600,
-              color: Colors.white,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-}
+// import 'dart:async';
+//
+// import 'package:auropay/view/widgets/CustomAppBar.dart';
+// import 'package:flutter/material.dart';
+// import 'package:flutter_barcode_scanner/flutter_barcode_scanner.dart';
+// import 'package:camera/camera.dart';
+//
+// class QRScanner extends StatefulWidget {
+//   const QRScanner({Key? key}) : super(key: key);
+//
+//   @override
+//   State<QRScanner> createState() => _QRScannerState();
+// }
+//
+// class _QRScannerState extends State<QRScanner> {
+//   late CameraController _cameraController;
+//   late Future<void> _initializeCameraControllerFuture;
+//   bool isScanCompleted = false;
+//
+//   @override
+//   void initState() {
+//     super.initState();
+//     initializeCamera();
+//     startTimer();
+//   }
+//
+//   @override
+//   void dispose() {
+//     _cameraController.dispose();
+//     super.dispose();
+//   }
+//
+//   Future<void> initializeCamera() async {
+//     final cameras = await availableCameras();
+//     final firstCamera = cameras.first;
+//
+//     _cameraController = CameraController(
+//       firstCamera,
+//       ResolutionPreset.high,
+//     );
+//
+//     _initializeCameraControllerFuture = _cameraController.initialize();
+//
+//     setState(() {});
+//   }
+//
+//   void startTimer() {
+//     const delay = Duration(seconds: 3);
+//     Timer(delay, () {
+//       if (!isScanCompleted) {
+//         Navigator.pushReplacementNamed(context, '/qramount');
+//       }
+//     });
+//   }
+//
+//   Future<void> scanBarcode() async {
+//     try {
+//       await _initializeCameraControllerFuture;
+//
+//       final imagePath = await FlutterBarcodeScanner.scanBarcode(
+//         '#ff6666', // Custom scanner color
+//         'Cancel', // Custom cancel button text
+//         true, // Enable flash
+//         ScanMode.QR, // Specify the scan mode (QR, BARCODE, or DEFAULT)
+//       );
+//
+//       if (imagePath != '-1' && !isScanCompleted) {
+//         isScanCompleted = true;
+//         Navigator.pushReplacementNamed(context, '/qramount');
+//       }
+//     } catch (e) {
+//       print('Error scanning barcode: $e');
+//     }
+//   }
+//
+//   @override
+//   Widget build(BuildContext context) {
+//     return Scaffold(
+//       appBar: myAppBar(context, 'QR Code Scanner'),
+//       body: Container(
+//         width: double.infinity,
+//         padding: const EdgeInsets.all(24),
+//         child: Column(
+//           children: [
+//             const Expanded(
+//               child: Column(
+//                 mainAxisAlignment: MainAxisAlignment.center,
+//                 children: [
+//                   Text(
+//                     "Place the QR code in the area",
+//                     style: TextStyle(
+//                       fontFamily: "SF Pro Display",
+//                       fontSize: 18,
+//                       fontWeight: FontWeight.w600,
+//                     ),
+//                   ),
+//                   Text(
+//                     "Scanning will start automatically",
+//                     style: TextStyle(
+//                       fontFamily: "SF Pro Display",
+//                       fontSize: 16,
+//                     ),
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             Expanded(
+//               flex: 4,
+//               child: Stack(
+//                 children: [
+//                   FutureBuilder<void>(
+//                     future: _initializeCameraControllerFuture,
+//                     builder: (context, snapshot) {
+//                       if (snapshot.connectionState == ConnectionState.done) {
+//                         return CameraPreview(_cameraController);
+//                       } else {
+//                         return const Center(child: CircularProgressIndicator());
+//                       }
+//                     },
+//                   ),
+//                 ],
+//               ),
+//             ),
+//             const SizedBox(
+//               height: 20,
+//             ),
+//             const Expanded(
+//               child: Text(
+//                 "Wait until the scan completes",
+//                 style: TextStyle(
+//                   fontFamily: "SF Pro Display",
+//                   fontSize: 16,
+//                 ),
+//                 textAlign: TextAlign.center,
+//               ),
+//             ),
+//           ],
+//         ),
+//       ),
+//     );
+//   }
+// }

@@ -94,7 +94,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     final email = _emailController.text;
 
     return Scaffold(
-      appBar: myAppBar(context, 'Profile'),
+      appBar: myAppBar(context, 'Edit Profile'),
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -135,7 +135,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   foregroundColor: Colors.transparent,
                   backgroundColor: Colors.transparent,
                   elevation: 0,
-                  shape: CircleBorder(
+                  shape: const CircleBorder(
                     side: BorderSide(color: Colors.white, width: 1),
                   )),
               child: Stack(
@@ -143,7 +143,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   CircleAvatar(
                     radius: 80,
                     backgroundImage: _profilePhoto != null
-                        ? FileImage(_profilePhoto!) as ImageProvider<Object>?
+                        ? FileImage(_profilePhoto!)
                         : (profilePhotoUrl != null
                             ? NetworkImage(profilePhotoUrl)
                                 as ImageProvider<Object>?
@@ -155,7 +155,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                     child: Container(
                       height: 60,
                       width: 60,
-                      decoration: BoxDecoration(
+                      decoration: const BoxDecoration(
                         shape: BoxShape.circle,
                         color: Colors.white,
                       ),
@@ -171,7 +171,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
             const SizedBox(height: 16),
             myField(context, 'Full Name', _fullNameController, false),
             myField(context, 'Email address', _emailController, false),
-            myField(context, 'phone number', _phoneNumberController, false),
+            myField(context, 'Phone number', _phoneNumberController, false),
             const SizedBox(height: 20),
             Expanded(
               child: Align(

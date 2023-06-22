@@ -4,7 +4,7 @@ import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/HelpScreen.dart';
+import 'package:auropay/view/pages/MoreScreens/FAQScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/NotificationScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
@@ -26,6 +26,9 @@ import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
 import 'package:auropay/view/pages/Send/ProgressScreen.dart';
 import 'package:auropay/view/pages/Send/SuccessScreen.dart';
 import 'package:flutter/material.dart';
+import 'FutureEnhancements/DesignCardScreen.dart';
+import 'MoreScreens/PrivacyPolicyScreen.dart';
+import 'MoreScreens/SecurityScreen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   '/splashScreen': (context) => const SplashScreen(),
@@ -45,7 +48,7 @@ final Map<String, WidgetBuilder> routes = {
   '/home': (context) => const HomeScreen(),
   '/topup': (context) => PaymentTopUpScreen(),
   '/withdraw': (context) =>  WithdrawalScreen(),
-  '/qrscreen': (context) => const QRScreen(),
+  // '/qrscreen': (context) => const QRScanner(),
   '/confirmpay': (context) => const ConfirmPayScreen(),
   '/progress': (context) => const ProgressScreen(),
   '/success': (context) => const SuccessScreen(),
@@ -54,11 +57,14 @@ final Map<String, WidgetBuilder> routes = {
   '/analytics': (context) => AnalyticsScreen(),
   '/more': (context) => const MoreScreen(),
   '/profile': (context) => const ProfileScreen(),
-  '/help': (context) => const HelpScreen(),
   '/support': (context) => const SupportScreen(),
   '/contact': (context) => const ContactScreen(),
   '/settings': (context) => const SettingScreen(),
   '/notifications': (context) => const NotificationScreen(),
   '/notifs': (context) => const NotifScreen(),
   '/send': (context) => const SendScreen(),
+  '/designcard': (context) =>  DesignCardScreen(),
+  '/security' : (context) => const SecurityScreen(),
+  '/policy': (context) => const PolicyScreen(),
+  '/faq' : (context) => const FAQScreen()
 };

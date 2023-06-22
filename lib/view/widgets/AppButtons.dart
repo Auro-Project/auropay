@@ -1,12 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
 Container appButton(
-    BuildContext context,
-    BoxDecoration styleButton,
-    String title,
-    String route, {
-      String? iconPath,
-    }) {
+  BuildContext context,
+  BoxDecoration styleButton,
+  String title,
+  String route, {
+  String? iconPath,
+}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.88,
     height: MediaQuery.of(context).size.height * 0.065,
@@ -46,13 +47,13 @@ Container appButton(
 }
 
 Container appButtonFunc(
-    BuildContext context,
-    BoxDecoration styleButton,
-    String title,
-    Function() onPressed,
-    {String? iconPath,
-      EdgeInsets? margin,
-    }) {
+  BuildContext context,
+  BoxDecoration styleButton,
+  String title,
+  Function() onPressed, {
+  String? iconPath,
+  EdgeInsets? margin,
+}) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.88,
     height: MediaQuery.of(context).size.height * 0.065,

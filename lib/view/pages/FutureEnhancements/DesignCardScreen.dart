@@ -1,3 +1,7 @@
+import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 
 class DesignCardScreen extends StatefulWidget {
@@ -24,14 +28,8 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          'Design Card',
-          style: TextStyle(color: Colors.white),
-        ),
-        backgroundColor: Colors.black,
-      ),
-      backgroundColor: Colors.black,
+      appBar: myAppBar(context, 'Design Card'),
+      backgroundColor: AppColors.primaryColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -41,75 +39,84 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
               height: 200, // Adjust the height of the card
               child: Card(
                 elevation: 4,
-                color: selectedColor, // Use selected color for the card
+                color: Colors.transparent,
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(12.0),
+                  borderRadius: BorderRadius.circular(20.0),
                 ),
-                child: Padding(
-                  padding: const EdgeInsets.all(16.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    children: [
-                      Row(
-                        children: [
-                          Icon(
-                            Icons.credit_card,
-                            color: Colors.white,
-                            size: 32,
-                          ),
-                          SizedBox(width: 16),
-                          Text(
-                            'Auropay',
-                            style: TextStyle(
+                child: Container(
+                  decoration: const BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Color(0xFFA4AAEE), Color(0xFF8FB4EC)],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight,
+                    ),
+                  ),
+                  child: const Padding(
+                    padding: EdgeInsets.all(16.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.credit_card,
                               color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                              size: 32,
                             ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 16),
-                      Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            'Total Balance',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 14,
+                            SizedBox(width: 16),
+                            Text(
+                              'Auropay',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 24,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 8),
-                          Text(
-                            '\$10,000.00',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 24,
-                              fontWeight: FontWeight.bold,
+                          ],
+                        ),
+                        SizedBox(height: 16),
+                        Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(
+                              'Total Balance',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 22,
+                              ),
                             ),
-                          ),
-                          SizedBox(height: 16),
-                          Text(
-                            'John Doe',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 18,
-                              fontWeight: FontWeight.bold,
+                            SizedBox(height: 8),
+                            Text(
+                              'Rs 5,000.00',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 20,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
-                          ),
-                        ],
-                      ),
-                    ],
+                            SizedBox(height: 16),
+                            Text(
+                              'John Doe',
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ],
+                        ),
+                      ],
+                    ),
                   ),
                 ),
               ),
             ),
-            SizedBox(height: 16),
-            Text(
+            const SizedBox(height: 16),
+            const Text(
               'Select Color:',
-              style: TextStyle(color: Colors.white, fontSize: 16),
+              style: TextStyle(color: AppColors.textColor, fontSize: 18),
             ),
-            SizedBox(height: 8),
+            const SizedBox(height: 8),
             Row(
               children: [
                 ColorOption(
@@ -134,11 +141,15 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
                 ),
               ],
             ),
-            SizedBox(height: 16),
-            Center( // Center the "Save" button
-              child: ElevatedButton(
-                onPressed: saveCardColor,
-                child: Text('Save'),
+
+            const SizedBox(height: 16),
+            Expanded(
+              child: Align(
+                alignment: Alignment.bottomCenter,
+                child: appButtonFunc(
+                    margin: const EdgeInsets.only(bottom: 20),
+                    context,
+                    gradient(context), 'Save', saveCardColor),
               ),
             ),
           ],
@@ -166,7 +177,7 @@ class ColorOption extends StatelessWidget {
       child: Container(
         width: 40,
         height: 40,
-        margin: EdgeInsets.symmetric(horizontal: 4),
+        margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(8),

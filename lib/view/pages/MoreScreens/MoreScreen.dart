@@ -9,6 +9,9 @@ import 'package:provider/provider.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
 import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+
+import '../../widgets/CustomTile.dart';
 
 class MoreScreen extends StatelessWidget {
   const MoreScreen({Key? key}) : super(key: key);
@@ -16,7 +19,6 @@ class MoreScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    
 
     void _showLogoutConfirmationBottomSheet(BuildContext context) {
       showModalBottomSheet(
@@ -34,18 +36,18 @@ class MoreScreen extends StatelessWidget {
                     0.5, // Set desired height here
               ),
               child: Container(
-                padding: EdgeInsets.all(30.0),
+                padding: const EdgeInsets.all(30.0),
                 child: Column(
                   mainAxisSize: MainAxisSize.max,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Divider(
+                    const Divider(
                       thickness: 6.0,
                       indent: 130.0,
                       endIndent: 130.0,
                     ),
-                    SizedBox(height: 30.0),
-                    Text(
+                    const SizedBox(height: 30.0),
+                    const Text(
                       'Log Out',
                       style: TextStyle(
                         fontSize: 30,
@@ -53,8 +55,8 @@ class MoreScreen extends StatelessWidget {
                         fontWeight: FontWeight.w600,
                       ),
                     ),
-                    SizedBox(height: 16.0),
-                    Text(
+                    const SizedBox(height: 16.0),
+                    const Text(
                       'Are you sure you want to log out?',
                       style: TextStyle(
                         fontSize: 16,
@@ -62,28 +64,34 @@ class MoreScreen extends StatelessWidget {
                         fontWeight: FontWeight.normal,
                       ),
                     ),
-                    SizedBox(height: 50.0),
-                    appButtonFunc(context, gradient(context),
-                        'Logout', () async {
-                          // Perform the logout action
-                          FirebaseAuth auth = FirebaseAuth.instance;
-                          await auth.signOut();
+                    const SizedBox(height: 50.0),
+                    appButtonFunc(
+                      context,
+                      gradient(context),
+                      'Logout',
+                          () async {
+                        // Perform the logout action
+                        FirebaseAuth auth = FirebaseAuth.instance;
+                        await auth.signOut();
 
-                          // Remove the user login state
-                          final storage = FlutterSecureStorage();
-                          await storage.delete(key: 'isSignedIn');
+                        // Remove the user login state
+                        const storage = FlutterSecureStorage();
+                        await storage.delete(key: 'isSignedIn');
 
-                          // Close all screens and go back to the login screen
-                          Navigator.of(context).pushNamedAndRemoveUntil(
-                              '/account', (Route<dynamic> route) => false);
-                        }
+                        // Close all screens and go back to the login screen
+                        Navigator.of(context).pushNamedAndRemoveUntil(
+                            '/account', (Route<dynamic> route) => false);
+                      },
                     ),
-                    appButtonFunc(margin: EdgeInsets.only(top: 20.0),
-                        context, border(context), 'Cancel',
-                            () {
-                          Navigator.of(context).pop();
-                        }),
-
+                    appButtonFunc(
+                      margin: const EdgeInsets.only(top: 20.0),
+                      context,
+                      border(context),
+                      'Cancel',
+                          () {
+                        Navigator.of(context).pop();
+                      },
+                    ),
                   ],
                 ),
               ),
@@ -92,13 +100,15 @@ class MoreScreen extends StatelessWidget {
         },
       );
     }
-    
-    Widget iconButton( String icon, String route,
-        {double size = 42,
-          Color? color ,
-          double iconSize= 15,
-        }
-    ) {
+
+    Widget iconButton(
+        BuildContext context,
+        String icon,
+        String route, {
+          double size = 42,
+          Color? color,
+          double iconSize = 15,
+        }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -119,14 +129,14 @@ class MoreScreen extends StatelessWidget {
         ),
       );
     }
+
     Widget iconButtonFunc(
-        String iconPath,
-        {double size = 42,
+        String iconPath, {
+          double size = 42,
           Color? color,
-          double iconSize= 15,
+          double iconSize = 15,
           required Function() onPressed,
-        }
-        ) {
+        }) {
       color ??= AppColors.accent1.shade200;
       return Container(
         width: size,
@@ -146,29 +156,25 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-
-
-    Widget buildRow(String title, String iconPath, String route) {
+    Widget buildRow(BuildContext context, String title, String iconPath, String route) {
       return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
+        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
         child: Row(
           children: [
-            iconButton(iconPath, route),
-            SizedBox(width: 20.0),
+            iconButton(context, iconPath, route),
+            const SizedBox(width: 20.0),
             Text(
               title,
-              style: TextStyle(
+              style: const TextStyle(
                 fontSize: 20,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.w600,
-                
               ),
             ),
-            Spacer(),
+            const Spacer(),
             IconButton(
-              icon: Icon(
+              icon: const Icon(
                 Icons.arrow_forward_ios,
-                
               ),
               onPressed: () {
                 Navigator.pushNamed(context, route);
@@ -179,20 +185,23 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
+    final height = MediaQuery.of(context).size.height;
+    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
+    final String? profilePhotoUrl = currentUser?.photoURL;
+
     return Scaffold(
       backgroundColor: AppColors.primaryColor,
-      appBar: myAppBar(context, ''),
+      appBar: myAppBar(context, '', showLeadingIcon: false),
       extendBodyBehindAppBar: true,
       body: Stack(
         children: [
           Image.asset(
             'assets/images/shapes/gradHM.png',
             fit: BoxFit.cover,
-
           ),
           Column(
             children: [
-              SizedBox(height: 100.0),
+              const SizedBox(height: 80.0),
               Stack(
                 children: [
                   Center(
@@ -200,12 +209,12 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: gradient(context,borderColor: AppColors.accent1.shade100),
+                      decoration: border(context, borderColor: AppColors.accent1.shade100),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          SizedBox(height: 60.0),
-                          Text(
+                          const SizedBox(height: 60.0),
+                          const Text(
                             'John Doe',
                             style: TextStyle(
                               fontSize: 26,
@@ -214,8 +223,9 @@ class MoreScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          SizedBox(height: 10.0),
-                          Text('FCW-675325',
+                          const SizedBox(height: 10.0),
+                          const Text(
+                            'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'SF-Pro-Display',
@@ -223,18 +233,43 @@ class MoreScreen extends StatelessWidget {
                               color: AppColors.primaryColor,
                             ),
                           ),
-                          SizedBox(height: 20.0),
+                          const SizedBox(height: 20.0),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              iconButton(iconSize:20, color: AppColors.primaryColor, size:50,'assets/images/icons/report.svg', '/analytics'),
-                              iconButton(iconSize:18, color: AppColors.primaryColor,size:50,'assets/images/icons/notify.svg', '/analytics'),
-                              iconButton(iconSize:18,color: AppColors.primaryColor, size:50,'assets/images/icons/settings.svg', '/analytics'),
-                              iconButtonFunc(iconSize:18,
-                                  color: AppColors.primaryColor, size:50,
-                                  'assets/images/icons/logout.svg', onPressed: (){
-                                _showLogoutConfirmationBottomSheet(context);
-                              })
+                              iconButton(
+                                context,
+                                'assets/images/icons/user.svg',
+                                '/profile',
+                                iconSize: 20,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
+                              iconButton(
+                                context,
+                                'assets/images/icons/designcard.svg',
+                                '/designcard',
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
+                              iconButton(
+                                context,
+                                'assets/images/icons/notify.svg',
+                                '/notifs',
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
+                              iconButtonFunc(
+                                'assets/images/icons/logout.svg',
+                                onPressed: () {
+                                  _showLogoutConfirmationBottomSheet(context);
+                                },
+                                iconSize: 18,
+                                color: AppColors.primaryColor,
+                                size: 50,
+                              ),
                             ],
                           ),
                         ],
@@ -252,62 +287,53 @@ class MoreScreen extends StatelessWidget {
                           color: AppColors.accent1.shade400,
                           width: 2,
                         ),
-                        image: DecorationImage(
-                          image: AssetImage('assets/images/avatar.png'),
-                          fit: BoxFit.cover,
-                        ),
+                      ),
+                      child: const CircleAvatar(
+                        radius: 20,
+                        backgroundImage:
+                        AssetImage("assets/images/avatar.png"),
                       ),
                     ),
                   ),
                 ],
               ),
-              // SizedBox(height: 10.0),
-              buildRow('Information', 'assets/images/icons/user.svg', '/proflie'),
-              buildRow('Security', 'assets/images/icons/secure.svg', '/proflie'),
-              buildRow('Contact Us', 'assets/images/icons/contact.svg', '/proflie'),
-              buildRow('Chat Support', 'assets/images/icons/support.svg', '/proflie'),
-              //create a same way row but dark mode should be there with theme toggle from cupertinao
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 5.0),
-                child: Row(
-                  children: [
-                    Container(
-                      width: 42,
-                      height: 42,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: AppColors.accent1.shade200,
-                      ),
-                      child: IconButton(
-                        icon: SvgPicture.asset(
-                          'assets/images/icons/dark.svg',
-                          height: 15.0,
-                          color: AppColors.textColor,
-                        ),
-                        onPressed: () {
-                          Navigator.pushNamed(context, '/profile');
+              SizedBox(
+                height: height * 0.5,
+                child: SingleChildScrollView(
+                  child: ListView(
+                    padding: const EdgeInsets.all(0),
+                    shrinkWrap: true,
+                    physics: const ClampingScrollPhysics(),
+                    children: [
+                      switchRow(
+                        context,
+                        'Dark Mode',
+                        'assets/images/icons/dark.svg',
+                        valueDefault: themeProvider.getThemeMode() == ThemeMode.dark,
+                        changedValue: (valueDefault) {
+                          themeProvider.toggleTheme();
                         },
                       ),
-                    ),
-                    SizedBox(width: 20.0),
-                    Text(
-                      'Dark Mode',
-                      style: TextStyle(
-                        fontSize: 20,
-                        fontFamily: 'SF-Pro-Display',
-                        fontWeight: FontWeight.w600,
-
+                      buildRow(
+                        context,
+                        'App Settings',
+                        'assets/images/icons/settings.svg',
+                        '/settings',
                       ),
-                    ),
-                    Spacer(),
-                    CupertinoSwitch(
-                      value: themeProvider.getThemeMode() == ThemeMode.dark,
-                      onChanged: (value) {
-                        themeProvider.toggleTheme();
-                      },
-                    )
-
-                  ],
+                      buildRow(
+                        context,
+                        'Security',
+                        'assets/images/icons/secure.svg',
+                        '/security',
+                      ),
+                      buildRow(
+                        context,
+                        'Contact Us',
+                        'assets/images/icons/contact.svg',
+                        '/contact',
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ],
@@ -317,134 +343,3 @@ class MoreScreen extends StatelessWidget {
     );
   }
 }
-
-//here is old code to give navigation
- /*{
-
-Widget  list (// Optional named parameter
-    ) {
-  return Column(
-    children: [
-      ListTile(
-        leading: Icon(
-          Icons.person,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Profile',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/profile');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.help,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Help',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/help');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.settings,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Settings',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        onTap: () {
-          Navigator.pushNamed(context, '/settings');
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: Icon(
-          Icons.nightlight_round,
-          color: AppColors.textColor,
-        ),
-        title: Text(
-          'Dark Mode',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            
-          ),
-        ),
-        trailing: Switch(
-          value: themeProvider.currentTheme == ThemeMode.dark,
-          onChanged: (value) {
-            themeProvider.toggleTheme();
-          },
-          activeColor: Colors.deepPurpleAccent,
-          inactiveTrackColor: Colors.grey,
-        ),
-        onTap: () {
-          themeProvider.toggleTheme();
-        },
-      ),
-      Divider(
-        color: AppColors.textColor,
-        indent: 16,
-        endIndent: 16,
-      ),
-      ListTile(
-        leading: const Icon(
-          Icons.logout,
-          color: Colors.red,
-        ),
-        title: const Text(
-          'Logout',
-          style: TextStyle(
-            fontSize: 18,
-            fontFamily: 'SF-Pro-Display',
-            fontWeight: FontWeight.normal,
-            color: Colors.red,
-          ),
-        ),
-        onTap: () {
-          _showLogoutConfirmationBottomSheet(context);
-        },
-      ),
-    ],
-  );
-}
- }
-  */
