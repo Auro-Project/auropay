@@ -60,12 +60,11 @@ class AppColors {
     ),
   );
 
-
   // Define dark theme
   static const MaterialColor darktextColor = MaterialColor(
     _textColorValue,
     <int, Color>{
-      50: Color(0xFFE0E0E0),
+      50: Color(0xFFFAFAFA),
       100: Color(0xFFB3B3B3),
       200: Color(0xFF808080),
       300: Color(0xFF4D4D4D),

@@ -1,5 +1,3 @@
-import 'dart:js';
-
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -7,13 +5,13 @@ import 'package:flutter_svg/svg.dart';
 import '../Theme/appColors.dart';
 
 Widget iconButton(
-  BuildContext context,
-  String icon,
-  String route, {
-  double size = 42,
-  Color? color,
-  double iconSize = 15,
-}) {
+    BuildContext context,
+    String icon,
+    String route, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+    }) {
   color ??= AppColors.accent1.shade200;
   return Container(
     width: size,
@@ -36,12 +34,13 @@ Widget iconButton(
 }
 
 Widget iconButtonFunc(
-  String iconPath, {
-  double size = 42,
-  Color? color,
-  double iconSize = 15,
-  required Function() onPressed,
-}) {
+    BuildContext context,
+    String iconPath, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+      required Function() onPressed,
+    }) {
   color ??= AppColors.accent1.shade200;
   return Container(
     width: size,
@@ -54,7 +53,7 @@ Widget iconButtonFunc(
       icon: SvgPicture.asset(
         iconPath,
         height: iconSize,
-        color: Theme.of(context as BuildContext).cardColor,
+        color: Theme.of(context).cardColor,
       ),
       onPressed: onPressed,
     ),
@@ -62,11 +61,12 @@ Widget iconButtonFunc(
 }
 
 Widget buildRow(
-    BuildContext context, String title, String iconPath, String route,
-    {
-      Function()? onPressed
-    }
-    ) {
+    BuildContext context,
+    String title,
+    String iconPath,
+    String route, {
+      Function()? onPressed,
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
@@ -96,16 +96,16 @@ Widget buildRow(
 }
 
 Widget buildRowFunc(
-    BuildContext context, String title, String iconPath,
-    {
+    BuildContext context,
+    String title,
+    String iconPath, {
       required Function() onPressed,
-    }
-    ) {
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
       children: [
-        iconButtonFunc( iconPath, onPressed: onPressed),
+        iconButtonFunc(context, iconPath, onPressed: onPressed),
         const SizedBox(width: 20.0),
         Text(
           title,
@@ -128,12 +128,12 @@ Widget buildRowFunc(
 }
 
 Widget switchRow(
-  BuildContext context,
-  String title,
-  String iconPath, {
-  required bool valueDefault,
-  required Function(bool)? changedValue,
-}) {
+    BuildContext context,
+    String title,
+    String iconPath, {
+      required bool valueDefault,
+      required Function(bool)? changedValue,
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
