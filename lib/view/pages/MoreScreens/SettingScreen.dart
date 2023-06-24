@@ -20,7 +20,7 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'App Settings'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -34,13 +34,13 @@ class _SettingScreenState extends State<SettingScreen> {
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text(
+                    title: Text(
                       'Select Language',
                       style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.normal,
-                        color: AppColors.textColor,
+                       color: Theme.of(context).cardColor,
                       ),
                     ),
                     content: SingleChildScrollView(
@@ -54,13 +54,13 @@ class _SettingScreenState extends State<SettingScreen> {
                               });
                               Navigator.pop(context); // Close the dialog
                             },
-                            child: const Text(
+                            child: Text(
                               'English',
                               style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                                color: AppColors.textColor,
+                               color: Theme.of(context).cardColor,
                               ),
                             ),
                           ),
@@ -75,13 +75,13 @@ class _SettingScreenState extends State<SettingScreen> {
                               });
                               Navigator.pop(context); // Close the dialog
                             },
-                            child: const Text(
+                            child: Text(
                               'Spanish',
                               style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                                color: AppColors.textColor,
+                               color: Theme.of(context).cardColor,
                               ),
                             ),
                           ),

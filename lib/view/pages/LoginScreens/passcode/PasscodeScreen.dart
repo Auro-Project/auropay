@@ -52,10 +52,9 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Create Passcode',showLeadingIcon: false),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           const SizedBox(height: 40),
@@ -64,13 +63,13 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Create a secure passcode you can use to log in \nto your app anytime.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                    color: AppColors.textColor,
+                   color: Theme.of(context).cardColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -92,7 +91,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                            color: AppColors.textColor,
+                           color: Theme.of(context).cardColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -212,10 +211,9 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Confirm Passcode',showLeadingIcon: false),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           const SizedBox(height: 40),
@@ -224,13 +222,13 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                const Text(
+                 Text(
                   'Create a secure passcode you can use to log in \nto your app anytime.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                    color: AppColors.textColor,
+                   color: Theme.of(context).cardColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -252,7 +250,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                            color: AppColors.textColor,
+                           color: Theme.of(context).cardColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),

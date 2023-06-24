@@ -3,6 +3,9 @@ import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+
+import '../../Theme/theme_provider.dart';
 
 class DesignCardScreen extends StatefulWidget {
   @override
@@ -27,9 +30,11 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+   
     return Scaffold(
       appBar: myAppBar(context, 'Design Card'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(
@@ -112,9 +117,9 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
               ),
             ),
             const SizedBox(height: 16),
-            const Text(
+             Text(
               'Select Color:',
-              style: TextStyle(color: AppColors.textColor, fontSize: 18),
+              style: TextStyle(color: Theme.of(context).cardColor, fontSize: 18),
             ),
             const SizedBox(height: 8),
             Row(

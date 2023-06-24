@@ -18,7 +18,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Withdraw'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(16.0),
         child: Column(

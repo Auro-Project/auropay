@@ -2,7 +2,6 @@ import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../../Theme/appColors.dart';
 import '../../Theme/theme_provider.dart';
 
 class NotifScreen extends StatefulWidget {
@@ -341,7 +340,7 @@ class _NotifScreenState extends State<NotifScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Notifications'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -395,7 +394,7 @@ class NotificationCategory extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: isSelected ? AppColors.textColor : AppColors.textColor,
+          color: isSelected ? Theme.of(context).cardColor : Theme.of(context).cardColor,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -423,7 +422,7 @@ class NotificationItem extends StatelessWidget {
       ),
       title: Text(
         message,
-        style: const TextStyle(color: AppColors.textColor),
+        style: TextStyle(color: Theme.of(context).cardColor,),
       ),
     );
   }

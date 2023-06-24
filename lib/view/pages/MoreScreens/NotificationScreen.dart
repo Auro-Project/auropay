@@ -10,7 +10,7 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
@@ -31,7 +31,7 @@ class NotificationScreen extends StatelessWidget {
                     fontSize: 20,
                     fontWeight: FontWeight.w600,
                     fontFamily: 'SF Pro Display',
-                    color: AppColors.textColor,
+                   color: Theme.of(context).cardColor,
                   ),
                 ),
                 PopupMenuButton(
@@ -56,7 +56,7 @@ class NotificationScreen extends StatelessWidget {
           ListTile(
             leading: Icon(
               Icons.notifications_active,
-              color: AppColors.textColor,
+             color: Theme.of(context).cardColor,
             ),
             title: Text(
               'Push Notifications',
@@ -64,7 +64,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
             trailing: Switch(
@@ -80,14 +80,14 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.manage_accounts_sharp,
-              color: AppColors.textColor,
+             color: Theme.of(context).cardColor,
             ),
             title: Text(
               'Manage Notifications',
@@ -95,19 +95,19 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
           ),
           Divider(
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.sms_sharp,
-              color: AppColors.textColor,
+             color: Theme.of(context).cardColor,
             ),
             title: Text(
               'SMS Notifications',
@@ -115,7 +115,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
             trailing: Switch(
@@ -131,14 +131,14 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
             indent: 16,
             endIndent: 16,
           ),
           ListTile(
             leading: Icon(
               Icons.email_sharp,
-              color: AppColors.textColor,
+             color: Theme.of(context).cardColor,
             ),
             title: Text(
               'Email Notifications',
@@ -146,7 +146,7 @@ class NotificationScreen extends StatelessWidget {
                 fontSize: 17,
                 fontFamily: 'SF-Pro-Display',
                 fontWeight: FontWeight.normal,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
             trailing: Switch(
@@ -162,7 +162,7 @@ class NotificationScreen extends StatelessWidget {
             },
           ),
           Divider(
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
             indent: 16,
             endIndent: 16,
           ),

@@ -1,4 +1,5 @@
 import 'package:auropay/view/Theme/appColors.dart';
+import 'package:provider/provider.dart';
 
 import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
@@ -9,6 +10,8 @@ import '../../../view/widgets/CustomField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
+
+import '../../Theme/theme_provider.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -66,10 +69,12 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       key: _scaffoldKey,
       appBar: myAppBar(context, 'Sign In'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Padding(
         padding: const EdgeInsets.all(24.0),
         child: Column(

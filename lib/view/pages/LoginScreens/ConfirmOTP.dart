@@ -1,4 +1,3 @@
-import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
 import 'package:auropay/view/widgets/CustomError.dart';
 
@@ -100,21 +99,21 @@ class _confirmOTPState extends State<confirmOTP> {
         child: Column(
           children: [
             const SizedBox(height: 100),
-            const Text(
+             Text(
               'Enter the OTP sent to',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textColor,
+              color: Theme.of(context).cardColor,
               ),
             ),
             const SizedBox(height: 10),
             Text(
               widget.phoneNumber,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textColor,
+              color: Theme.of(context).cardColor,
               ),
             ),
             const SizedBox(height: 30),
@@ -169,12 +168,12 @@ class _confirmOTPState extends State<confirmOTP> {
                 // Example navigation to the previous screen
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 'Resend Code',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color:AppColors.textColor,
+                 color: Theme.of(context).cardColor,
                 ),
               ),
             ),
@@ -197,11 +196,6 @@ class _confirmOTPState extends State<confirmOTP> {
                     String code = enteredCode.join('');
 
                     // Create PhoneAuthCredential using the verificationId and the entered code
-                    PhoneAuthCredential credential =
-                        PhoneAuthProvider.credential(
-                      verificationId: widget.verificationId,
-                      smsCode: code,
-                    );
                     // Call the _signUp method
                     verifyOTP(widget.verificationId, code);
                     // Call signInWithCredential method to sign in the user

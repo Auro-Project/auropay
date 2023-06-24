@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../Theme/appColors.dart';
 import 'Constants.dart';
 
 Column myField(
@@ -16,11 +15,11 @@ Column myField(
     children: [
       Text(
         label,
-        style: const TextStyle(
+        style: TextStyle(
           fontSize: 18,
           fontFamily: 'SF-Pro-Display',
           fontWeight: FontWeight.w500,
-          color: AppColors.textColor,
+         color: Theme.of(context).cardColor,
         ),
       ),
       const SizedBox(height: 10),
@@ -35,7 +34,7 @@ Column myField(
           controller: controller,
           obscureText: obscure,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-          style: TextStyle(color: AppColors.textColor),
+          style: TextStyle(color: Theme.of(context).cardColor,),
           decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 15),

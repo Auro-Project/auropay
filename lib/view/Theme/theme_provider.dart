@@ -1,26 +1,27 @@
 import 'package:flutter/material.dart';
-
-import 'appColors.dart';
+import 'package:auropay/view/Theme/appColors.dart';
 
 enum ThemeModeType { light, dark }
 
 class ThemeProvider with ChangeNotifier {
-  ThemeModeType _themeMode = ThemeModeType.light;
+  final ThemeData _lightTheme = ThemeData.light();
+  final ThemeData _darkTheme = ThemeData.dark();
+
+  ThemeMode _themeMode = ThemeMode.light;
 
   ThemeData getTheme() {
-    return _themeMode == ThemeModeType.light
-        ? AppColors.lightTheme
-        : AppColors.darkTheme;
+    return _themeMode == ThemeMode.light ? _lightTheme : _darkTheme;
   }
 
   ThemeMode getThemeMode() {
-    return _themeMode == ThemeModeType.light ? ThemeMode.light : ThemeMode.dark;
+    return _themeMode;
   }
 
   void toggleTheme() {
-    _themeMode = _themeMode == ThemeModeType.light
-        ? ThemeModeType.dark
-        : ThemeModeType.light;
+    _themeMode = _themeMode == ThemeMode.light ? ThemeMode.dark : ThemeMode.light;
     notifyListeners();
   }
 }
+
+
+

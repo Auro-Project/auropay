@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/material.dart';
 
 import '../../Theme/appColors.dart';
@@ -10,7 +12,7 @@ class PolicyScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, "Privacy Policy"),
       body: SingleChildScrollView(
         padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 20),
@@ -106,7 +108,7 @@ class PolicyScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-          color: AppColors.textColor,
+          color: Theme.of(context as BuildContext).cardColor,
         ),
       ),
     );

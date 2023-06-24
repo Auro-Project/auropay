@@ -32,7 +32,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
               iconPath,
               color: widget.currentIndex == index
                   ? AppColors.accent1
-                  : AppColors.textColor
+                  : Theme.of(context).cardColor,
             ),
             onPressed: () => widget.onTap(index),
             splashColor: Colors.transparent,
@@ -106,7 +106,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).cardColor,
                       ),
                     ),
                   ),

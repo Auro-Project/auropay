@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 
 class FAQScreen extends StatelessWidget {
@@ -9,7 +8,7 @@ class FAQScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, "Auro FAQ"),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),

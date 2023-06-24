@@ -1,7 +1,6 @@
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +9,6 @@ import 'package:auropay/view/Theme/theme_provider.dart';
 import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-
 import '../../widgets/CustomTile.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -121,7 +119,7 @@ class MoreScreen extends StatelessWidget {
           icon: SvgPicture.asset(
             icon,
             height: iconSize,
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
           ),
           onPressed: () {
             Navigator.pushNamed(context, route);
@@ -149,7 +147,7 @@ class MoreScreen extends StatelessWidget {
           icon: SvgPicture.asset(
             iconPath,
             height: iconSize,
-            color: AppColors.textColor,
+           color: Theme.of(context).cardColor,
           ),
           onPressed: onPressed,
         ),
@@ -190,7 +188,8 @@ class MoreScreen extends StatelessWidget {
     final String? profilePhotoUrl = currentUser?.photoURL;
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      //backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: myAppBar(context, '', showLeadingIcon: false),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -214,23 +213,23 @@ class MoreScreen extends StatelessWidget {
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(height: 60.0),
-                          const Text(
+                           Text(
                             'John Doe',
                             style: TextStyle(
                               fontSize: 26,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).cardColor,
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                          const Text(
+                           Text(
                             'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.normal,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).cardColor,
                             ),
                           ),
                           const SizedBox(height: 20.0),
@@ -242,7 +241,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/user.svg',
                                 '/profile',
                                 iconSize: 20,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).cardColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -250,7 +249,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/designcard.svg',
                                 '/designcard',
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).cardColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -258,7 +257,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/notify.svg',
                                 '/notifs',
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).cardColor,
                                 size: 50,
                               ),
                               iconButtonFunc(
@@ -267,7 +266,7 @@ class MoreScreen extends StatelessWidget {
                                   _showLogoutConfirmationBottomSheet(context);
                                 },
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).cardColor,
                                 size: 50,
                               ),
                             ],
@@ -282,7 +281,7 @@ class MoreScreen extends StatelessWidget {
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).cardColor,
                         border: Border.all(
                           color: AppColors.accent1.shade400,
                           width: 2,

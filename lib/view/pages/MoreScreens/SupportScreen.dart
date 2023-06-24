@@ -1,7 +1,6 @@
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import '../../Theme/appColors.dart';
 import '../../Theme/theme_provider.dart';
 
 class SupportScreen extends StatelessWidget {
@@ -12,7 +11,7 @@ class SupportScreen extends StatelessWidget {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Support'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
           const SizedBox(height: 200),
@@ -36,38 +35,38 @@ class SupportScreen extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: const Icon(Icons.camera_alt_rounded),
-                color: AppColors.textColor,
+                icon: Icon(Icons.camera_alt_rounded),
+               color: Theme.of(context).cardColor,
                 onPressed: () {
                   // Handle camera icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.attach_file),
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
                 onPressed: () {
                   // Handle document icon press
                 },
               ),
               Expanded(
                 child: TextFormField(
-                  style: TextStyle(color: AppColors.textColor),
+                  style: TextStyle(color: Theme.of(context).cardColor,),
                   decoration: InputDecoration(
                     hintText: 'Type your message...',
-                    hintStyle: TextStyle(color: AppColors.textColor.withOpacity(0.54)),
+                    hintStyle: TextStyle(color: Theme.of(context).cardColor,),
                   ),
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.keyboard_voice),
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
                 onPressed: () {
                   // Handle voice input icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.send),
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
                 onPressed: () {
                   // Handle send icon press
                 },
@@ -111,14 +110,14 @@ class TextBubble extends StatelessWidget {
                 sender,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                  color: AppColors.textColor,
+                 color: Theme.of(context).cardColor,
                 ),
               ),
               const SizedBox(height: 4.0),
               Text(
                 message,
                 style: TextStyle(
-                  color: AppColors.textColor,
+                 color: Theme.of(context).cardColor,
                 ),
               ),
             ],

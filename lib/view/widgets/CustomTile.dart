@@ -1,3 +1,5 @@
+import 'dart:js';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -24,7 +26,7 @@ Widget iconButton(
       icon: SvgPicture.asset(
         icon,
         height: iconSize,
-        color: AppColors.textColor,
+        color: Theme.of(context).cardColor,
       ),
       onPressed: () {
         Navigator.pushNamed(context, route);
@@ -52,7 +54,7 @@ Widget iconButtonFunc(
       icon: SvgPicture.asset(
         iconPath,
         height: iconSize,
-        color: AppColors.textColor,
+        color: Theme.of(context as BuildContext).cardColor,
       ),
       onPressed: onPressed,
     ),
@@ -147,7 +149,7 @@ Widget switchRow(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
               iconPath,
-              color: AppColors.textColor,
+              color: Theme.of(context).cardColor,
             ),
           ),
         ),

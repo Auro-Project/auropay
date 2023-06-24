@@ -29,7 +29,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Add Money'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
@@ -45,7 +45,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
             SizedBox(height: 30.0),
@@ -61,7 +61,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
                   hintStyle: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textColor,
+                   color: Theme.of(context).cardColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -81,7 +81,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
               style: TextStyle(
                 fontSize: 16.0,
                 // fontWeight: FontWeight.w500,
-                color: AppColors.textColor,
+               color: Theme.of(context).cardColor,
               ),
             ),
             SizedBox(height: 150.0),
