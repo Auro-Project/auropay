@@ -124,7 +124,8 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: border(context,
+                      decoration: border(
+                          context,
                           borderColor: Theme.of(context).cardColor),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
