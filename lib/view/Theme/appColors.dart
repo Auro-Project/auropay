@@ -19,7 +19,8 @@ class AppColors {
       600: Color(0xFF1F1F1F),
       700: Color(0xFF191919),
       800: Color(0xFF121212),
-      900: Color(0xFF0C0C0C),
+      //900: Color(0xFF0C0C0C),
+      900: Color(0xFF19191A),
     },
   );
 
@@ -46,15 +47,15 @@ class AppColors {
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor : lightBackgroundColor,
     primaryColor: textColor[900],
-    hintColor: accentColor,
+    hintColor: accentColor[100],
     cardColor: textColor[900],
     textTheme:  TextTheme(
-      bodyMedium: TextStyle(color: textColor[800]),
+      bodyMedium: TextStyle(color: textColor[900]),
     ),
     appBarTheme:  AppBarTheme(
       color: lightBackgroundColor,
       titleTextStyle: TextStyle(color: textColor[800]),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.transparent,
       ),
     ),
@@ -72,7 +73,7 @@ class AppColors {
     appBarTheme: AppBarTheme(
       color: accentColor[700],
       titleTextStyle: TextStyle(color: textColor[100]),
-      iconTheme: IconThemeData(
+      iconTheme: const IconThemeData(
         color: Colors.transparent,
       ),
     ),

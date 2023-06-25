@@ -41,7 +41,7 @@ Widget iconButtonFunc(
       double iconSize = 15,
       required Function() onPressed,
     }) {
-  color ??= Theme.of(context).hintColor;
+  color ??= Theme.of(context).hintColor ;
   return Container(
     width: size,
     height: size,
@@ -71,7 +71,7 @@ Widget buildRow(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
       children: [
-        iconButton(context, iconPath, route),
+        iconButton(context, iconPath, route, color: AppColors.accentColor[100]),
         const SizedBox(width: 20.0),
         Text(
           title,
@@ -105,7 +105,7 @@ Widget buildRowFunc(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
       children: [
-        iconButtonFunc(context, iconPath, onPressed: onPressed),
+        iconButtonFunc(context, iconPath, onPressed: onPressed, color: AppColors.accentColor[100]),
         const SizedBox(width: 20.0),
         Text(
           title,
@@ -143,7 +143,7 @@ Widget switchRow(
           height: 42,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).hintColor,
+            color: Theme.of(context).primaryColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -167,7 +167,7 @@ Widget switchRow(
           activeColor: AppColors.accentColor,
           value: valueDefault,
           onChanged: changedValue,
-        )
+        ),
       ],
     ),
   );
