@@ -115,7 +115,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'SF Pro Display',
-                         color: Theme.of(context).cardColor,
+                         color: Theme.of(context).hintColor,
                         ),
                       ),
                       const SizedBox(height: 60),
@@ -168,13 +168,13 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                         onPressed: () {
                           resetPasscode();
                         },
-                        child: const Text(
+                        child: Text(
                           'Forgot MPIN?',
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.normal,
                             fontFamily: 'SF Pro Display',
-                            color: AppColors.accent1,
+                            color: Theme.of(context).hintColor,
                           ),
                         ),
                       )

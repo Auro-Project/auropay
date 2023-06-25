@@ -99,89 +99,6 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-    Widget iconButton(
-        BuildContext context,
-        String icon,
-        String route, {
-          double size = 42,
-          Color? color,
-          double iconSize = 15,
-        }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            icon,
-            height: iconSize,
-           color: Theme.of(context).cardColor,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, route);
-          },
-        ),
-      );
-    }
-
-    Widget iconButtonFunc(
-        String iconPath, {
-          double size = 42,
-          Color? color,
-          double iconSize = 15,
-          required Function() onPressed,
-        }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            iconPath,
-            height: iconSize,
-           color: Theme.of(context).cardColor,
-          ),
-          onPressed: onPressed,
-        ),
-      );
-    }
-
-    Widget buildRow(BuildContext context, String title, String iconPath, String route) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
-        child: Row(
-          children: [
-            iconButton(context, iconPath, route),
-            const SizedBox(width: 20.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontFamily: 'SF-Pro-Display',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, route);
-              },
-            ),
-          ],
-        ),
-      );
-    }
 
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
@@ -189,7 +106,6 @@ class MoreScreen extends StatelessWidget {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      //backgroundColor: currentTheme.scaffoldBackgroundColor,
       appBar: myAppBar(context, '', showLeadingIcon: false),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -208,7 +124,8 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: border(context, borderColor: AppColors.accent1.shade100),
+                      decoration: border(context,
+                          borderColor: Theme.of(context).cardColor),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -241,7 +158,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/user.svg',
                                 '/profile',
                                 iconSize: 20,
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context).hintColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -249,7 +166,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/designcard.svg',
                                 '/designcard',
                                 iconSize: 18,
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context).hintColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -257,16 +174,17 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/notify.svg',
                                 '/notifs',
                                 iconSize: 18,
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context).hintColor,
                                 size: 50,
                               ),
                               iconButtonFunc(
+                                context,
                                 'assets/images/icons/logout.svg',
                                 onPressed: () {
                                   _showLogoutConfirmationBottomSheet(context);
                                 },
                                 iconSize: 18,
-                                color: Theme.of(context).cardColor,
+                                color: Theme.of(context).hintColor,
                                 size: 50,
                               ),
                             ],
@@ -283,7 +201,7 @@ class MoreScreen extends StatelessWidget {
                         shape: BoxShape.circle,
                         color: Theme.of(context).cardColor,
                         border: Border.all(
-                          color: AppColors.accent1.shade400,
+                          color: Theme.of(context).hintColor,
                           width: 2,
                         ),
                       ),

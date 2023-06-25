@@ -31,7 +31,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               iconPath,
               color: widget.currentIndex == index
-                  ? AppColors.accent1
+                  ? Theme.of(context).hintColor
                   : Theme.of(context).cardColor,
             ),
             onPressed: () => widget.onTap(index),
@@ -45,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: AppColors.accent1,
+                    color: Theme.of(context).hintColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -89,7 +89,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.accent1.shade300,
+                      color: Theme.of(context).hintColor,
                       // gradient: LinearGradient(
                       //   begin: Alignment(0.00, -1.00),
                       //   end: Alignment(1.00, 1.00),
@@ -101,7 +101,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: AppColors.accent1.shade300,
+                      backgroundColor: Theme.of(context).hintColor,
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(

@@ -216,10 +216,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/transactions');
                                 },
-                                child: const Text(
+                                child: Text(
                                   "View All",
                                   style: TextStyle(
-                                    color: AppColors.accent1,
+                                    color: Theme.of(context).hintColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),

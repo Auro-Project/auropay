@@ -137,7 +137,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: AppColors.accent1, // Customize the text color
+          backgroundColor: Theme.of(context).hintColor, // Customize the text color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),

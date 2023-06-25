@@ -12,7 +12,7 @@ Widget iconButton(
       Color? color,
       double iconSize = 15,
     }) {
-  color ??= AppColors.accent1.shade200;
+  color ??= Theme.of(context).hintColor;
   return Container(
     width: size,
     height: size,
@@ -24,7 +24,7 @@ Widget iconButton(
       icon: SvgPicture.asset(
         icon,
         height: iconSize,
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       onPressed: () {
         Navigator.pushNamed(context, route);
@@ -41,7 +41,7 @@ Widget iconButtonFunc(
       double iconSize = 15,
       required Function() onPressed,
     }) {
-  color ??= AppColors.accent1.shade200;
+  color ??= Theme.of(context).hintColor;
   return Container(
     width: size,
     height: size,
@@ -53,7 +53,7 @@ Widget iconButtonFunc(
       icon: SvgPicture.asset(
         iconPath,
         height: iconSize,
-        color: Theme.of(context).cardColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       onPressed: onPressed,
     ),
@@ -143,13 +143,13 @@ Widget switchRow(
           height: 42,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.accent1.shade200,
+            color: Theme.of(context).hintColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
               iconPath,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
         ),
@@ -164,6 +164,7 @@ Widget switchRow(
         ),
         const Spacer(),
         CupertinoSwitch(
+          activeColor: AppColors.accentColor,
           value: valueDefault,
           onChanged: changedValue,
         )

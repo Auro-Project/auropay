@@ -98,7 +98,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'all',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: AppColors.accent1,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -110,7 +110,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'credit',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: AppColors.accent1,
+                      selectedColor:Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -122,7 +122,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'debit',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: AppColors.accent1,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                   ],
