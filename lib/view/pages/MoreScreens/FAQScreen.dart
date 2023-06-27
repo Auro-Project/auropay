@@ -100,15 +100,15 @@ class _ToggleQuestionState extends State<ToggleQuestion> {
           },
           title: Text(
             widget.question,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 18,
-              color: Colors.black,
+              color: Theme.of(context).cardColor,
             ),
           ),
           trailing: Icon(
             _expanded ? Icons.expand_less : Icons.expand_more,
-            color: Colors.black54,
+            color: Theme.of(context).cardColor,
           ),
         ),
         if (_expanded)
@@ -116,8 +116,8 @@ class _ToggleQuestionState extends State<ToggleQuestion> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               widget.answer,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: Theme.of(context).cardColor,
                 fontSize: 16,
               ),
             ),

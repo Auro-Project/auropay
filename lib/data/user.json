@@ -6,70 +6,70 @@
   [
     {
       "userImage":"assets/images/avatar.png",
-      "name": "Zara Doe",
+      "name": "Tuck Shop",
       "date": "12 Jub, 12:00 PM",
       "amount": "-₹200.00",
       "type": "debit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "Tuck Shop",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "Tuck Shop",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "T-Cafe",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"
     },
     {
       "userImage":"assets/images/avatar.png",
-      "name": "John Smith",
+      "name": "Tuck Shop",
       "date": "13 Jub, 01:30 PM",
       "amount": "+₹500.00",
       "type": "credit"

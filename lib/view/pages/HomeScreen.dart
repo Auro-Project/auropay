@@ -302,7 +302,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   minimumSize: const Size(200, 50)),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                 child: SvgPicture.asset(
                   icon,
                   height: 30,

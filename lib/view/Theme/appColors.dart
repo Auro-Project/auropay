@@ -19,8 +19,7 @@ class AppColors {
       600: Color(0xFF1F1F1F),
       700: Color(0xFF191919),
       800: Color(0xFF121212),
-      //900: Color(0xFF0C0C0C),
-      900: Color(0xFF19191A),
+      900: Color(0xFF0C0C0C),
     },
   );
 
@@ -71,7 +70,8 @@ class AppColors {
       bodyMedium: TextStyle(color: textColor[50]),
     ),
     appBarTheme: AppBarTheme(
-      color: accentColor[700],
+      // color: accentColor[700],
+      color: darkBackgroundColor,
       titleTextStyle: TextStyle(color: textColor[100]),
       iconTheme: const IconThemeData(
         color: Colors.transparent,

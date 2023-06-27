@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../../Theme/appColors.dart';
 import '../../Theme/theme_provider.dart';
+import '../../widgets/CustomAppBar.dart';
 
 class NotificationScreen extends StatelessWidget {
   const NotificationScreen({Key? key}) : super(key: key);
@@ -10,49 +11,12 @@ class NotificationScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
+      appBar: myAppBar(context, 'Notifications'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Container(
-            padding: const EdgeInsets.only(top: 50),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {
-                    Navigator.pop(context);
-                  },
-                ),
-                Text(
-                  'Notifications',
-                  style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.w600,
-                    fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).cardColor,
-                  ),
-                ),
-                PopupMenuButton(
-                  itemBuilder: (BuildContext context) {
-                    return [
-                      const PopupMenuItem(
-                        child: Text('Menu Item 1'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 2'),
-                      ),
-                      const PopupMenuItem(
-                        child: Text('Menu Item 3'),
-                      ),
-                    ];
-                  },
-                ),
-              ],
-            ),
-          ),
-          const SizedBox(height: 30),
+          const SizedBox(height: 20),
           ListTile(
             leading: Icon(
               Icons.notifications_active,

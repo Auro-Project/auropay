@@ -30,7 +30,7 @@ class _SignUpScreenState extends State<SignUpScreen> {
 
   void _sendOtp(BuildContext context) async {
     // final String phoneNumber = _phoneNumberController.text.trim();
-    final String phoneNumber = '+91' + _phoneNumberController.text.trim();
+    final String phoneNumber = '+91${_phoneNumberController.text.trim()}';
     if (_formKey.currentState!.validate()) {
       try {
         await FirebaseAuth.instance.verifyPhoneNumber(

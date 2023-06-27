@@ -35,7 +35,7 @@ class SupportScreen extends StatelessWidget {
           Row(
             children: [
               IconButton(
-                icon: Icon(Icons.camera_alt_rounded),
+                icon: const Icon(Icons.camera_alt_rounded),
                color: Theme.of(context).cardColor,
                 onPressed: () {
                   // Handle camera icon press

@@ -18,7 +18,7 @@ AppBar myAppBar(
         ? IconButton(
             icon: Icon(
               Icons.arrow_back_ios_new,
-             color: Theme.of(context).cardColor,
+              color: Theme.of(context).cardColor,
             ),
             onPressed: onPressed,
           )
@@ -29,7 +29,7 @@ AppBar myAppBar(
         fontSize: 20,
         fontWeight: FontWeight.w600,
         fontFamily: 'SF Pro Display',
-       color: Theme.of(context).cardColor,
+        color: Theme.of(context).cardColor,
       ),
     ),
     centerTitle: true,

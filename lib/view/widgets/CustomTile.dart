@@ -12,13 +12,12 @@ Widget iconButton(
       Color? color,
       double iconSize = 15,
     }) {
-  color ??= Theme.of(context).hintColor;
   return Container(
     width: size,
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: color,
+      color: color = AppColors.accentColor[100],
     ),
     child: IconButton(
       icon: SvgPicture.asset(
@@ -41,13 +40,12 @@ Widget iconButtonFunc(
       double iconSize = 15,
       required Function() onPressed,
     }) {
-  color ??= Theme.of(context).hintColor ;
   return Container(
     width: size,
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: color,
+        color: color = AppColors.accentColor[100],
     ),
     child: IconButton(
       icon: SvgPicture.asset(
@@ -143,7 +141,7 @@ Widget switchRow(
           height: 42,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: Theme.of(context).primaryColor,
+              color: AppColors.accentColor[100],
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),

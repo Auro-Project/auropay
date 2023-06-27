@@ -79,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       width: size.width,
                       height: size.height * 0.14,
                       decoration: BoxDecoration(
-                        color: Color(0xFFACA9D5).withOpacity(0.15),
+                        color: const Color(0xFFACA9D5).withOpacity(0.15),
                       ),
                     ),
                   ),
@@ -101,7 +101,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: Theme.of(context).hintColor,
+                      backgroundColor: AppColors.accentColor[100],
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
