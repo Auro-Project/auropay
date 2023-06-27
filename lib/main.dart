@@ -69,7 +69,7 @@ class _MyAppState extends State<MyApp> {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AuroPay',
-      theme: currentTheme, // Use the current theme from the provider
+      theme: AppColors.lightTheme, // Use the current theme from the provider
       darkTheme: AppColors.darkTheme,
       themeMode: themeProvider.getThemeMode(), // Use the current theme mode from the provider
       initialRoute: _user != null ? '/signedUser' : '/splashScreen',

@@ -29,7 +29,7 @@ class _SettingScreenState extends State<SettingScreen> {
               'Notifications', 'assets/images/icons/notify.svg',
               '/notifications',),
           buildRowFunc(
-            context, 'Language', 'assets/images/icons/notify.svg', onPressed: () {
+            context, 'Language', 'assets/images/icons/lang.svg', onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
@@ -67,24 +67,6 @@ class _SettingScreenState extends State<SettingScreen> {
                           const SizedBox(
                             height: 20,
                           ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedLanguage =
-                                    'Spanish'; // Update selected language
-                              });
-                              Navigator.pop(context); // Close the dialog
-                            },
-                            child: Text(
-                              'Spanish',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontFamily: 'SF-Pro-Display',
-                                fontWeight: FontWeight.normal,
-                               color: Theme.of(context).cardColor,
-                              ),
-                            ),
-                          ),
                           // Add more language options as needed
                         ],
                       ),
@@ -96,7 +78,8 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           switchRow(
               context, 'ScreenShot Protection', 'assets/images/icons/notify.svg',
-              valueDefault: false, changedValue: (valueDefault) {})
+              valueDefault: false, changedValue: (valueDefault) {}
+          ),
         ],
       ),
     );

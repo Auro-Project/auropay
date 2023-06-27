@@ -1,7 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../Theme/appColors.dart';
-import '../../Theme/theme_provider.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomTile.dart';
 
@@ -32,7 +29,7 @@ class ContactScreen extends StatelessWidget {
           buildRow(
             context,
             'FAQ',
-            'assets/images/icons/support.svg',
+            'assets/images/icons/help.svg',
             '/faq',
           ),
         ],

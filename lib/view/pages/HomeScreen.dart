@@ -196,7 +196,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      color: Theme.of(context).cardColor.withOpacity(0.85),
+                      color: Theme.of(context).cardColor.withOpacity(0.0),
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.02),
