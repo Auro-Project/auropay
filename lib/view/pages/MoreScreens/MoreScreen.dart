@@ -21,6 +21,7 @@ class MoreScreen extends StatelessWidget {
     void _showLogoutConfirmationBottomSheet(BuildContext context) {
       showModalBottomSheet(
         context: context,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(30.0),
@@ -30,8 +31,7 @@ class MoreScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height *
-                    0.5, // Set desired height here
+                minHeight: MediaQuery.of(context).size.height * 0.5, // Set desired height here
               ),
               child: Container(
                 padding: const EdgeInsets.all(30.0),

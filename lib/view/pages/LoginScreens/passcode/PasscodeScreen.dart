@@ -9,6 +9,8 @@ import '../../../widgets/CustomError.dart';
 import '../../../Theme/theme_provider.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 
+import '../../HomeScreen.dart';
+
 class CreatePasscodeScreen extends StatefulWidget {
   const CreatePasscodeScreen({Key? key}) : super(key: key);
 
@@ -53,7 +55,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, 'Create Passcode',showLeadingIcon: false),
+      appBar: myAppBar(context, 'Create Passcode', showLeadingIcon: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
@@ -63,13 +65,13 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(
+                Text(
                   'Create a secure passcode you can use to log in \nto your app anytime.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -82,7 +84,8 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -91,7 +94,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                           color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -194,9 +197,11 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
     String? savedPasscode = await storage.read(key: 'passcode');
     return passcode == savedPasscode;
   }
+
   Future<void> signIn(String email, String password) async {
     // This is just an example, your actual sign-in code may look different
-    await FirebaseAuth.instance.signInWithEmailAndPassword(email: email, password: password);
+    await FirebaseAuth.instance
+        .signInWithEmailAndPassword(email: email, password: password);
 
     // When sign-in is successful, save to secure storage
     await FlutterSecureStorage().write(key: 'isSignedIn', value: 'true');
@@ -209,10 +214,19 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
     }
   }
 
+  void navigateToHomeScreen() async {
+    if (await confirmPasscode()) {
+      Navigator.pushNamedAndRemoveUntil(context, '/home', (route) => false);
+    } else {
+      // Show an error message to the user
+      showGlobalSnackBar(context, 'Invalid passcode');
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: myAppBar(context, 'Confirm Passcode',showLeadingIcon: false),
+      appBar: myAppBar(context, 'Confirm Passcode', showLeadingIcon: false),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         children: [
@@ -222,13 +236,13 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                 Text(
+                Text(
                   'Create a secure passcode you can use to log in \nto your app anytime.',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -241,7 +255,8 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: Theme.of(context).primaryColor.withOpacity(0.1),
+                          color:
+                              Theme.of(context).primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -250,7 +265,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                           color: Theme.of(context).primaryColor,
+                            color: Theme.of(context).primaryColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -277,17 +292,8 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
               alignment: Alignment.bottomCenter,
               child: Padding(
                   padding: const EdgeInsets.only(bottom: 40),
-                  child:
-                      // appButton(context, gradient(context), 'Proceed', '/home'),
-                      appButtonFunc(context, gradient(context), 'Done',
-                          () async {
-                    if (await confirmPasscode()) {
-                      Navigator.pushReplacementNamed(context, '/home');
-                    } else {
-                      // Show an error message to the user
-                      showGlobalSnackBar(context, 'Invalid passcode');
-                    }
-                  })),
+                  child: appButtonFunc(context, gradient(context), 'Done',
+                      navigateToHomeScreen)),
             ),
           ),
         ],
