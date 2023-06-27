@@ -40,17 +40,18 @@ class AppColors {
     },
   );
 
-  static Color grey = Colors.grey.withOpacity(0.25);
 
   // Define light theme
   static final ThemeData lightTheme = ThemeData.light().copyWith(
     scaffoldBackgroundColor : lightBackgroundColor,
     primaryColor: textColor[900],
-    hintColor: accentColor[100],
-    cardColor: textColor[900],
-    textTheme:  TextTheme(
-      bodyMedium: TextStyle(color: textColor[900]),
-    ),
+    hintColor: accentColor[200],
+    canvasColor:accentColor[400] ,
+    hoverColor: Colors.white,
+
+    // textTheme:  TextTheme(
+    //   bodyMedium: TextStyle(color: textColor[900]),
+    // ),
     appBarTheme:  AppBarTheme(
       color: lightBackgroundColor,
       titleTextStyle: TextStyle(color: textColor[800]),
@@ -65,10 +66,12 @@ class AppColors {
     scaffoldBackgroundColor : darkBackgroundColor,
     primaryColor: textColor[50],
     hintColor: accentColor[100],
-    cardColor: textColor[50],
-    textTheme: TextTheme(
-      bodyMedium: TextStyle(color: textColor[50]),
-    ),
+    canvasColor:accentColor[200] ,
+    hoverColor: Colors.white,
+
+    // textTheme: TextTheme(
+    //   bodyMedium: TextStyle(color: textColor[50]),
+    // ),
     appBarTheme: AppBarTheme(
       // color: accentColor[700],
       color: darkBackgroundColor,

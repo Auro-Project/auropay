@@ -31,8 +31,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               iconPath,
               color: widget.currentIndex == index
-                  ? Theme.of(context).hintColor
-                  : Theme.of(context).cardColor,
+                  ? Theme.of(context).canvasColor
+                  : Theme.of(context).primaryColor,
             ),
             onPressed: () => widget.onTap(index),
             splashColor: Colors.transparent,
@@ -45,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: Theme.of(context).hintColor,
+                    color: Theme.of(context).canvasColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -101,12 +101,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: AppColors.accentColor[100],
+                      backgroundColor:  Theme.of(context).hintColor,
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
-                        color: Theme.of(context).cardColor,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                       ),
                     ),
                   ),

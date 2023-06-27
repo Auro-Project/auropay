@@ -17,7 +17,7 @@ Widget iconButton(
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: color = AppColors.accentColor[100],
+      color: color = Theme.of(context).hintColor,
     ),
     child: IconButton(
       icon: SvgPicture.asset(
@@ -45,7 +45,7 @@ Widget iconButtonFunc(
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-        color: color = AppColors.accentColor[100],
+        color: color = Theme.of(context).hintColor,
     ),
     child: IconButton(
       icon: SvgPicture.asset(
@@ -141,7 +141,7 @@ Widget switchRow(
           height: 42,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-              color: AppColors.accentColor[100],
+              color: Theme.of(context).hintColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
@@ -162,7 +162,7 @@ Widget switchRow(
         ),
         const Spacer(),
         CupertinoSwitch(
-          activeColor: AppColors.accentColor,
+          activeColor: Theme.of(context).hintColor,
           value: valueDefault,
           onChanged: changedValue,
         ),

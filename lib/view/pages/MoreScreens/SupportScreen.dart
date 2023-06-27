@@ -36,37 +36,37 @@ class SupportScreen extends StatelessWidget {
             children: [
               IconButton(
                 icon: const Icon(Icons.camera_alt_rounded),
-               color: Theme.of(context).cardColor,
+               color: Theme.of(context).primaryColor,
                 onPressed: () {
                   // Handle camera icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.attach_file),
-               color: Theme.of(context).cardColor,
+               color: Theme.of(context).primaryColor,
                 onPressed: () {
                   // Handle document icon press
                 },
               ),
               Expanded(
                 child: TextFormField(
-                  style: TextStyle(color: Theme.of(context).cardColor,),
+                  style: TextStyle(color: Theme.of(context).primaryColor,),
                   decoration: InputDecoration(
                     hintText: 'Type your message...',
-                    hintStyle: TextStyle(color: Theme.of(context).cardColor,),
+                    hintStyle: TextStyle(color: Theme.of(context).primaryColor,),
                   ),
                 ),
               ),
               IconButton(
                 icon: const Icon(Icons.keyboard_voice),
-               color: Theme.of(context).cardColor,
+               color: Theme.of(context).primaryColor,
                 onPressed: () {
                   // Handle voice input icon press
                 },
               ),
               IconButton(
                 icon: const Icon(Icons.send),
-               color: Theme.of(context).cardColor,
+               color: Theme.of(context).primaryColor,
                 onPressed: () {
                   // Handle send icon press
                 },
@@ -110,14 +110,14 @@ class TextBubble extends StatelessWidget {
                 sender,
                 style: TextStyle(
                   fontWeight: FontWeight.bold,
-                 color: Theme.of(context).cardColor,
+                 color: Theme.of(context).primaryColor,
                 ),
               ),
               const SizedBox(height: 4.0),
               Text(
                 message,
                 style: TextStyle(
-                 color: Theme.of(context).cardColor,
+                 color: Theme.of(context).primaryColor,
                 ),
               ),
             ],

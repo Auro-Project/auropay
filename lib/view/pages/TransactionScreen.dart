@@ -75,7 +75,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           decoration: InputDecoration(
                             hintText: 'Search',
                             hintStyle: TextStyle(
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
@@ -98,7 +98,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'all',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: Theme.of(context).hintColor,
+                      selectedColor: Theme.of(context).primaryColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -110,7 +110,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'credit',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor:Theme.of(context).hintColor,
+                      selectedColor:Theme.of(context).primaryColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -122,7 +122,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                       },
                       selected: filter == 'debit',
                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: Theme.of(context).hintColor,
+                      selectedColor: Theme.of(context).primaryColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                   ],
@@ -150,7 +150,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               title: Text(
                                 item.name,
                                 style: TextStyle(
-                                 color: Theme.of(context).cardColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -158,7 +158,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               subtitle: Text(
                                 item.date,
                                 style: TextStyle(
-                                 color: Theme.of(context).cardColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -166,7 +166,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               trailing: Text(
                                 item.amount,
                                 style: TextStyle(
-                                 color: Theme.of(context).cardColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),

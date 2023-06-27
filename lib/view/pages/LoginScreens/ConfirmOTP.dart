@@ -104,7 +104,7 @@ class _confirmOTPState extends State<confirmOTP> {
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(height: 10),
@@ -113,7 +113,7 @@ class _confirmOTPState extends State<confirmOTP> {
               style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-              color: Theme.of(context).cardColor,
+              color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(height: 30),
@@ -173,7 +173,7 @@ class _confirmOTPState extends State<confirmOTP> {
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                 color: Theme.of(context).cardColor,
+                 color: Theme.of(context).primaryColor,
                 ),
               ),
             ),

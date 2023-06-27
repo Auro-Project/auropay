@@ -81,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                         Text(
                           "Hi, ${userData.name}",
                           style: TextStyle(
-                           color: Theme.of(context).cardColor,
+                           color: Theme.of(context).primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -94,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             icon: SvgPicture.asset(
                               "assets/images/icons/notify.svg",
+                              color: Theme.of(context).primaryColor,
                               height: 23,
                             ),
                           ),
@@ -116,7 +117,7 @@ class _HomeScreenState extends State<HomeScreen> {
                            Text(
                             "Your Balance",
                             style: TextStyle(
-                             color: Theme.of(context).cardColor,
+                             color: Theme.of(context).primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                             ),
@@ -125,7 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
                           Text(
                             userData.balance,
                             style: TextStyle(
-                             color: Theme.of(context).cardColor,
+                             color: Theme.of(context).primaryColor,
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
@@ -139,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SvgPicture.asset(
                                   "assets/images/icons/Logo.svg",
                                   height: 45,
-                                 color: Theme.of(context).cardColor,
+                                 color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               Padding(
@@ -149,14 +150,14 @@ class _HomeScreenState extends State<HomeScreen> {
                                      Text(
                                       "Valid Thru",
                                       style: TextStyle(
-                                       color: Theme.of(context).cardColor,
+                                       color: Theme.of(context).primaryColor,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Text(
                                       userData.expireDate,
                                       style: TextStyle(
-                                       color: Theme.of(context).cardColor,
+                                       color: Theme.of(context).primaryColor,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -196,7 +197,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      color: Theme.of(context).cardColor.withOpacity(0.0),
+                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.02),
@@ -206,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               Text(
                                 "Recent Transactions",
                                 style: TextStyle(
-                                 color: Theme.of(context).cardColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -242,7 +243,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   title: Text(
                                     item.name,
                                     style: TextStyle(
-                                     color: Theme.of(context).cardColor,
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -250,7 +251,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   subtitle: Text(
                                     item.date,
                                     style: TextStyle(
-                                     color: Theme.of(context).cardColor,
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -258,7 +259,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                   trailing: Text(
                                     item.amount,
                                     style: TextStyle(
-                                     color: Theme.of(context).cardColor,
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -306,7 +307,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 child: SvgPicture.asset(
                   icon,
                   height: 30,
-                  color: Theme.of(context).cardColor,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
               onPressed: () => Navigator.pushNamed(context, route),
@@ -318,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
             maxLines: 2,
             textAlign: TextAlign.center,
             style: TextStyle(
-             color: Theme.of(context).cardColor,
+             color: Theme.of(context).primaryColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),

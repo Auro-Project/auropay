@@ -126,7 +126,9 @@ class MoreScreen extends StatelessWidget {
                       height: 210,
                       decoration: border(
                           context,
-                          borderColor: Theme.of(context).cardColor),
+                          colorbg: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
+                          borderColor: Theme.of(context).hintColor.withOpacity(0.8)
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
@@ -137,7 +139,7 @@ class MoreScreen extends StatelessWidget {
                               fontSize: 26,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.bold,
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context).hoverColor,
                             ),
                           ),
                           const SizedBox(height: 10.0),
@@ -147,7 +149,7 @@ class MoreScreen extends StatelessWidget {
                               fontSize: 16,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.normal,
-                              color: Theme.of(context).cardColor,
+                              color: Theme.of(context).hoverColor,
                             ),
                           ),
                           const SizedBox(height: 20.0),
@@ -159,7 +161,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/user.svg',
                                 '/profile',
                                 iconSize: 20,
-                                color: Theme.of(context).hintColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -167,7 +169,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/designcard.svg',
                                 '/designcard',
                                 iconSize: 18,
-                                color: Theme.of(context).hintColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -175,7 +177,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/notify.svg',
                                 '/notifs',
                                 iconSize: 18,
-                                color: Theme.of(context).hintColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButtonFunc(
@@ -185,7 +187,7 @@ class MoreScreen extends StatelessWidget {
                                   _showLogoutConfirmationBottomSheet(context);
                                 },
                                 iconSize: 18,
-                                color: Theme.of(context).hintColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                             ],
@@ -200,7 +202,7 @@ class MoreScreen extends StatelessWidget {
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: Theme.of(context).cardColor,
+                        color: Theme.of(context).hintColor.withOpacity(0.8),
                         border: Border.all(
                           color: Theme.of(context).hintColor,
                           width: 2,

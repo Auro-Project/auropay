@@ -69,7 +69,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).cardColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -82,7 +82,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: AppColors.grey,
+                          color: Theme.of(context).primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -91,7 +91,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                           color: Theme.of(context).cardColor,
+                           color: Theme.of(context).primaryColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),
@@ -228,7 +228,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).cardColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 30),
@@ -241,7 +241,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                         height: 60,
                         margin: const EdgeInsets.symmetric(horizontal: 8),
                         decoration: BoxDecoration(
-                          color: AppColors.grey,
+                          color: Theme.of(context).primaryColor.withOpacity(0.1),
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
@@ -250,7 +250,7 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
                           maxLength: 1,
                           obscureText: true,
                           style: TextStyle(
-                           color: Theme.of(context).cardColor,
+                           color: Theme.of(context).primaryColor,
                             fontSize: 24,
                             fontWeight: FontWeight.bold,
                           ),

@@ -40,7 +40,7 @@ class _SettingScreenState extends State<SettingScreen> {
                         fontSize: 18,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.normal,
-                       color: Theme.of(context).cardColor,
+                       color: Theme.of(context).primaryColor,
                       ),
                     ),
                     content: SingleChildScrollView(
@@ -60,7 +60,7 @@ class _SettingScreenState extends State<SettingScreen> {
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                               color: Theme.of(context).cardColor,
+                               color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),

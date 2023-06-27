@@ -394,7 +394,7 @@ class NotificationCategory extends StatelessWidget {
       child: Text(
         title,
         style: TextStyle(
-          color: isSelected ? Theme.of(context).cardColor : Theme.of(context).cardColor,
+          color: isSelected ? Theme.of(context).primaryColor : Theme.of(context).primaryColor,
           fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
         ),
       ),
@@ -422,7 +422,7 @@ class NotificationItem extends StatelessWidget {
       ),
       title: Text(
         message,
-        style: TextStyle(color: Theme.of(context).cardColor,),
+        style: TextStyle(color: Theme.of(context).primaryColor,),
       ),
     );
   }

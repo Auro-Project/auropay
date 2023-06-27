@@ -53,7 +53,7 @@ class AnalyticsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
-                   color: Theme.of(context).cardColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                  Text(
@@ -61,7 +61,7 @@ class AnalyticsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
-                   color: Theme.of(context).cardColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -70,7 +70,7 @@ class AnalyticsScreen extends StatelessWidget {
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.normal,
-                   color: Theme.of(context).cardColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 20),

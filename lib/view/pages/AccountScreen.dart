@@ -33,8 +33,8 @@ class AccountScreen extends StatelessWidget {
                         SvgPicture.asset(
                           "assets/images/icons/APxl.svg",
                           width: 150,
-                          //color: Theme.of(context).cardColor.shade[300],
-                            color: Theme.of(context).cardColor,
+                          //color: Theme.of(context).primaryColor.shade[300],
+                            color: Theme.of(context).primaryColor,
                         ),
                         const SizedBox(height: 20.0),
                          Text(
@@ -42,7 +42,7 @@ class AccountScreen extends StatelessWidget {
                           ' Start your financial \nactivity at Auro with\n Convenience',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).cardColor,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         const SizedBox(height: 10.0),

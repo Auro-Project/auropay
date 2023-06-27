@@ -19,7 +19,7 @@ Column myField(
           fontSize: 18,
           fontFamily: 'SF-Pro-Display',
           fontWeight: FontWeight.w500,
-         color: Theme.of(context).cardColor,
+         color: Theme.of(context).primaryColor,
         ),
       ),
       const SizedBox(height: 10),
@@ -34,7 +34,7 @@ Column myField(
           controller: controller,
           obscureText: obscure,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-          style: TextStyle(color: Theme.of(context).cardColor,),
+          style: TextStyle(color: Theme.of(context).primaryColor,),
           decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 15),

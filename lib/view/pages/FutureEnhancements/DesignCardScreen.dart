@@ -119,7 +119,7 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
             const SizedBox(height: 16),
              Text(
               'Select Color:',
-              style: TextStyle(color: Theme.of(context).cardColor, fontSize: 18),
+              style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),
             ),
             const SizedBox(height: 8),
             Row(

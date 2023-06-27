@@ -205,7 +205,7 @@ class PolicyScreen extends StatelessWidget {
         style: TextStyle(
           fontSize: fontSize,
           fontWeight: isBold ? FontWeight.bold : FontWeight.normal,
-          color: Theme.of(context).cardColor,
+          color: Theme.of(context).primaryColor,
         ),
       ),
     );
