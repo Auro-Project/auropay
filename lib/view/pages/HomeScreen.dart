@@ -51,228 +51,233 @@ class _HomeScreenState extends State<HomeScreen> {
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: SingleChildScrollView(
+      body: Container(
+        height: height,
+        width: width,
         child: Stack(
           children: [
             Image.asset("assets/images/shapes/gradHM.png"),
-            Padding(
-              padding: EdgeInsets.symmetric(
-                // horizontal: width * 0.02,
-                vertical: height * 0.08,
-              ),
-              child: Column(
-                children: [
-                  SizedBox(
-                    height: 50,
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Padding(
-                          padding: const EdgeInsets.only(left: 30),
-                          child: CircleAvatar(
-                            radius: 20,
-                            backgroundImage: profilePhotoUrl != null
-                                ? NetworkImage(profilePhotoUrl)
-                                : const AssetImage("assets/images/avatar.png")
-                                    as ImageProvider<Object>?,
-                            //AssetImage("assets/images/avatar.png"),
-                          ),
-                        ),
-                        Text(
-                          "Hi, ${userData.name}",
-                          style: TextStyle(
-                           color: Theme.of(context).primaryColor,
-                            fontSize: 20,
-                            fontWeight: FontWeight.bold,
-                          ),
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(right: 30),
-                          child: IconButton(
-                            onPressed: () {
-                              Navigator.pushNamed(context, '/notifs');
-                            },
-                            icon: SvgPicture.asset(
-                              "assets/images/icons/notify.svg",
-                              color: Theme.of(context).primaryColor,
-                              height: 23,
+            SingleChildScrollView(
+              child: Padding(
+                padding: EdgeInsets.symmetric(
+                  // horizontal: width * 0.02,
+                  vertical: height * 0.08,
+                ),
+                child: Column(
+                  children: [
+                    SizedBox(
+                      height: 50,
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Padding(
+                            padding: const EdgeInsets.only(left: 30),
+                            child: CircleAvatar(
+                              radius: 20,
+                              backgroundImage: profilePhotoUrl != null
+                                  ? NetworkImage(profilePhotoUrl)
+                                  : const AssetImage("assets/images/avatar.png")
+                                      as ImageProvider<Object>?,
+                              //AssetImage("assets/images/avatar.png"),
                             ),
                           ),
-                        ),
-                      ],
-                    ),
-                  ),
-                  SizedBox(height: height * 0.02),
-                  SizedBox(
-                    height: height * 0.25,
-                    width: width * 0.9,
-                    child: CustomPaint(
-                      painter: CustomShape(
-                        strokeColor: Colors.white.withOpacity(0.8),
-                        fillColor: Colors.white54.withOpacity(0.01),
-                      ),
-                      child: Column(
-                        children: [
-                          SizedBox(height: height * 0.05),
-                           Text(
-                            "Your Balance",
+                          Text(
+                            "Hi, ${userData.name}",
                             style: TextStyle(
                              color: Theme.of(context).primaryColor,
                               fontSize: 20,
-                              fontWeight: FontWeight.w400,
-                            ),
-                          ),
-                          SizedBox(height: height * 0.005),
-                          Text(
-                            userData.balance,
-                            style: TextStyle(
-                             color: Theme.of(context).primaryColor,
-                              fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
                           ),
-                          SizedBox(height: height * 0.03),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: [
-                              Padding(
-                                padding: const EdgeInsets.only(left: 20),
-                                child: SvgPicture.asset(
-                                  "assets/images/icons/Logo.svg",
-                                  height: 45,
-                                 color: Theme.of(context).primaryColor,
-                                ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.only(right: 30),
-                                child: Column(
-                                  children: [
-                                     Text(
-                                      "Valid Thru",
-                                      style: TextStyle(
-                                       color: Theme.of(context).primaryColor,
-                                        fontSize: 16,
-                                      ),
-                                    ),
-                                    Text(
-                                      userData.expireDate,
-                                      style: TextStyle(
-                                       color: Theme.of(context).primaryColor,
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          ),
-                        ],
-                      ),
-                    ),
-                  ),
-                  SizedBox(height: height * 0.04),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                    children: [
-                      _homeButton(
-                        context,
-                        'assets/images/icons/add.svg',
-                        'TopUp',
-                        '/topup',
-                      ),
-                      _homeButton(
-                        context,
-                        'assets/images/icons/withdraw.svg',
-                        'Withdraw',
-                        '/withdraw',
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: height * 0.02),
-                  SizedBox(
-                    height: height * 0.42,
-                    width: width * 1,
-                    child: Card(
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(20),
-                      ),
-                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
-                      child: Column(
-                        children: [
-                          SizedBox(height: height * 0.02),
-                          Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                            children: [
-                              Text(
-                                "Recent Transactions",
-                                style: TextStyle(
-                                 color: Theme.of(context).primaryColor,
-                                  fontSize: 20,
-                                  fontWeight: FontWeight.w400,
-                                ),
-                              ),
-                              SizedBox(width: width * 0.08),
-                              TextButton(
-                                onPressed: () {
-                                  Navigator.pushNamed(context, '/transactions');
-                                },
-                                child: Text(
-                                  "View All",
-                                  style: TextStyle(
-                                    color: Theme.of(context).hintColor,
-                                    fontSize: 16,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                                ),
-                              )
-                            ],
-                          ),
-                          SizedBox(height: height * 0.01),
-                          Expanded(
-                            child: ListView.builder(
-                              padding: EdgeInsets.zero,
-                              itemCount: userData.transactions.length,
-                              itemBuilder: (context, index) {
-                                ListItem item = userData.transactions[index];
-                                return ListTile(
-                                  leading: CircleAvatar(
-                                    radius: 20,
-                                    backgroundImage: AssetImage(item.userImage),
-                                  ),
-                                  title: Text(
-                                    item.name,
-                                    style: TextStyle(
-                                     color: Theme.of(context).primaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  subtitle: Text(
-                                    item.date,
-                                    style: TextStyle(
-                                     color: Theme.of(context).primaryColor,
-                                      fontSize: 14,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                  trailing: Text(
-                                    item.amount,
-                                    style: TextStyle(
-                                     color: Theme.of(context).primaryColor,
-                                      fontSize: 16,
-                                      fontWeight: FontWeight.w400,
-                                    ),
-                                  ),
-                                );
+                          Padding(
+                            padding: const EdgeInsets.only(right: 30),
+                            child: IconButton(
+                              onPressed: () {
+                                Navigator.pushNamed(context, '/notifs');
                               },
+                              icon: SvgPicture.asset(
+                                "assets/images/icons/notify.svg",
+                                color: Theme.of(context).primaryColor,
+                                height: 23,
+                              ),
                             ),
                           ),
                         ],
                       ),
                     ),
-                  ),
-                ],
+                    SizedBox(height: height * 0.02),
+                    SizedBox(
+                      height: height * 0.25,
+                      width: width * 0.9,
+                      child: CustomPaint(
+                        painter: CustomShape(
+                          strokeColor: Colors.white.withOpacity(0.8),
+                          fillColor: Colors.white54.withOpacity(0.01),
+                        ),
+                        child: Column(
+                          children: [
+                            SizedBox(height: height * 0.05),
+                             Text(
+                              "Your Balance",
+                              style: TextStyle(
+                               color: Theme.of(context).primaryColor,
+                                fontSize: 20,
+                                fontWeight: FontWeight.w400,
+                              ),
+                            ),
+                            SizedBox(height: height * 0.005),
+                            Text(
+                              userData.balance,
+                              style: TextStyle(
+                               color: Theme.of(context).primaryColor,
+                                fontSize: 36,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                            SizedBox(height: height * 0.03),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: const EdgeInsets.only(left: 20),
+                                  child: SvgPicture.asset(
+                                    "assets/images/icons/Logo.svg",
+                                    height: 45,
+                                   color: Theme.of(context).primaryColor,
+                                  ),
+                                ),
+                                Padding(
+                                  padding: const EdgeInsets.only(right: 30),
+                                  child: Column(
+                                    children: [
+                                       Text(
+                                        "Valid Thru",
+                                        style: TextStyle(
+                                         color: Theme.of(context).primaryColor,
+                                          fontSize: 16,
+                                        ),
+                                      ),
+                                      Text(
+                                        userData.expireDate,
+                                        style: TextStyle(
+                                         color: Theme.of(context).primaryColor,
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                              ],
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                    SizedBox(height: height * 0.04),
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                      children: [
+                        _homeButton(
+                          context,
+                          'assets/images/icons/add.svg',
+                          'TopUp',
+                          '/topup',
+                        ),
+                        _homeButton(
+                          context,
+                          'assets/images/icons/withdraw.svg',
+                          'Withdraw',
+                          '/withdraw',
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: height * 0.02),
+                    SizedBox(
+                      height: height * 0.42,
+                      width: width * 1,
+                      child: Card(
+                        elevation: 0,
+                        shape: RoundedRectangleBorder(
+                          borderRadius: BorderRadius.circular(20),
+                        ),
+                        color: Theme.of(context).primaryColor.withOpacity(0.04),
+                        child: Column(
+                          children: [
+                            SizedBox(height: height * 0.02),
+                            Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: [
+                                Text(
+                                  "Recent Transactions",
+                                  style: TextStyle(
+                                   color: Theme.of(context).primaryColor,
+                                    fontSize: 20,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                                ),
+                                SizedBox(width: width * 0.08),
+                                TextButton(
+                                  onPressed: () {
+                                    Navigator.pushNamed(context, '/transactions');
+                                  },
+                                  child: Text(
+                                    "View All",
+                                    style: TextStyle(
+                                      color: Theme.of(context).hintColor,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w400,
+                                    ),
+                                  ),
+                                )
+                              ],
+                            ),
+                            SizedBox(height: height * 0.01),
+                            Expanded(
+                              child: ListView.builder(
+                                padding: EdgeInsets.zero,
+                                itemCount: userData.transactions.length,
+                                itemBuilder: (context, index) {
+                                  ListItem item = userData.transactions[index];
+                                  return ListTile(
+                                    leading: CircleAvatar(
+                                      radius: 20,
+                                      backgroundImage: AssetImage(item.userImage),
+                                    ),
+                                    title: Text(
+                                      item.name,
+                                      style: TextStyle(
+                                       color: Theme.of(context).primaryColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    subtitle: Text(
+                                      item.date,
+                                      style: TextStyle(
+                                       color: Theme.of(context).primaryColor,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                    trailing: Text(
+                                      item.amount,
+                                      style: TextStyle(
+                                       color: Theme.of(context).primaryColor,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w400,
+                                      ),
+                                    ),
+                                  );
+                                },
+                              ),
+                            ),
+                          ],
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
           ],

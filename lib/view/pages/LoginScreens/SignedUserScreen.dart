@@ -1,3 +1,4 @@
+import 'package:auropay/services/local_auth_api.dart';
 import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
@@ -22,6 +23,21 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     super.initState();
     for (int i = 0; i < 4; i++) {
       passcodeControllers.add(TextEditingController());
+    }
+    Future.delayed(Duration(seconds: 1), () {
+      authenticateUser();
+    });
+  }
+
+  Future<void> authenticateUser() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    var authenticated = await authService.authenticate();
+
+    if (authenticated) {
+      Navigator.pushReplacementNamed(context, '/home');
+    } else {
+      // You might want to add a condition here to show the snackbar only if the user has not manually cancelled the authentication
+      showGlobalSnackBar(context, 'Authentication failed');
     }
   }
 
