@@ -1,3 +1,4 @@
+import 'package:auropay/services/auth_service.dart';
 import 'package:auropay/view/Theme/appColors.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,13 +16,15 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
 
-  final storage = FlutterSecureStorage();
-  String? isSignedIn = await storage.read(key: 'isSignedIn');
-  bool isUserSignedIn = isSignedIn != null && isSignedIn == 'false';
+  final authService = AuthService();
+  bool isUserSignedIn = await authService.isUserSignedIn();
 
   runApp(
-    ChangeNotifierProvider(
-      create: (context) => ThemeProvider(),
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => ThemeProvider()),
+        Provider.value(value: authService),
+      ],
       child: MyApp(isUserSignedIn: isUserSignedIn),
     ),
   );

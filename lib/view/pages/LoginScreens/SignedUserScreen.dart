@@ -1,11 +1,9 @@
-import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/flutter_svg.dart';
+import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import '../../../services/local_auth_api.dart';
+import '../../../services/auth_service.dart';
 import '../../widgets/Constants.dart';
 import '../../Theme/theme_provider.dart';
 
@@ -19,7 +17,6 @@ class SignedUserScreen extends StatefulWidget {
 class _SignedUserScreenState extends State<SignedUserScreen> {
   List<TextEditingController> passcodeControllers = [];
   int currentPasscodeIndex = 0;
-  final storage = const FlutterSecureStorage();
   bool authenticated = false;
 
   @override
@@ -38,29 +35,6 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     super.dispose();
   }
 
-  Future<bool> confirmPasscode() async {
-    String passcode = passcodeControllers.map((controller) => controller.text).join();
-    String? savedPasscode = await storage.read(key: 'passcode');
-    return passcode == savedPasscode;
-  }
-
-  void signOut() async {
-    SharedPreferences prefs = await SharedPreferences.getInstance();
-    prefs.setBool('isSignedIn', false);
-    // Perform any other sign-out related actions
-  }
-
-  void resetPasscode() async {
-    // Clear the existing passcode
-    await storage.delete(key: 'passcode');
-
-    // Perform any additional steps required for resetting the passcode
-
-    Navigator.pushReplacementNamed(context, '/createPasscode');
-    // Show a success message or navigate to a passcode setup screen
-    showGlobalSnackBar(context, 'Now reset your passcode');
-  }
-
   void focusNextPasscodeField() {
     if (currentPasscodeIndex < passcodeControllers.length - 1) {
       currentPasscodeIndex++;
@@ -70,16 +44,24 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
 
   void checkPasscode(int index, String value) async {
     if (index == 3 && value.isNotEmpty) {
-      // If it's the last field and it's filled
-      if (await confirmPasscode()) {
+      final authService = Provider.of<AuthService>(context, listen: false);
+      List<String> passcode = passcodeControllers.map((controller) => controller.text).toList();
+      if (await authService.confirmPasscode(passcode)) {
         Navigator.pushReplacementNamed(context, '/home');
       } else {
-        // Show an error message to the user
         ScaffoldMessenger.of(context).showSnackBar(
           const SnackBar(content: Text('Invalid passcode')),
         );
       }
     }
+  }
+
+  void resetPasscode() async {
+    final authService = Provider.of<AuthService>(context, listen: false);
+    await authService.resetPasscode();
+
+    Navigator.pushReplacementNamed(context, '/createPasscode');
+    showGlobalSnackBar(context, 'Now reset your passcode');
   }
 
   @override
@@ -109,23 +91,23 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                         height: 200,
                       ),
                       const SizedBox(height: 30),
-                       Text(
+                      Text(
                         'Hello, Naresh!',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
                           fontFamily: 'SF Pro Display',
-                         color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       const SizedBox(height: 60),
-                       Text(
+                      Text(
                         'Enter your MPIN',
                         style: TextStyle(
                           fontSize: 16,
                           fontWeight: FontWeight.normal,
                           fontFamily: 'SF Pro Display',
-                         color: Theme.of(context).primaryColor,
+                          color: Theme.of(context).primaryColor,
                         ),
                       ),
                       const SizedBox(height: 20),
@@ -144,7 +126,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                                 maxLength: 1,
                                 obscureText: true,
                                 style: TextStyle(
-                                 color: Theme.of(context).primaryColor,
+                                  color: Theme.of(context).primaryColor,
                                   fontSize: 24,
                                   fontWeight: FontWeight.bold,
                                 ),
@@ -165,9 +147,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                       ),
                       const SizedBox(height: 20),
                       TextButton(
-                        onPressed: () {
-                          resetPasscode();
-                        },
+                        onPressed: resetPasscode,
                         child: Text(
                           'Forgot MPIN?',
                           style: TextStyle(
@@ -184,32 +164,33 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                 SizedBox(height: MediaQuery.of(context).size.height * 0.15),
                 IconButton(
                   onPressed: () async {
-                    final authenticate = await LocalAuthApi.authenticate();
+                    final authService = Provider.of<AuthService>(context, listen: false);
+                    var authenticated = await authService.authenticate();
+
                     setState(() {
-                      authenticated = authenticate;
+                      authenticated = authenticated;
                     });
 
                     if (authenticated) {
                       Navigator.pushReplacementNamed(context, '/home');
                     } else {
-                      // Authentication failed, display an error message or handle accordingly.
                       showGlobalSnackBar(context, 'Authentication failed');
                     }
                   },
                   icon: SvgPicture.asset(
                     'assets/images/icons/faceid.svg',
                     width: 40,
-                   color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 10),
-                 Text(
+                Text(
                   'Use Face ID',
                   style: TextStyle(
                     fontSize: 16,
                     fontWeight: FontWeight.normal,
                     fontFamily: 'SF Pro Display',
-                   color: Theme.of(context).primaryColor,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 16),
