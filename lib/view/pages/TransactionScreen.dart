@@ -2,11 +2,7 @@ import 'dart:convert';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
 import '../../model/Transaction.dart';
-import '../Theme/appColors.dart';
-import '../Theme/theme_provider.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key});
@@ -35,7 +31,6 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
@@ -97,8 +92,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'all',
-                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: Theme.of(context).primaryColor,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -109,8 +104,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'credit',
-                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor:Theme.of(context).primaryColor,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -121,8 +116,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'debit',
-                     backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                      selectedColor: Theme.of(context).primaryColor,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                   ],

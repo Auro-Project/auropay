@@ -30,13 +30,18 @@ class AccountScreen extends StatelessWidget {
                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
+                        Image.asset(
+                          'assets/images/APlogo.png',
+                          width: 110,
+                        ),
+                        const SizedBox(height: 30,),
                         SvgPicture.asset(
-                          "assets/images/icons/APxl.svg",
+                          "assets/images/icons/APtext.svg",
                           width: 150,
                           //color: Theme.of(context).primaryColor.shade[300],
-                            color: Theme.of(context).primaryColor,
+                          //   color: Theme.of(context).primaryColor,
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 10.0),
                          Text(
                           textAlign: TextAlign.center,
                           ' Start your financial \nactivity at Auro with\n Convenience',
