@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 
@@ -103,7 +104,24 @@ class _BottomNavBarState extends State<BottomNavBar> {
                     child: FloatingActionButton(
                       backgroundColor:  Theme.of(context).hintColor,
                       elevation: 0.1,
-                      onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
+                      onPressed: ()=> showModalBottomSheet(
+                        context: context,
+                        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                        isScrollControlled: true,
+                        shape: const RoundedRectangleBorder(
+                          borderRadius: BorderRadius.only(
+                            topLeft: Radius.circular(25.0),
+                            topRight: Radius.circular(25.0),
+                          ),
+                        ),
+                        builder: (context) => SingleChildScrollView(
+                          child: Container(
+                            width: MediaQuery.of(context).size.width,
+                            height: MediaQuery.of(context).size.height,
+                            child: ScannerView(),
+                          ),
+                        ),
+                      ),
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
                         color: Theme.of(context).scaffoldBackgroundColor,

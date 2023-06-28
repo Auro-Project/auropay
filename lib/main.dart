@@ -70,6 +70,7 @@ class _MyAppState extends State<MyApp> {
       theme: AppColors.lightTheme, // Use the current theme from the provider
       darkTheme: AppColors.darkTheme,
       themeMode: themeProvider.getThemeMode(), // Use the current theme mode from the provider
+      // home: HelpScreen(),
       initialRoute: _user != null ? '/signedUser' : '/splashScreen',
       routes: routes,
     );
