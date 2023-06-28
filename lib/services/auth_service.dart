@@ -42,7 +42,7 @@ class AuthService {
       await _auth.verifyPhoneNumber(
         phoneNumber: phoneNumber,
         verificationCompleted: (PhoneAuthCredential credential) {
-          _auth.signInWithCredential(credential);
+          // _auth.signInWithCredential(credential);
         },
         verificationFailed: (FirebaseAuthException e) {
           throw Exception('Failed to send OTP: ${e.message}');

@@ -1,6 +1,6 @@
 import 'package:auropay/view/pages/LoginScreens/ConfirmOTP.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/SignUpScreen.dart';
+import 'package:auropay/view/pages/LoginScreens/SignUpInfo.dart';
 import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
 import 'package:auropay/view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
@@ -36,13 +36,9 @@ final Map<String, WidgetBuilder> routes = {
   '/signedUser': (context) => const SignedUserScreen(),
   '/account': (context) => const AccountScreen(),
   '/login': (context) => const LoginScreen(),
-  '/signup': (context) => const SignUpScreen(),
-  '/confirmOTP': (context) => ConfirmOTP(
-    phoneNumber: '',
-    countryCode: '',
-    verificationId: '',
-    onVerificationComplete: (PhoneAuthCredential) {},
-  ),
+  // '/signup': (context) => const SignUpScreen(),
+  '/signup': (context) =>  SignupInfoScreen(),
+
   '/createPasscode': (context) => const CreatePasscodeScreen(),
   '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
   '/home': (context) => const HomeScreen(),

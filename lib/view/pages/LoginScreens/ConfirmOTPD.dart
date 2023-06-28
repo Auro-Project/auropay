@@ -12,9 +12,6 @@ class ConfirmOTP extends StatefulWidget {
   final String countryCode;
   final String verificationId;
   final Function(UserCredential) onVerificationComplete;
-  final String fullName;
-  final String email;
-  final String password;
 
   const ConfirmOTP({
     Key? key,
@@ -22,9 +19,6 @@ class ConfirmOTP extends StatefulWidget {
     required this.countryCode,
     required this.verificationId,
     required this.onVerificationComplete,
-    required this.fullName,
-    required this.email,
-    required this.password,
   }) : super(key: key);
 
   @override
@@ -68,7 +62,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   6,
-                      (index) => Container(
+                  (index) => Container(
                     width: 40,
                     height: 60,
                     margin: const EdgeInsets.all(5),
@@ -133,35 +127,34 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 40.0),
                   child: appButtonFunc(context, gradient(context), 'Verify OTP',
-                          () async {
-                        String code = enteredCode.join('');
-                        try {
-                          UserCredential userCredential = await _authService
-                              .verifyOTP(widget.verificationId, code);
-                          if (FirebaseAuth.instance.currentUser != null) {
-                            await _authService.signUp(widget.fullName, widget.email, widget.password, widget.phoneNumber);
-                            widget.onVerificationComplete(userCredential);
-                            showGlobalSnackBar(context, 'Signed Up successfully');
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
-                              ),
-                            );
-                          } else {
-                            setState(() {
-                              errorMessage = 'Invalid OTP';
-                              showGlobalSnackBar(context, errorMessage);
-                            });
-                          }
-                        } catch (e) {
-                          print('OTP Verification Error: $e');
-                          setState(() {
-                            errorMessage = 'An error occurred during verification';
-                            showGlobalSnackBar(context, errorMessage);
-                          });
-                        }
-                      }),
+                      () async {
+                    String code = enteredCode.join('');
+                    try {
+                      UserCredential userCredential = await _authService
+                          .verifyOTP(widget.verificationId, code); // change here
+                      widget.onVerificationComplete(userCredential); // and here
+                      if (FirebaseAuth.instance.currentUser != null) {
+                        showGlobalSnackBar(context, 'Signed Up successfully');
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (context) => LoginScreen(),
+                          ),
+                        );
+                      } else {
+                        setState(() {
+                          errorMessage = 'Invalid OTP';
+                          showGlobalSnackBar(context, errorMessage);
+                        });
+                      }
+                    } catch (e) {
+                      print('OTP Verification Error: $e');
+                      setState(() {
+                        errorMessage = 'An error occurred during verification';
+                        showGlobalSnackBar(context, errorMessage);
+                      });
+                    }
+                  }),
                 ),
               ),
             ),
