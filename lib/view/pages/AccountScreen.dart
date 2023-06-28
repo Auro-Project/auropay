@@ -11,7 +11,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFFE5E5E5),
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           Image.asset("assets/images/shapes/gradAC.png",
@@ -30,18 +30,24 @@ class AccountScreen extends StatelessWidget {
                    child: Column(
                       mainAxisSize: MainAxisSize.min,
                       children: [
-                        SvgPicture.asset(
-                          "assets/images/icons/APxl.svg",
-                          width: 150,
-                          color: AppColors.textColor.shade300,
+                        Image.asset(
+                          'assets/images/APlogo.png',
+                          width: 110,
                         ),
-                        const SizedBox(height: 20.0),
+                        const SizedBox(height: 30,),
+                        SvgPicture.asset(
+                          "assets/images/icons/APtext.svg",
+                          width: 150,
+                          //color: Theme.of(context).primaryColor.shade[300],
+                          //   color: Theme.of(context).primaryColor,
+                        ),
+                        const SizedBox(height: 10.0),
                          Text(
                           textAlign: TextAlign.center,
                           ' Start your financial \nactivity at Auro with\n Convenience',
                           style: TextStyle(
                             fontSize: 16,
-                            color: AppColors.textColor.shade300,
+                            color: Theme.of(context).primaryColor,
                           ),
                         ),
                         const SizedBox(height: 10.0),

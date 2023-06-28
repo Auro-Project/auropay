@@ -20,20 +20,11 @@ class _OnBoardingScreenState extends State<OnBoardingScreen> {
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
-                  image: AssetImage('assets/images/onBoardL.png'),
+                  image: AssetImage('assets/images/GetStartedScreen.png'),
                   fit: BoxFit.cover
               ),
             ),
           ),
-          Positioned(
-              top: 620,
-              child: Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 120),
-                child: SvgPicture.asset(
-                  "assets/images/icons/AP.svg",
-                  // height: 55,
-                ),
-              )),
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [

@@ -29,12 +29,12 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'Add Money'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Container(
         width: MediaQuery.of(context).size.width,
         decoration: BoxDecoration(
           borderRadius: BorderRadius.circular(30.0),
-          color: AppColors.grey
+          color: Theme.of(context).primaryColor
         ),
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -45,7 +45,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
               style: TextStyle(
                 fontSize: 16.0,
                 fontWeight: FontWeight.w500,
-                color: AppColors.textColor,
+               color: Theme.of(context).primaryColor,
               ),
             ),
             SizedBox(height: 30.0),
@@ -61,7 +61,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
                   hintStyle: TextStyle(
                     fontSize: 36.0,
                     fontWeight: FontWeight.w500,
-                    color: AppColors.textColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                   border: OutlineInputBorder(
                     borderRadius: BorderRadius.circular(8.0),
@@ -81,7 +81,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
               style: TextStyle(
                 fontSize: 16.0,
                 // fontWeight: FontWeight.w500,
-                color: AppColors.textColor,
+               color: Theme.of(context).primaryColor,
               ),
             ),
             SizedBox(height: 150.0),
@@ -137,7 +137,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
         style: ElevatedButton.styleFrom(
           elevation: 0,
           foregroundColor: Colors.white,
-          backgroundColor: AppColors.accent1, // Customize the text color
+          backgroundColor: Theme.of(context).primaryColor, // Customize the text color
           shape: RoundedRectangleBorder(
             borderRadius: BorderRadius.circular(15.0),
           ),

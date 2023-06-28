@@ -1,7 +1,6 @@
 import 'dart:convert';
 import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/Theme/appColors.dart';
-import 'package:auropay/view/Theme/theme_provider.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
@@ -14,7 +13,6 @@ import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
-import 'package:provider/provider.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class HomeScreen extends StatefulWidget {
@@ -52,7 +50,7 @@ class _HomeScreenState extends State<HomeScreen> {
     final String? profilePhotoUrl = currentUser?.photoURL;
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: SingleChildScrollView(
         child: Stack(
           children: [
@@ -82,8 +80,8 @@ class _HomeScreenState extends State<HomeScreen> {
                         ),
                         Text(
                           "Hi, ${userData.name}",
-                          style: const TextStyle(
-                            color: AppColors.textColor,
+                          style: TextStyle(
+                           color: Theme.of(context).primaryColor,
                             fontSize: 20,
                             fontWeight: FontWeight.bold,
                           ),
@@ -96,6 +94,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             },
                             icon: SvgPicture.asset(
                               "assets/images/icons/notify.svg",
+                              color: Theme.of(context).primaryColor,
                               height: 23,
                             ),
                           ),
@@ -115,10 +114,10 @@ class _HomeScreenState extends State<HomeScreen> {
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.05),
-                          const Text(
+                           Text(
                             "Your Balance",
                             style: TextStyle(
-                              color: AppColors.textColor,
+                             color: Theme.of(context).primaryColor,
                               fontSize: 20,
                               fontWeight: FontWeight.w400,
                             ),
@@ -126,8 +125,8 @@ class _HomeScreenState extends State<HomeScreen> {
                           SizedBox(height: height * 0.005),
                           Text(
                             userData.balance,
-                            style: const TextStyle(
-                              color: AppColors.textColor,
+                            style: TextStyle(
+                             color: Theme.of(context).primaryColor,
                               fontSize: 36,
                               fontWeight: FontWeight.bold,
                             ),
@@ -141,24 +140,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                 child: SvgPicture.asset(
                                   "assets/images/icons/Logo.svg",
                                   height: 45,
-                                  color: AppColors.textColor,
+                                 color: Theme.of(context).primaryColor,
                                 ),
                               ),
                               Padding(
                                 padding: const EdgeInsets.only(right: 30),
                                 child: Column(
                                   children: [
-                                    const Text(
+                                     Text(
                                       "Valid Thru",
                                       style: TextStyle(
-                                        color: AppColors.textColor,
+                                       color: Theme.of(context).primaryColor,
                                         fontSize: 16,
                                       ),
                                     ),
                                     Text(
                                       userData.expireDate,
-                                      style: const TextStyle(
-                                        color: AppColors.textColor,
+                                      style: TextStyle(
+                                       color: Theme.of(context).primaryColor,
                                         fontSize: 20,
                                         fontWeight: FontWeight.bold,
                                       ),
@@ -198,17 +197,17 @@ class _HomeScreenState extends State<HomeScreen> {
                       shape: RoundedRectangleBorder(
                         borderRadius: BorderRadius.circular(20),
                       ),
-                      color: AppColors.primaryColor.withOpacity(0.85),
+                      color: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.8),
                       child: Column(
                         children: [
                           SizedBox(height: height * 0.02),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                             children: [
-                              const Text(
+                              Text(
                                 "Recent Transactions",
                                 style: TextStyle(
-                                  color: AppColors.textColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 20,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -218,10 +217,10 @@ class _HomeScreenState extends State<HomeScreen> {
                                 onPressed: () {
                                   Navigator.pushNamed(context, '/transactions');
                                 },
-                                child: const Text(
+                                child: Text(
                                   "View All",
                                   style: TextStyle(
-                                    color: AppColors.accent1,
+                                    color: Theme.of(context).hintColor,
                                     fontSize: 16,
                                     fontWeight: FontWeight.w400,
                                   ),
@@ -243,24 +242,24 @@ class _HomeScreenState extends State<HomeScreen> {
                                   ),
                                   title: Text(
                                     item.name,
-                                    style: const TextStyle(
-                                      color: AppColors.textColor,
+                                    style: TextStyle(
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   subtitle: Text(
                                     item.date,
-                                    style: const TextStyle(
-                                      color: AppColors.textColor,
+                                    style: TextStyle(
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 14,
                                       fontWeight: FontWeight.w400,
                                     ),
                                   ),
                                   trailing: Text(
                                     item.amount,
-                                    style: const TextStyle(
-                                      color: AppColors.textColor,
+                                    style: TextStyle(
+                                     color: Theme.of(context).primaryColor,
                                       fontSize: 16,
                                       fontWeight: FontWeight.w400,
                                     ),
@@ -304,11 +303,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   minimumSize: const Size(200, 50)),
               child: Padding(
                 padding:
-                    const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
+                const EdgeInsets.symmetric(horizontal: 20, vertical: 18),
                 child: SvgPicture.asset(
                   icon,
                   height: 30,
-                  color: AppColors.primaryColor,
+                  color: Theme.of(context).scaffoldBackgroundColor,
                 ),
               ),
               onPressed: () => Navigator.pushNamed(context, route),
@@ -319,8 +318,8 @@ class _HomeScreenState extends State<HomeScreen> {
             text,
             maxLines: 2,
             textAlign: TextAlign.center,
-            style: const TextStyle(
-              color: AppColors.textColor,
+            style: TextStyle(
+             color: Theme.of(context).primaryColor,
               fontSize: 16,
               fontWeight: FontWeight.w400,
             ),

@@ -1,7 +1,6 @@
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
@@ -10,7 +9,6 @@ import 'package:auropay/view/Theme/theme_provider.dart';
 import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
-
 import '../../widgets/CustomTile.dart';
 
 class MoreScreen extends StatelessWidget {
@@ -23,6 +21,7 @@ class MoreScreen extends StatelessWidget {
     void _showLogoutConfirmationBottomSheet(BuildContext context) {
       showModalBottomSheet(
         context: context,
+        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.vertical(
             top: Radius.circular(30.0),
@@ -32,8 +31,7 @@ class MoreScreen extends StatelessWidget {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height *
-                    0.5, // Set desired height here
+                minHeight: MediaQuery.of(context).size.height * 0.5, // Set desired height here
               ),
               child: Container(
                 padding: const EdgeInsets.all(30.0),
@@ -101,96 +99,13 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-    Widget iconButton(
-        BuildContext context,
-        String icon,
-        String route, {
-          double size = 42,
-          Color? color,
-          double iconSize = 15,
-        }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            icon,
-            height: iconSize,
-            color: AppColors.textColor,
-          ),
-          onPressed: () {
-            Navigator.pushNamed(context, route);
-          },
-        ),
-      );
-    }
-
-    Widget iconButtonFunc(
-        String iconPath, {
-          double size = 42,
-          Color? color,
-          double iconSize = 15,
-          required Function() onPressed,
-        }) {
-      color ??= AppColors.accent1.shade200;
-      return Container(
-        width: size,
-        height: size,
-        decoration: BoxDecoration(
-          shape: BoxShape.circle,
-          color: color,
-        ),
-        child: IconButton(
-          icon: SvgPicture.asset(
-            iconPath,
-            height: iconSize,
-            color: AppColors.textColor,
-          ),
-          onPressed: onPressed,
-        ),
-      );
-    }
-
-    Widget buildRow(BuildContext context, String title, String iconPath, String route) {
-      return Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
-        child: Row(
-          children: [
-            iconButton(context, iconPath, route),
-            const SizedBox(width: 20.0),
-            Text(
-              title,
-              style: const TextStyle(
-                fontSize: 20,
-                fontFamily: 'SF-Pro-Display',
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-            const Spacer(),
-            IconButton(
-              icon: const Icon(
-                Icons.arrow_forward_ios,
-              ),
-              onPressed: () {
-                Navigator.pushNamed(context, route);
-              },
-            ),
-          ],
-        ),
-      );
-    }
 
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;
 
     return Scaffold(
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, '', showLeadingIcon: false),
       extendBodyBehindAppBar: true,
       body: Stack(
@@ -209,28 +124,32 @@ class MoreScreen extends StatelessWidget {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: border(context, borderColor: AppColors.accent1.shade100),
+                      decoration: border(
+                          context,
+                          colorbg: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
+                          borderColor: Theme.of(context).hintColor.withOpacity(0.8)
+                      ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(height: 60.0),
-                          const Text(
+                           Text(
                             'John Doe',
                             style: TextStyle(
                               fontSize: 26,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.bold,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).hoverColor,
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                          const Text(
+                           Text(
                             'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
                               fontFamily: 'SF-Pro-Display',
                               fontWeight: FontWeight.normal,
-                              color: AppColors.primaryColor,
+                              color: Theme.of(context).hoverColor,
                             ),
                           ),
                           const SizedBox(height: 20.0),
@@ -242,7 +161,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/user.svg',
                                 '/profile',
                                 iconSize: 20,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -250,7 +169,7 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/designcard.svg',
                                 '/designcard',
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButton(
@@ -258,16 +177,17 @@ class MoreScreen extends StatelessWidget {
                                 'assets/images/icons/notify.svg',
                                 '/notifs',
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                               iconButtonFunc(
+                                context,
                                 'assets/images/icons/logout.svg',
                                 onPressed: () {
                                   _showLogoutConfirmationBottomSheet(context);
                                 },
                                 iconSize: 18,
-                                color: AppColors.primaryColor,
+                                color: Theme.of(context).primaryColor,
                                 size: 50,
                               ),
                             ],
@@ -282,9 +202,9 @@ class MoreScreen extends StatelessWidget {
                       height: 100,
                       decoration: BoxDecoration(
                         shape: BoxShape.circle,
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).hintColor.withOpacity(0.8),
                         border: Border.all(
-                          color: AppColors.accent1.shade400,
+                          color: Theme.of(context).hintColor,
                           width: 2,
                         ),
                       ),

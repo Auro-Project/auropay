@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 
 class FAQScreen extends StatelessWidget {
@@ -9,7 +8,7 @@ class FAQScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, "Auro FAQ"),
       body: ListView(
         padding: const EdgeInsets.symmetric(vertical: 20, horizontal: 16),
@@ -101,15 +100,15 @@ class _ToggleQuestionState extends State<ToggleQuestion> {
           },
           title: Text(
             widget.question,
-            style: const TextStyle(
+            style: TextStyle(
               fontWeight: FontWeight.w600,
               fontSize: 18,
-              color: Colors.black,
+              color: Theme.of(context).primaryColor,
             ),
           ),
           trailing: Icon(
             _expanded ? Icons.expand_less : Icons.expand_more,
-            color: Colors.black54,
+            color: Theme.of(context).primaryColor,
           ),
         ),
         if (_expanded)
@@ -117,8 +116,8 @@ class _ToggleQuestionState extends State<ToggleQuestion> {
             padding: const EdgeInsets.symmetric(horizontal: 16.0),
             child: Text(
               widget.answer,
-              style: const TextStyle(
-                color: Colors.black,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
                 fontSize: 16,
               ),
             ),

@@ -1,4 +1,3 @@
-import 'package:auropay/view/Theme/appColors.dart';
 import 'package:flutter/material.dart';
 
 AppBar myAppBar(
@@ -17,20 +16,20 @@ AppBar myAppBar(
     elevation: 0,
     leading: showLeadingIcon
         ? IconButton(
-            icon: const Icon(
+            icon: Icon(
               Icons.arrow_back_ios_new,
-              color: AppColors.textColor,
+              color: Theme.of(context).primaryColor,
             ),
             onPressed: onPressed,
           )
         : null, // If showLeadingIcon is false, leading will be null
     title: Text(
       title,
-      style: const TextStyle(
+      style: TextStyle(
         fontSize: 20,
         fontWeight: FontWeight.w600,
         fontFamily: 'SF Pro Display',
-        color: AppColors.textColor,
+        color: Theme.of(context).primaryColor,
       ),
     ),
     centerTitle: true,

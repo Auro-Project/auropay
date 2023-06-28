@@ -31,8 +31,8 @@ class _BottomNavBarState extends State<BottomNavBar> {
             icon: SvgPicture.asset(
               iconPath,
               color: widget.currentIndex == index
-                  ? AppColors.accent1
-                  : AppColors.textColor
+                  ? Theme.of(context).canvasColor
+                  : Theme.of(context).primaryColor,
             ),
             onPressed: () => widget.onTap(index),
             splashColor: Colors.transparent,
@@ -45,7 +45,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   width: 8,
                   height: 8,
                   decoration: BoxDecoration(
-                    color: AppColors.accent1,
+                    color: Theme.of(context).canvasColor,
                     shape: BoxShape.circle,
                   ),
                 ),
@@ -79,7 +79,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       width: size.width,
                       height: size.height * 0.14,
                       decoration: BoxDecoration(
-                        color: Color(0xFFACA9D5).withOpacity(0.15),
+                        color: const Color(0xFFACA9D5).withOpacity(0.15),
                       ),
                     ),
                   ),
@@ -89,7 +89,7 @@ class _BottomNavBarState extends State<BottomNavBar> {
                   child: Container(
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
-                      color: AppColors.accent1.shade300,
+                      color: Theme.of(context).hintColor,
                       // gradient: LinearGradient(
                       //   begin: Alignment(0.00, -1.00),
                       //   end: Alignment(1.00, 1.00),
@@ -101,12 +101,12 @@ class _BottomNavBarState extends State<BottomNavBar> {
                       // ),
                     ),
                     child: FloatingActionButton(
-                      backgroundColor: AppColors.accent1.shade300,
+                      backgroundColor:  Theme.of(context).hintColor,
                       elevation: 0.1,
                       onPressed: ()=> Navigator.pushNamed(context, '/qrscreen') ,
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
-                        color: AppColors.primaryColor,
+                        color: Theme.of(context).scaffoldBackgroundColor,
                       ),
                     ),
                   ),

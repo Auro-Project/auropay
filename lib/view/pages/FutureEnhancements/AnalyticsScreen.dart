@@ -1,7 +1,9 @@
-import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:charts_flutter/flutter.dart' as charts;
+import 'package:provider/provider.dart';
+
+import '../../Theme/theme_provider.dart';
 
 class AnalyticsScreen extends StatelessWidget {
   final List<charts.Series<PaymentData, int>> data = [
@@ -24,11 +26,15 @@ class AnalyticsScreen extends StatelessWidget {
     ),
   ];
 
+   AnalyticsScreen({super.key});
+
   @override
   Widget build(BuildContext context) {
+    final themeProvider = Provider.of<ThemeProvider>(context);
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, "Payment Analytics", showLeadingIcon: false),
       body: Stack(
         children: [
@@ -42,29 +48,29 @@ class AnalyticsScreen extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                const Text(
+                 Text(
                   'Upcoming Screen',
                   style: TextStyle(
                     fontSize: 24,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
-                const Text(
+                 Text(
                   'Rs.5,000',
                   style: TextStyle(
                     fontSize: 32,
                     fontWeight: FontWeight.w600,
-                    color: AppColors.textColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 20),
-                const Text(
+                 Text(
                   'Payment Overview',
                   style: TextStyle(
                     fontSize: 20,
                     fontWeight: FontWeight.normal,
-                    color: AppColors.textColor,
+                   color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 20),

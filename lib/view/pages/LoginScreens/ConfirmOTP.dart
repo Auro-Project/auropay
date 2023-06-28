@@ -1,96 +1,40 @@
-import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/services/auth_service.dart';
 import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
+import 'package:auropay/view/widgets/AppButtons.dart';
+import 'package:auropay/view/widgets/Constants.dart';
+import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:auropay/view/widgets/CustomError.dart';
-
-import '../../../view/widgets/AppButtons.dart';
-import '../../../view/widgets/Constants.dart';
-import '../../../view/widgets/CustomAppBar.dart';
-import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/material.dart';
 
-class confirmOTP extends StatefulWidget {
+class ConfirmOTP extends StatefulWidget {
   final String phoneNumber;
   final String countryCode;
   final String verificationId;
-  final Function(PhoneAuthCredential) onVerificationComplete;
+  final Function(UserCredential) onVerificationComplete;
+  final String fullName;
+  final String email;
+  final String password;
 
-  const confirmOTP({
+  const ConfirmOTP({
     Key? key,
     required this.phoneNumber,
     required this.countryCode,
     required this.verificationId,
     required this.onVerificationComplete,
+    required this.fullName,
+    required this.email,
+    required this.password,
   }) : super(key: key);
 
   @override
-  _confirmOTPState createState() => _confirmOTPState();
+  _ConfirmOTPState createState() => _ConfirmOTPState();
 }
 
-class _confirmOTPState extends State<confirmOTP> {
-  List<String> enteredCode =
-      List.filled(6, ''); // Initialize the list with empty strings
+class _ConfirmOTPState extends State<ConfirmOTP> {
+  List<String> enteredCode = List.filled(6, '');
   String errorMessage = '';
-
-  void signInWithCredential(PhoneAuthCredential credential) async {
-    FirebaseAuth auth = FirebaseAuth.instance;
-
-    try {
-      await auth.signInWithCredential(credential);
-      print('Sign In Success');
-      showGlobalSnackBar(context, 'Sent OTP successfully');
-      // Navigator.push(
-      //   context,
-      //   MaterialPageRoute(
-      //     builder: (context) => const LoginScreen(),
-      //   ),
-      // );
-    } catch (e) {
-      setState(() {
-        errorMessage = 'Enter the correct OTP';// Display error message
-        showGlobalSnackBar(context, 'Enter the correct OTP');
-      });
-      print('Sign In Failed: $e');
-    }
-  }
-
-  void verifyOTP(String verificationId, String smsCode) async {
-    try {
-      PhoneAuthCredential credential = PhoneAuthProvider.credential(
-        verificationId: verificationId,
-        smsCode: smsCode,
-      );
-
-      UserCredential userCredential =
-          await FirebaseAuth.instance.signInWithCredential(credential);
-
-      if (userCredential.user != null) {
-        // Verification successful
-        // You can navigate to the next screen or perform any other actions
-
-        showGlobalSnackBar(context, 'Signed Up successfully');
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: (context) =>
-                LoginScreen(), // Replace with your desired next screen
-          ),
-        );
-      } else {
-        // Verification failed
-        setState(() {
-          errorMessage = 'Invalid OTP'; // Display error message
-          showGlobalSnackBar(context, errorMessage);
-        });
-      }
-    } catch (e) {
-      print('OTP Verification Error: $e');
-      setState(() {
-        errorMessage =
-            'An error occurred during verification'; // Display error message
-        showGlobalSnackBar(context, errorMessage);
-      });
-    }
-  }
+  final AuthService _authService = AuthService();
 
   @override
   Widget build(BuildContext context) {
@@ -100,21 +44,21 @@ class _confirmOTPState extends State<confirmOTP> {
         child: Column(
           children: [
             const SizedBox(height: 100),
-            const Text(
+            Text(
               'Enter the OTP sent to',
               style: TextStyle(
                 fontSize: 24,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(height: 10),
             Text(
               widget.phoneNumber,
-              style: const TextStyle(
+              style: TextStyle(
                 fontSize: 20,
                 fontWeight: FontWeight.bold,
-                color: AppColors.textColor,
+                color: Theme.of(context).primaryColor,
               ),
             ),
             const SizedBox(height: 30),
@@ -124,7 +68,7 @@ class _confirmOTPState extends State<confirmOTP> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: List.generate(
                   6,
-                  (index) => Container(
+                      (index) => Container(
                     width: 40,
                     height: 60,
                     margin: const EdgeInsets.all(5),
@@ -136,11 +80,10 @@ class _confirmOTPState extends State<confirmOTP> {
                     child: TextFormField(
                       textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.number,
-                      maxLength: 1, // Restrict the input to 1 digit
+                      maxLength: 1,
                       onChanged: (value) {
                         setState(() {
-                          enteredCode[index] =
-                              value; // Update the entered value at the corresponding index
+                          enteredCode[index] = value;
                         });
                       },
                       style: const TextStyle(
@@ -151,8 +94,7 @@ class _confirmOTPState extends State<confirmOTP> {
                       decoration: const InputDecoration(
                         counterText: '',
                         border: InputBorder.none,
-                        hintText:
-                            'X', // Display a placeholder value or any other visual indicator
+                        hintText: 'X',
                         hintStyle: TextStyle(
                           fontSize: 20,
                           color: Colors.white38,
@@ -166,15 +108,14 @@ class _confirmOTPState extends State<confirmOTP> {
             const SizedBox(height: 30),
             TextButton(
               onPressed: () {
-                // Example navigation to the previous screen
                 Navigator.pop(context);
               },
-              child: const Text(
+              child: Text(
                 'Resend Code',
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.bold,
-                  color:AppColors.textColor,
+                  color: Theme.of(context).primaryColor,
                 ),
               ),
             ),
@@ -192,20 +133,35 @@ class _confirmOTPState extends State<confirmOTP> {
                 child: Padding(
                   padding: const EdgeInsets.only(bottom: 40.0),
                   child: appButtonFunc(context, gradient(context), 'Verify OTP',
-                      () {
-                    // Join the enteredCode list into a single string
-                    String code = enteredCode.join('');
-
-                    // Create PhoneAuthCredential using the verificationId and the entered code
-                    PhoneAuthCredential credential =
-                        PhoneAuthProvider.credential(
-                      verificationId: widget.verificationId,
-                      smsCode: code,
-                    );
-                    // Call the _signUp method
-                    verifyOTP(widget.verificationId, code);
-                    // Call signInWithCredential method to sign in the user
-                  }),
+                          () async {
+                        String code = enteredCode.join('');
+                        try {
+                          UserCredential userCredential = await _authService
+                              .verifyOTP(widget.verificationId, code);
+                          if (FirebaseAuth.instance.currentUser != null) {
+                            await _authService.signUp(widget.fullName, widget.email, widget.password, widget.phoneNumber);
+                            widget.onVerificationComplete(userCredential);
+                            showGlobalSnackBar(context, 'Signed Up successfully');
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => LoginScreen(),
+                              ),
+                            );
+                          } else {
+                            setState(() {
+                              errorMessage = 'Invalid OTP';
+                              showGlobalSnackBar(context, errorMessage);
+                            });
+                          }
+                        } catch (e) {
+                          print('OTP Verification Error: $e');
+                          setState(() {
+                            errorMessage = 'An error occurred during verification';
+                            showGlobalSnackBar(context, errorMessage);
+                          });
+                        }
+                      }),
                 ),
               ),
             ),

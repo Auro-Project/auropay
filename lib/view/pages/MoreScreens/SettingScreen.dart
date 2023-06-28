@@ -20,27 +20,27 @@ class _SettingScreenState extends State<SettingScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: myAppBar(context, 'App Settings'),
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // const SizedBox(height: 20),
+          const SizedBox(height: 20),
           buildRow(context,
               'Notifications', 'assets/images/icons/notify.svg',
               '/notifications',),
           buildRowFunc(
-            context, 'Language', 'assets/images/icons/notify.svg', onPressed: () {
+            context, 'Language', 'assets/images/icons/lang.svg', onPressed: () {
               showDialog(
                 context: context,
                 builder: (BuildContext context) {
                   return AlertDialog(
-                    title: const Text(
+                    title: Text(
                       'Select Language',
                       style: TextStyle(
                         fontSize: 18,
                         fontFamily: 'SF-Pro-Display',
                         fontWeight: FontWeight.normal,
-                        color: AppColors.textColor,
+                       color: Theme.of(context).primaryColor,
                       ),
                     ),
                     content: SingleChildScrollView(
@@ -54,36 +54,18 @@ class _SettingScreenState extends State<SettingScreen> {
                               });
                               Navigator.pop(context); // Close the dialog
                             },
-                            child: const Text(
+                            child: Text(
                               'English',
                               style: TextStyle(
                                 fontSize: 17,
                                 fontFamily: 'SF-Pro-Display',
                                 fontWeight: FontWeight.normal,
-                                color: AppColors.textColor,
+                               color: Theme.of(context).primaryColor,
                               ),
                             ),
                           ),
                           const SizedBox(
                             height: 20,
-                          ),
-                          GestureDetector(
-                            onTap: () {
-                              setState(() {
-                                selectedLanguage =
-                                    'Spanish'; // Update selected language
-                              });
-                              Navigator.pop(context); // Close the dialog
-                            },
-                            child: const Text(
-                              'Spanish',
-                              style: TextStyle(
-                                fontSize: 17,
-                                fontFamily: 'SF-Pro-Display',
-                                fontWeight: FontWeight.normal,
-                                color: AppColors.textColor,
-                              ),
-                            ),
                           ),
                           // Add more language options as needed
                         ],
@@ -96,7 +78,8 @@ class _SettingScreenState extends State<SettingScreen> {
           ),
           switchRow(
               context, 'ScreenShot Protection', 'assets/images/icons/notify.svg',
-              valueDefault: false, changedValue: (valueDefault) {})
+              valueDefault: false, changedValue: (valueDefault) {}
+          ),
         ],
       ),
     );

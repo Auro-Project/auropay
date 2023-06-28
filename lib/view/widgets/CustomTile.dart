@@ -5,26 +5,25 @@ import 'package:flutter_svg/svg.dart';
 import '../Theme/appColors.dart';
 
 Widget iconButton(
-  BuildContext context,
-  String icon,
-  String route, {
-  double size = 42,
-  Color? color,
-  double iconSize = 15,
-}) {
-  color ??= AppColors.accent1.shade200;
+    BuildContext context,
+    String icon,
+    String route, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+    }) {
   return Container(
     width: size,
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: color,
+      color: color = Theme.of(context).hintColor,
     ),
     child: IconButton(
       icon: SvgPicture.asset(
         icon,
         height: iconSize,
-        color: AppColors.textColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       onPressed: () {
         Navigator.pushNamed(context, route);
@@ -34,25 +33,25 @@ Widget iconButton(
 }
 
 Widget iconButtonFunc(
-  String iconPath, {
-  double size = 42,
-  Color? color,
-  double iconSize = 15,
-  required Function() onPressed,
-}) {
-  color ??= AppColors.accent1.shade200;
+    BuildContext context,
+    String iconPath, {
+      double size = 42,
+      Color? color,
+      double iconSize = 15,
+      required Function() onPressed,
+    }) {
   return Container(
     width: size,
     height: size,
     decoration: BoxDecoration(
       shape: BoxShape.circle,
-      color: color,
+        color: color = Theme.of(context).hintColor,
     ),
     child: IconButton(
       icon: SvgPicture.asset(
         iconPath,
         height: iconSize,
-        color: AppColors.textColor,
+        color: Theme.of(context).scaffoldBackgroundColor,
       ),
       onPressed: onPressed,
     ),
@@ -60,16 +59,17 @@ Widget iconButtonFunc(
 }
 
 Widget buildRow(
-    BuildContext context, String title, String iconPath, String route,
-    {
-      Function()? onPressed
-    }
-    ) {
+    BuildContext context,
+    String title,
+    String iconPath,
+    String route, {
+      Function()? onPressed,
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
       children: [
-        iconButton(context, iconPath, route),
+        iconButton(context, iconPath, route, color: AppColors.accentColor[100]),
         const SizedBox(width: 20.0),
         Text(
           title,
@@ -94,16 +94,16 @@ Widget buildRow(
 }
 
 Widget buildRowFunc(
-    BuildContext context, String title, String iconPath,
-    {
+    BuildContext context,
+    String title,
+    String iconPath, {
       required Function() onPressed,
-    }
-    ) {
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
       children: [
-        iconButtonFunc( iconPath, onPressed: onPressed),
+        iconButtonFunc(context, iconPath, onPressed: onPressed, color: AppColors.accentColor[100]),
         const SizedBox(width: 20.0),
         Text(
           title,
@@ -126,12 +126,12 @@ Widget buildRowFunc(
 }
 
 Widget switchRow(
-  BuildContext context,
-  String title,
-  String iconPath, {
-  required bool valueDefault,
-  required Function(bool)? changedValue,
-}) {
+    BuildContext context,
+    String title,
+    String iconPath, {
+      required bool valueDefault,
+      required Function(bool)? changedValue,
+    }) {
   return Padding(
     padding: const EdgeInsets.symmetric(horizontal: 25.0, vertical: 7.0),
     child: Row(
@@ -141,13 +141,13 @@ Widget switchRow(
           height: 42,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
-            color: AppColors.accent1.shade200,
+              color: Theme.of(context).hintColor,
           ),
           child: Padding(
             padding: const EdgeInsets.all(12.0),
             child: SvgPicture.asset(
               iconPath,
-              color: AppColors.textColor,
+              color: Theme.of(context).scaffoldBackgroundColor,
             ),
           ),
         ),
@@ -162,9 +162,10 @@ Widget switchRow(
         ),
         const Spacer(),
         CupertinoSwitch(
+          activeColor: Theme.of(context).hintColor,
           value: valueDefault,
           onChanged: changedValue,
-        )
+        ),
       ],
     ),
   );

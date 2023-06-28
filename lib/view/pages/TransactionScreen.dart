@@ -2,9 +2,7 @@ import 'dart:convert';
 import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-
 import '../../model/Transaction.dart';
-import '../Theme/appColors.dart';
 
 class TransactionScreen extends StatefulWidget {
   const TransactionScreen({Key? key});
@@ -33,9 +31,10 @@ class _TransactionScreenState extends State<TransactionScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     return Scaffold(
       extendBodyBehindAppBar: true,
-      backgroundColor: AppColors.primaryColor,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       appBar: myAppBar(context, 'Transaction', showLeadingIcon: false),
       body: Stack(
         clipBehavior: Clip.none,
@@ -66,12 +65,12 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           // TODO: Implement microphone button action
                         },
                       ),
-                      const Expanded(
+                       Expanded(
                         child: TextField(
                           decoration: InputDecoration(
                             hintText: 'Search',
                             hintStyle: TextStyle(
-                              color: AppColors.textColor,
+                              color: Theme.of(context).primaryColor,
                             ),
                             border: InputBorder.none,
                             contentPadding: EdgeInsets.all(10.0),
@@ -93,8 +92,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'all',
-                      backgroundColor: AppColors.primaryColor,
-                      selectedColor: AppColors.accent1,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -105,8 +104,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'credit',
-                      backgroundColor: AppColors.primaryColor,
-                      selectedColor: AppColors.accent1,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                     FilterChip(
@@ -117,8 +116,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         });
                       },
                       selected: filter == 'debit',
-                      backgroundColor: AppColors.primaryColor,
-                      selectedColor: AppColors.accent1,
+                     backgroundColor: Theme.of(context).canvasColor,
+                      selectedColor: Theme.of(context).hintColor,
                       labelStyle: const TextStyle(color: Colors.black),
                     ),
                   ],
@@ -146,7 +145,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               title: Text(
                                 item.name,
                                 style: TextStyle(
-                                  color: AppColors.textColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -154,7 +153,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               subtitle: Text(
                                 item.date,
                                 style: TextStyle(
-                                  color: AppColors.textColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 14,
                                   fontWeight: FontWeight.w400,
                                 ),
@@ -162,7 +161,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               trailing: Text(
                                 item.amount,
                                 style: TextStyle(
-                                  color: AppColors.textColor,
+                                 color: Theme.of(context).primaryColor,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w400,
                                 ),
