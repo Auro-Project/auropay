@@ -1,17 +1,15 @@
-import 'package:auropay/view/Theme/appColors.dart';
+import 'package:auropay/view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import 'package:provider/provider.dart';
-
-import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
 import '../../../view/widgets/CustomAppBar.dart';
 import '../../../view/widgets/CustomError.dart';
 import '../../../view/widgets/CustomField.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
-
+import 'package:firebase_auth/firebase_auth.dart';
 import '../../Theme/theme_provider.dart';
+import '../../../services/auth_service.dart'; // Import the AuthService
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({Key? key}) : super(key: key);
@@ -25,18 +23,14 @@ class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
 
+  final AuthService _authService = AuthService(); // Add this line
+
   Future<void> login() async {
     String email = emailController.text.trim();
     String password = passwordController.text.trim();
 
     try {
-      UserCredential userCredential = await FirebaseAuth.instance.signInWithEmailAndPassword(
-        email: email,
-        password: password,
-      );
-      // User signed in successfully
-      // You can perform any additional actions here
-      // print('Logged in successfully. User ID: ${userCredential.user?.uid}');
+      UserCredential userCredential = await _authService.signIn(email, password);
 
       // Navigate to the next screen (CreatePasscode screen)
       Timer(const Duration(seconds: 0), () {
@@ -64,8 +58,6 @@ class _LoginScreenState extends State<LoginScreen> {
       }
     }
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -95,5 +87,3 @@ class _LoginScreenState extends State<LoginScreen> {
     );
   }
 }
-
-

@@ -37,7 +37,7 @@ final Map<String, WidgetBuilder> routes = {
   '/account': (context) => const AccountScreen(),
   '/login': (context) => const LoginScreen(),
   '/signup': (context) => const SignUpScreen(),
-  '/confirmOTP': (context) => confirmOTP(
+  '/confirmOTP': (context) => ConfirmOTP(
     phoneNumber: '',
     countryCode: '',
     verificationId: '',

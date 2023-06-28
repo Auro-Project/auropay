@@ -1,11 +1,7 @@
 import 'package:auropay/services/auth_service.dart';
 import 'package:auropay/view/Theme/appColors.dart';
-import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-
 import '../../../view/pages/Routes.dart';
-import '../../../view/pages/SplashScreen.dart';
 import 'view/Theme/theme_provider.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -68,7 +64,6 @@ class _MyAppState extends State<MyApp> {
   @override
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
-    final currentTheme = themeProvider.getTheme();
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: 'AuroPay',

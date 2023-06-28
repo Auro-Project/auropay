@@ -2,10 +2,8 @@ import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import '../../../services/auth_service.dart';
 import '../../widgets/Constants.dart';
-import '../../Theme/theme_provider.dart';
 
 class SignedUserScreen extends StatefulWidget {
   const SignedUserScreen({Key? key}) : super(key: key);
