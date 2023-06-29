@@ -64,6 +64,8 @@ class AuthService {
         password: password,
       );
 
+      await userCredential.user!.updateDisplayName(fullName);
+
       final CollectionReference users = _firestore.collection('users');
       await users.doc(userCredential.user!.uid).set({
         'fullName': fullName,

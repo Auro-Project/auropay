@@ -1,18 +1,37 @@
 import 'package:auropay/view/widgets/AppButtons.dart';
 import 'package:auropay/view/widgets/Constants.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
 import 'package:auropay/view/Theme/theme_provider.dart';
+import '../../../model/UserModel.dart';
 import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import '../../widgets/CustomTile.dart';
 
-class MoreScreen extends StatelessWidget {
+class MoreScreen extends StatefulWidget {
   const MoreScreen({Key? key}) : super(key: key);
+
+  @override
+  State<MoreScreen> createState() => _MoreScreenState();
+}
+
+class _MoreScreenState extends State<MoreScreen> {
+
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUser();
+  }
+
+  Future<UserModel> _fetchUser() async {
+    return await UserModel.fetchCurrentUserDetails();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -99,7 +118,6 @@ class MoreScreen extends StatelessWidget {
       );
     }
 
-
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
     final String? profilePhotoUrl = currentUser?.photoURL;
@@ -134,7 +152,7 @@ class MoreScreen extends StatelessWidget {
                         children: [
                           const SizedBox(height: 60.0),
                            Text(
-                            'John Doe',
+                             currentUser?.displayName ?? 'Auro User',
                             style: TextStyle(
                               fontSize: 26,
                               fontFamily: 'SF-Pro-Display',
@@ -208,10 +226,9 @@ class MoreScreen extends StatelessWidget {
                           width: 2,
                         ),
                       ),
-                      child: const CircleAvatar(
+                      child:  CircleAvatar(
                         radius: 20,
-                        backgroundImage:
-                        AssetImage("assets/images/avatar.png"),
+                          backgroundImage: NetworkImage(currentUser?.photoURL ?? ''),
                       ),
                     ),
                   ),

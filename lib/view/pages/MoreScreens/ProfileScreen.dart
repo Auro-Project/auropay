@@ -66,8 +66,62 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
+  // void _saveProfile() async {
+  //   // Save the profile data to Firestore
+  //   final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+  //   if (userId != null) {
+  //     try {
+  //       await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(userId)
+  //           .update({
+  //         'fullName': _fullNameController.text,
+  //         'phoneNumber': _phoneNumberController.text,
+  //       });
+  //
+  //       showGlobalSnackBar(context, 'Profile updated successfully!');
+  //     } catch (e) {
+  //       print('Error updating profile: $e');
+  //       showGlobalSnackBar(context, 'Failed to update profile.');
+  //     }
+  //   }
+  // }
+
+  void _saveProfilePhoto() async {
+    final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+    if (userId != null && _profilePhoto != null) {
+      final storageRef = firebase_storage.FirebaseStorage.instance
+          .ref()
+          .child('userProfilePhotos/$userId');
+
+      final uploadTask = await storageRef.putFile(_profilePhoto!);
+
+      if (uploadTask.state == firebase_storage.TaskState.success) {
+        final downloadUrl = await uploadTask.ref.getDownloadURL();
+
+        // Update photo URL in Firebase Authentication
+        await firebase_auth.FirebaseAuth.instance.currentUser?.updatePhotoURL(downloadUrl);
+
+        // Update photo URL in Firestore
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(userId)
+            .update({
+          'photoUrl': downloadUrl,
+        });
+
+        print('Profile photo updated successfully');
+        showGlobalSnackBar(context, 'Profile photo updated successfully!');
+      } else {
+        print('Error uploading profile photo: ');
+        showGlobalSnackBar(context, 'Failed to upload profile photo.');
+      }
+    }
+  }
+
   void _saveProfile() async {
     // Save the profile data to Firestore
+    _saveProfilePhoto();
     final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
       try {
@@ -75,9 +129,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             .collection('users')
             .doc(userId)
             .update({
-          'fullname': _fullNameController.text,
-          'phonenumber': _phoneNumberController.text,
+          'fullName': _fullNameController.text,
+          'phoneNumber': _phoneNumberController.text,
+          // Add profile photo url
+          'profilePhotoUrl': _profilePhoto?.path,
         });
+
+        // Update the display name and photoURL of the Firebase user
+        final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
+        if (firebaseUser != null) {
+          await firebaseUser.updateDisplayName(_fullNameController.text);
+          await firebaseUser.updatePhotoURL(_profilePhoto?.path);
+        }
 
         showGlobalSnackBar(context, 'Profile updated successfully!');
       } catch (e) {
@@ -86,6 +149,32 @@ class _ProfileScreenState extends State<ProfileScreen> {
       }
     }
   }
+
+  // void _saveProfile() async {
+  //   // Save profile photo
+  //   _saveProfilePhoto();
+  //
+  //   // Save the profile data to Firestore
+  //   final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+  //   if (userId != null) {
+  //     try {
+  //       await FirebaseFirestore.instance
+  //           .collection('users')
+  //           .doc(userId)
+  //           .update({
+  //         'fullName': _fullNameController.text,
+  //         'phoneNumber': _phoneNumberController.text,
+  //       });
+  //
+  //       showGlobalSnackBar(context, 'Profile updated successfully!');
+  //     } catch (e) {
+  //       print('Error updating profile: $e');
+  //       showGlobalSnackBar(context, 'Failed to update profile.');
+  //     }
+  //   }
+  // }
+
+
 
   @override
   Widget build(BuildContext context) {
