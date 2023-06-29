@@ -9,6 +9,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../model/UserData.dart';
+import '../../model/UserModel.dart';
 import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
@@ -24,18 +25,16 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> {
   int _currentIndex = 0;
-  Future<String> fetchCurrentUserFullName() async {
-    final user = FirebaseAuth.instance.currentUser;
-    if (user != null) {
-      final userData = await FirebaseFirestore.instance
-          .collection('users')
-          .doc(user.uid)
-          .get();
-      return userData['fullName'];
-    }
-    return '';
+
+  @override
+  void initState() {
+    super.initState();
+    _fetchUser();
   }
 
+  Future<UserModel> _fetchUser() async {
+    return await UserModel.fetchCurrentUserDetails();
+  }
   static Future<UserData> loadJsonData() async {
     String jsonData = await rootBundle.loadString('lib/data/user.json');
     Map<String, dynamic> jsonMap = json.decode(jsonData);
@@ -82,7 +81,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                           ),
                           Text(
-                            "Hi, ${userData.name}",
+                              'Hi, ' + (currentUser?.displayName ?? 'Auro User').split(' ')[0],
                             style: TextStyle(
                              color: Theme.of(context).primaryColor,
                               fontSize: 20,
