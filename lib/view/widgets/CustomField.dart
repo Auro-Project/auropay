@@ -53,8 +53,6 @@ Column myField(
   );
 }
 
-
-
 Column ValidateField(
     BuildContext context,
     String label,
@@ -85,27 +83,45 @@ Column ValidateField(
             colorbg: Colors.grey.withOpacity(0.25),
             borderColor: Colors.transparent,
             borderRadius: 10),
-        child: TextFormField(
-          controller: controller,
-          obscureText: obscure,
-          keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-          style: TextStyle(color: Theme.of(context).primaryColor,),
-          decoration: const InputDecoration(
-            border: InputBorder.none,
-            contentPadding: EdgeInsets.symmetric(horizontal: 15),
-          ),
-          validator: (value) {
-            if (value == null || value.isEmpty) {
-              return truePhrase;
-            }else if(regexPattern != null &&
-                !RegExp(regexPattern!).hasMatch(value)) {
-              return falsePhrase;
-            }
-            else{
-              return null;
-            }
-          },
+        child: Stack(
+          alignment: Alignment.center,
+          children: [
+            TextFormField(
+              controller: controller,
+              obscureText: obscure,
+              keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+              ),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(horizontal: 15),
+              ),
+              validator: (value) {
+                if (value == null || value.isEmpty) {
+                  return truePhrase;
+                } else if (regexPattern != null && !RegExp(regexPattern!).hasMatch(value)) {
+                  return falsePhrase;
+                } else {
+                  return null;
+                }
+              },
+            ),
+            if (truePhrase != null)
+              Align(
+                alignment: Alignment.center,
+                child: Text(
+                  truePhrase,
+                  style: const TextStyle(
+                    fontSize: 14,
+                    color: Colors.red,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+              ),
+          ],
         ),
+
       ),
       const SizedBox(height: 20),
     ],

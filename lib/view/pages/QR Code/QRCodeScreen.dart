@@ -102,7 +102,7 @@ class _ScannerViewState extends State<ScannerView>
             child: Align(
               alignment: Alignment.center,
               child: Padding(
-                  padding: EdgeInsets.only(
+                  padding: const EdgeInsets.only(
                     top: 50,
                     bottom: 10,
                     left: 10,
@@ -171,7 +171,7 @@ class _ScannerViewState extends State<ScannerView>
                                       print('copied');
                                     }
                                     ScaffoldMessenger.of(context).showSnackBar(
-                                        SnackBar(
+                                        const SnackBar(
                                             content: Text('Teks disalin')));
                                   });
                                 },
