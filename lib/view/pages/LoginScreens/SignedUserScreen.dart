@@ -106,7 +106,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                       ),
                       const SizedBox(height: 30),
                       Text(
-                        'Hello, Naresh!',
+                        'Hello, Sneha!',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,
