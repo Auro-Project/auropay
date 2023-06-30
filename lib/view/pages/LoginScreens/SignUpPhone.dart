@@ -72,10 +72,10 @@ class _SignupPhoneScreenState extends State<SignupPhoneScreen> {
             const SizedBox(height: 30,),
             ValidateField(context, 'Phone Number',
                 _phoneNumberController,
-                false,isNumber: true,
+                false,
                 truePhrase: 'Please enter a phone number',
                 falsePhrase: 'Please enter a valid 10-digit phone number',
-                regexPattern: r'^[A-Za-z]+$',),
+                regexPattern:  r'^\d{10}$'),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -86,7 +86,7 @@ class _SignupPhoneScreenState extends State<SignupPhoneScreen> {
                       gradient(context), 'Sign Up',
                           () {
                         if (_formKey.currentState?.validate() ?? false) {
-                              () => _sendOtp(context);
+                          _sendOtp(context);
                         }
                       }
                   ),

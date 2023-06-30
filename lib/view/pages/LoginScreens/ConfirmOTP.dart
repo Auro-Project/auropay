@@ -139,7 +139,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                           UserCredential userCredential = await _authService
                               .verifyOTP(widget.verificationId, code);
                           if (FirebaseAuth.instance.currentUser != null) {
-                            await _authService.signUp(widget.fullName, widget.email, widget.password, widget.phoneNumber);
+                            // await _authService.signUp(widget.fullName, widget.email, widget.password, widget.phoneNumber);
                             widget.onVerificationComplete(userCredential);
                             showGlobalSnackBar(context, 'Signed Up successfully');
                             Navigator.push(
