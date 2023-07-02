@@ -1,37 +1,38 @@
-import 'package:auropay/view/Theme/appColors.dart';
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
-import 'package:auropay/view/widgets/CustomAppBar.dart';
-import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
 
-import '../../Theme/theme_provider.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
+import '../../../view/widgets/CustomAppBar.dart';
+import 'package:flutter/material.dart';
 
 class DesignCardScreen extends StatefulWidget {
+  const DesignCardScreen({super.key});
+
   @override
   _DesignCardScreenState createState() => _DesignCardScreenState();
 }
 
 class _DesignCardScreenState extends State<DesignCardScreen> {
-  Color selectedColor = Colors.blue; // Default selected color
-  Color? savedColor; // Variable to store the saved color
+  Gradient selectedGradient = LinearGradient(
+    begin: Alignment.topCenter,
+    end: Alignment.bottomCenter,
+    colors: [Colors.blue.shade100, Colors.blue.shade800],
+  ); // Default selected gradient
+  Gradient? savedGradient; // Variable to store the saved gradient
 
-  void changeCardColor(Color color) {
+  void changeCardGradient(Gradient gradient) {
     setState(() {
-      selectedColor = color;
+      selectedGradient = gradient;
     });
   }
 
-  void saveCardColor() {
+  void saveCardGradient() {
     setState(() {
-      savedColor = selectedColor;
+      savedGradient = selectedGradient;
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
-   
     return Scaffold(
       appBar: myAppBar(context, 'Design Card'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -44,17 +45,13 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
               height: 200, // Adjust the height of the card
               child: Card(
                 elevation: 4,
-                color: Colors.transparent,
                 shape: RoundedRectangleBorder(
                   borderRadius: BorderRadius.circular(20.0),
                 ),
                 child: Container(
-                  decoration: const BoxDecoration(
-                    gradient: LinearGradient(
-                      colors: [Color(0xFFA4AAEE), Color(0xFF8FB4EC)],
-                      begin: Alignment.topLeft,
-                      end: Alignment.bottomRight,
-                    ),
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(20.0),
+                    gradient: selectedGradient,
                   ),
                   child: const Padding(
                     padding: EdgeInsets.all(16.0),
@@ -70,7 +67,7 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
                             ),
                             SizedBox(width: 16),
                             Text(
-                              'Auropay',
+                              'AuroPay',
                               style: TextStyle(
                                 color: Colors.white,
                                 fontSize: 24,
@@ -117,44 +114,109 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
               ),
             ),
             const SizedBox(height: 16),
-             Text(
-              'Select Color:',
-              style: TextStyle(color: Theme.of(context).primaryColor, fontSize: 18),
+            Text(
+              'Select Gradient:',
+              style: TextStyle(
+                color: Theme.of(context).primaryColor,
+                fontSize: 18,
+              ),
             ),
             const SizedBox(height: 8),
             Row(
               children: [
-                ColorOption(
-                  color: Colors.blue,
-                  isSelected: selectedColor == Colors.blue,
-                  onColorSelected: changeCardColor,
+                GradientOption(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Theme.of(context).hintColor,
+                      Theme.of(context).hintColor.withOpacity(0.6),
+                    ],
+                  ),
+                  isSelected: selectedGradient ==
+                      LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Theme.of(context).hintColor,
+                          Theme.of(context).hintColor.withOpacity(0.6),
+                        ],
+                      ),
+                  onGradientSelected: changeCardGradient,
                 ),
-                ColorOption(
-                  color: Colors.red,
-                  isSelected: selectedColor == Colors.red,
-                  onColorSelected: changeCardColor,
+                GradientOption(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.red.shade200,
+                      Colors.red.shade200.withOpacity(0.6),
+                    ],
+                  ),
+                  isSelected: selectedGradient ==
+                      LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.red.shade200,
+                          Colors.red.shade200.withOpacity(0.6),
+                        ],
+                      ),
+                  onGradientSelected: changeCardGradient,
                 ),
-                ColorOption(
-                  color: Colors.green,
-                  isSelected: selectedColor == Colors.green,
-                  onColorSelected: changeCardColor,
+                GradientOption(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      const Color(0XFF98C6EC),
+                      const Color(0XFF98C6EC).withOpacity(0.6),
+                    ],
+                  ),
+                  isSelected: selectedGradient ==
+                      LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          const Color(0XFF98C6EC),
+                          const Color(0XFF98C6EC).withOpacity(0.6),
+                        ],
+                      ),
+                  onGradientSelected: changeCardGradient,
                 ),
-                ColorOption(
-                  color: Colors.yellow,
-                  isSelected: selectedColor == Colors.yellow,
-                  onColorSelected: changeCardColor,
+                GradientOption(
+                  gradient: LinearGradient(
+                    begin: Alignment.topCenter,
+                    end: Alignment.bottomCenter,
+                    colors: [
+                      Colors.grey,
+                      Colors.grey.withOpacity(0.6),
+                    ],
+                  ),
+                  isSelected: selectedGradient ==
+                      LinearGradient(
+                        begin: Alignment.topCenter,
+                        end: Alignment.bottomCenter,
+                        colors: [
+                          Colors.grey,
+                          Colors.grey.withOpacity(0.6),
+                        ],
+                      ),
+                  onGradientSelected: changeCardGradient,
                 ),
               ],
             ),
-
             const SizedBox(height: 16),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
                 child: appButtonFunc(
-                    margin: const EdgeInsets.only(bottom: 20),
-                    context,
-                    gradient(context), 'Save', saveCardColor),
+                  margin: const EdgeInsets.only(bottom: 20),
+                  context,
+                  gradient(context),
+                  'Save',
+                  saveCardGradient,
+                ),
               ),
             ),
           ],
@@ -164,27 +226,27 @@ class _DesignCardScreenState extends State<DesignCardScreen> {
   }
 }
 
-class ColorOption extends StatelessWidget {
-  final Color color;
+class GradientOption extends StatelessWidget {
+  final Gradient gradient;
   final bool isSelected;
-  final Function(Color) onColorSelected;
+  final Function(Gradient) onGradientSelected;
 
-  const ColorOption({
-    required this.color,
+  const GradientOption({super.key,
+    required this.gradient,
     required this.isSelected,
-    required this.onColorSelected,
+    required this.onGradientSelected,
   });
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onTap: () => onColorSelected(color),
+      onTap: () => onGradientSelected(gradient),
       child: Container(
         width: 40,
         height: 40,
         margin: const EdgeInsets.symmetric(horizontal: 4),
         decoration: BoxDecoration(
-          color: color,
+          gradient: gradient,
           borderRadius: BorderRadius.circular(8),
           border: Border.all(
             color: isSelected ? Colors.white : Colors.transparent,

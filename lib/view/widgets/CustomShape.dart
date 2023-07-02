@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 //Copy this CustomPainter code to the Bottom of the File
@@ -54,7 +53,7 @@ class CustomShape extends CustomPainter {
     path_0.close();
 
     Paint paint_0_fill = Paint()..style = PaintingStyle.fill;
-    paint_0_fill.color = Color(0xffD9D9D9).withOpacity(0.08);
+    paint_0_fill.color = const Color(0xffD9D9D9).withOpacity(0.08);
     canvas.drawPath(path_0, paint_0_fill);
 
     Path path_1 = Path();

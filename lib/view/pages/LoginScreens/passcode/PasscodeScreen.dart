@@ -1,4 +1,4 @@
-import 'package:auropay/view/widgets/CustomAppBar.dart';
+import '../../../../view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import '../../../../services/auth_service.dart';
 import '../../../widgets/AppButtons.dart';
@@ -104,33 +104,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
             ),
           ),
           const SizedBox(height: 50),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Add your code here for the action when the button is pressed
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.deepPurpleAccent),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  minimumSize: const Size(250, 60),
-                ),
-                child: const Text(
-                  'Use Thumb/Face ID',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'SF Pro Display',
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
+
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,
@@ -265,33 +239,6 @@ class _ConfirmPasscodeScreenState extends State<ConfirmPasscodeScreen> {
             ),
           ),
           const SizedBox(height: 50),
-          Expanded(
-            child: Align(
-              alignment: Alignment.bottomCenter,
-              child: OutlinedButton(
-                onPressed: () {
-                  // Add your code here for the action when the button is pressed
-                },
-                style: OutlinedButton.styleFrom(
-                  side: const BorderSide(color: Colors.deepPurpleAccent),
-                  shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15),
-                  ),
-                  minimumSize: const Size(250, 60),
-                ),
-                child: const Text(
-                  'Use Thumb/Face ID',
-                  style: TextStyle(
-                    fontSize: 16,
-                    fontWeight: FontWeight.normal,
-                    fontFamily: 'SF Pro Display',
-                    color: Colors.deepPurpleAccent,
-                  ),
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ),
-          ),
           Expanded(
             child: Align(
               alignment: Alignment.bottomCenter,

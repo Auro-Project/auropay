@@ -1,12 +1,11 @@
-import 'package:auropay/view/widgets/CustomError.dart';
+import '../../../view/widgets/CustomError.dart';
 import '../../../view/widgets/CustomAppBar.dart';
 import '../../../view/widgets/CustomField.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
-import 'ConfirmOTP.dart';
+import '../../../view/pages/LoginScreens/ConfirmOTP.dart';
 import '../../../services/auth_service.dart'; // Import AuthService
 
 class SignupPhoneScreen extends StatefulWidget {

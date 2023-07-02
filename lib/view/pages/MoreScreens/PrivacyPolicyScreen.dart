@@ -1,5 +1,5 @@
+
 import 'package:flutter/material.dart';
-import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 
 class PolicyScreen extends StatelessWidget {

@@ -1,7 +1,6 @@
 import 'dart:io';
 import 'package:path_provider/path_provider.dart';
 import 'package:flutter/material.dart';
-import 'package:share_plus/share_plus.dart';
 import 'package:intl/intl.dart';
 
 class ReceiptScreen extends StatelessWidget {
@@ -23,7 +22,6 @@ class ReceiptScreen extends StatelessWidget {
     File file = File('${tempDir.path}/receipt.txt');
     await file.writeAsString(receiptText);
 
-    await Share.shareFiles([file.path]);
   }
 
   String _generateReceiptText() {

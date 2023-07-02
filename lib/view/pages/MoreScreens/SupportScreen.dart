@@ -1,14 +1,11 @@
-import 'package:auropay/view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../Theme/theme_provider.dart';
 
 class SupportScreen extends StatelessWidget {
-  const SupportScreen({Key? key}) : super(key: key);
+  const SupportScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Scaffold(
       appBar: myAppBar(context, 'Support'),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -85,6 +82,7 @@ class TextBubble extends StatelessWidget {
   final bool isSentByUser;
 
   const TextBubble({
+    super.key,
     required this.sender,
     required this.message,
     required this.isSentByUser,
@@ -92,7 +90,6 @@ class TextBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: Align(

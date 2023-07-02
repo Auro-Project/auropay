@@ -1,34 +1,33 @@
-import 'package:auropay/view/pages/LoginScreens/ConfirmOTP.dart';
-import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/SignUpInfo.dart';
-import 'package:auropay/view/pages/LoginScreens/SignedUserScreen.dart';
-import 'package:auropay/view/pages/LoginScreens/passcode/PasscodeScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/ContactScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/FAQScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/MoreScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/NotificationScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/NotificationScreen1.dart';
-import 'package:auropay/view/pages/MoreScreens/ProfileScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/SettingScreen.dart';
-import 'package:auropay/view/pages/MoreScreens/SupportScreen.dart';
-import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
-import 'package:auropay/view/pages/ReceiptScreen.dart';
-import 'package:auropay/view/pages/Send/SendScreen.dart';
-import 'package:auropay/view/pages/Send/TopUpScreen.dart';
-import 'package:auropay/view/pages/Send/WithdrawScreen.dart';
-import 'package:auropay/view/pages/SplashScreen.dart';
-import 'package:auropay/view/pages/TransactionScreen.dart';
-import 'package:auropay/view/pages/onBoardScreen.dart';
-import 'package:auropay/view/pages/FutureEnhancements/AnalyticsScreen.dart';
-import 'package:auropay/view/pages/HomeScreen.dart';
-import 'package:auropay/view/pages/AccountScreen.dart';
-import 'package:auropay/view/pages/Send/ConfirmPayScreen.dart';
-import 'package:auropay/view/pages/Send/ProgressScreen.dart';
-import 'package:auropay/view/pages/Send/SuccessScreen.dart';
+import '../../../view/pages/LoginScreens/LoginScreen.dart';
+import '../../../view/pages/LoginScreens/SignUpInfo.dart';
+import '../../../view/pages/LoginScreens/SignedUserScreen.dart';
+import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
+import '../../../view/pages/MoreScreens/ContactScreen.dart';
+import '../../../view/pages/MoreScreens/FAQScreen.dart';
+import '../../../view/pages/MoreScreens/MoreScreen.dart';
+import '../../../view/pages/MoreScreens/NotificationScreen.dart';
+import '../../../view/pages/MoreScreens/NotificationsScreen.dart';
+import '../../../view/pages/MoreScreens/ProfileScreen.dart';
+import '../../../view/pages/MoreScreens/SettingScreen.dart';
+import '../../../view/pages/MoreScreens/SupportScreen.dart';
+import '../../../view/pages/QR%20Code/QRCodeScreen.dart';
+import '../../../view/pages/ReceiptScreen.dart';
+import '../../../view/pages/Send/SendScreen.dart';
+import '../../../view/pages/Send/TopUpScreen.dart';
+import '../../../view/pages/Send/WithdrawScreen.dart';
+import '../../../view/pages/SplashScreen.dart';
+import '../../../view/pages/TransactionScreen.dart';
+import '../../../view/pages/onBoardScreen.dart';
+import '../../../view/pages/FutureEnhancements/AnalyticsScreen.dart';
+import '../../../view/pages/HomeScreen.dart';
+import '../../../view/pages/AccountScreen.dart';
+import '../../../view/pages/Send/ConfirmPayScreen.dart';
+import '../../../view/pages/Send/ProgressScreen.dart';
+import '../../../view/pages/Send/SuccessScreen.dart';
 import 'package:flutter/material.dart';
-import 'FutureEnhancements/DesignCardScreen.dart';
-import 'MoreScreens/PrivacyPolicyScreen.dart';
-import 'MoreScreens/SecurityScreen.dart';
+import '../../../view/pages/FutureEnhancements/DesignCardScreen.dart';
+import '../../../view/pages/MoreScreens/PrivacyPolicyScreen.dart';
+import '../../../view/pages/MoreScreens/SecurityScreen.dart';
 
 final Map<String, WidgetBuilder> routes = {
   '/splashScreen': (context) => const SplashScreen(),
@@ -36,9 +35,7 @@ final Map<String, WidgetBuilder> routes = {
   '/signedUser': (context) => const SignedUserScreen(),
   '/account': (context) => const AccountScreen(),
   '/login': (context) => const LoginScreen(),
-  // '/signup': (context) => const SignUpScreen(),
-  '/signup': (context) =>  SignupInfoScreen(),
-
+  '/signup': (context) =>  const SignupInfoScreen(),
   '/createPasscode': (context) => const CreatePasscodeScreen(),
   '/confirmPasscode': (context) => const ConfirmPasscodeScreen(),
   '/home': (context) => const HomeScreen(),
@@ -57,9 +54,9 @@ final Map<String, WidgetBuilder> routes = {
   '/contact': (context) => const ContactScreen(),
   '/settings': (context) => const SettingScreen(),
   '/notifications': (context) => const NotificationScreen(),
-  '/notifs': (context) => const NotifScreen(),
+  '/notifs': (context) => const NotificationsScreen(),
   '/send': (context) => const SendScreen(),
-  '/designcard': (context) =>  DesignCardScreen(),
+  '/designcard': (context) =>  const DesignCardScreen(),
   '/security' : (context) => const SecurityScreen(),
   '/policy': (context) => const PolicyScreen(),
   '/faq' : (context) => const FAQScreen()
