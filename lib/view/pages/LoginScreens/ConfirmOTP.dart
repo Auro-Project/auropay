@@ -1,9 +1,9 @@
-import 'package:auropay/services/auth_service.dart';
-import 'package:auropay/view/pages/LoginScreens/LoginScreen.dart';
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
-import 'package:auropay/view/widgets/CustomAppBar.dart';
-import 'package:auropay/view/widgets/CustomError.dart';
+import '../../../services/auth_service.dart';
+import '../../../view/pages/LoginScreens/LoginScreen.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomError.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
@@ -145,7 +145,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => LoginScreen(),
+                                builder: (context) => const LoginScreen(),
                               ),
                             );
                           } else {
@@ -155,10 +155,10 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                             });
                           }
                         } catch (e) {
-                          print('OTP Verification Error: $e');
+                          // print('OTP Verification Error: $e');
                           setState(() {
                             errorMessage = 'An error occurred during verification';
-                            showGlobalSnackBar(context, errorMessage);
+                            showGlobalSnackBar(context, errorMessage+ '$e');
                           });
                         }
                       }),

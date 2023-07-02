@@ -1,13 +1,13 @@
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
+
+import '../../../view/widgets/CustomError.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:flutter_svg/svg.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
-import 'package:url_launcher/url_launcher.dart';
 
 class ScannerView extends StatefulWidget {
   const ScannerView({Key? key}) : super(key: key);
@@ -18,26 +18,17 @@ class ScannerView extends StatefulWidget {
 
 class _ScannerViewState extends State<ScannerView>
     with SingleTickerProviderStateMixin {
-  static const flashlighton = CupertinoIcons.bolt;
-  static const flashlightoff = CupertinoIcons.bolt_slash_fill;
-  static const frontCamera = 'Kamera Depan';
+  static const flashLightOn = CupertinoIcons.bolt;
+  static const flashLightOff = CupertinoIcons.bolt_slash_fill;
+  static const frontCamera = 'open Camera';
 
-  var flashState = flashlightoff;
+  var flashState = flashLightOff;
   var cameraState = frontCamera;
   MobileScannerController controller = MobileScannerController();
   String? result;
 
-  Future<void> _launchBrowser(String url) async {
-    if (await canLaunch(url)) {
-      await launch(url);
-    } else {
-      ScaffoldMessenger.of(context)
-          .showSnackBar(SnackBar(content: Text('link url bermasalah')));
-    }
-  }
-
   bool _isFlashOn(IconData current) {
-    return flashlighton == current;
+    return flashLightOn == current;
   }
 
   @override
@@ -51,14 +42,6 @@ class _ScannerViewState extends State<ScannerView>
     return Scaffold(
       body: Stack(
         children: [
-          // MobileScanner(
-          //   controller: controller,
-          //   onDetect: ((qrcode, args) {
-          //     setState(() {
-          //       result = qrcode.rawValue;
-          //     });
-          //   }),
-          // ),
           MobileScanner(
             controller: controller,
             onDetect: (capture) {
@@ -153,7 +136,7 @@ class _ScannerViewState extends State<ScannerView>
                             mainAxisAlignment: MainAxisAlignment.spaceAround,
                             children: [
                               Text(
-                                'hasil convert : $result',
+                                'Result convert : $result',
                                 style: TextStyle(
                                     color: Theme.of(context)
                                         .primaryColor
@@ -170,9 +153,7 @@ class _ScannerViewState extends State<ScannerView>
                                     if (kDebugMode) {
                                       print('copied');
                                     }
-                                    ScaffoldMessenger.of(context).showSnackBar(
-                                        const SnackBar(
-                                            content: Text('Teks disalin')));
+                                    showGlobalSnackBar(context, 'Texts were removed');
                                   });
                                 },
                                 child: Icon(Icons.copy,
@@ -213,11 +194,11 @@ class _ScannerViewState extends State<ScannerView>
                                     controller.toggleTorch();
                                     if (_isFlashOn(flashState)) {
                                       setState(() {
-                                        flashState = flashlightoff;
+                                        flashState = flashLightOff;
                                       });
                                     } else {
                                       setState(() {
-                                        flashState = flashlighton;
+                                        flashState = flashLightOn;
                                       });
                                     }
                                   },
@@ -252,22 +233,10 @@ class _ScannerViewState extends State<ScannerView>
                                       if (await controller
                                           .analyzeImage(image.path)) {
                                         if (!mounted) return;
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('Barcode found!'),
-                                            backgroundColor: Colors.green,
-                                          ),
-                                        );
+                                        showGlobalSnackBar(context, 'QR Found');
                                       } else {
                                         if (!mounted) return;
-                                        ScaffoldMessenger.of(context)
-                                            .showSnackBar(
-                                          const SnackBar(
-                                            content: Text('No barcode found!'),
-                                            backgroundColor: Colors.red,
-                                          ),
-                                        );
+                                        showGlobalSnackBar(context, 'No QR Found');
                                       }
                                     }
                                   },
@@ -310,22 +279,22 @@ class _ScannerViewState extends State<ScannerView>
         builder: (BuildContext bc) {
           return Container(
             height: MediaQuery.of(context).size.height*0.6,
-            padding: EdgeInsets.all(16),
+            padding: const EdgeInsets.all(16),
             child: Column(
               // mainAxisSize: MainAxisSize.max,
               children: [
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Text('John Doe',
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
                         fontSize: 36,
                         fontWeight: FontWeight.bold)),
-                SizedBox(height: 10),
+                const SizedBox(height: 10),
                 Text('Account Number: 123456789',
                     style: TextStyle(
                         color: Theme.of(context).primaryColor,
                         fontSize: 16)),
-                SizedBox(height: 40),
+                const SizedBox(height: 40),
                 Image.network(
                   'https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=Example',  // Replace with actual QR code image URL
                   height: 200,
@@ -406,13 +375,13 @@ class _ScannerViewState extends State<ScannerView>
                         hintStyle: TextStyle(
                           color: Theme.of(context).primaryColor,
                         ),
-                        enabledBorder: UnderlineInputBorder(
+                        enabledBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 0.0,
                           ),
                         ),
-                        focusedBorder: UnderlineInputBorder(
+                        focusedBorder: const UnderlineInputBorder(
                           borderSide: BorderSide(
                             color: Colors.transparent,
                             width: 0.0,
@@ -447,7 +416,6 @@ class _ScannerViewState extends State<ScannerView>
                     const SizedBox(
                       height: 20,
                     ),
-                    //label Paying to in grey, textfield with name of the user
                     Text(
                       'Store Name',
                       style: TextStyle(
@@ -507,7 +475,7 @@ class _ScannerViewState extends State<ScannerView>
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: appButtonFunc(context, gradient(context), 'Pay Now',
-                      margin: EdgeInsets.only(bottom: 40), () {
+                      margin: const EdgeInsets.only(bottom: 40), () {
                     Navigator.pushNamed(context, '/receipt');
                   }),
                 ),

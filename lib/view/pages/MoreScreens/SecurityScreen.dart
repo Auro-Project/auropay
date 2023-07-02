@@ -1,7 +1,5 @@
+
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
-import '../../Theme/appColors.dart';
-import '../../Theme/theme_provider.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomTile.dart';
 

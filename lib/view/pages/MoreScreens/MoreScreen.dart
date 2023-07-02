@@ -1,14 +1,12 @@
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
+import '../../../services/auth_service.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
-import 'package:flutter_svg/flutter_svg.dart';
 import 'package:provider/provider.dart';
-import 'package:auropay/view/Theme/theme_provider.dart';
+import '../../../view/Theme/theme_provider.dart';
 import '../../../model/UserModel.dart';
-import '../../Theme/appColors.dart';
 import '../../widgets/CustomAppBar.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import '../../widgets/CustomTile.dart';
@@ -21,12 +19,11 @@ class MoreScreen extends StatefulWidget {
 }
 
 class _MoreScreenState extends State<MoreScreen> {
-
+  UserModel? user;
 
   @override
   void initState() {
     super.initState();
-    _fetchUser();
   }
 
   Future<UserModel> _fetchUser() async {
@@ -37,7 +34,7 @@ class _MoreScreenState extends State<MoreScreen> {
   Widget build(BuildContext context) {
     final themeProvider = Provider.of<ThemeProvider>(context);
 
-    void _showLogoutConfirmationBottomSheet(BuildContext context) {
+    void showLogoutConfirmationBottomSheet(BuildContext context) {
       showModalBottomSheet(
         context: context,
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -50,7 +47,8 @@ class _MoreScreenState extends State<MoreScreen> {
           return SingleChildScrollView(
             child: ConstrainedBox(
               constraints: BoxConstraints(
-                minHeight: MediaQuery.of(context).size.height * 0.5, // Set desired height here
+                minHeight: MediaQuery.of(context).size.height *
+                    0.5, // Set desired height here
               ),
               child: Container(
                 padding: const EdgeInsets.all(30.0),
@@ -86,7 +84,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       context,
                       gradient(context),
                       'Logout',
-                          () async {
+                      () async {
                         // Perform the logout action
                         FirebaseAuth auth = FirebaseAuth.instance;
                         await auth.signOut();
@@ -105,7 +103,7 @@ class _MoreScreenState extends State<MoreScreen> {
                       context,
                       border(context),
                       'Cancel',
-                          () {
+                      () {
                         Navigator.of(context).pop();
                       },
                     ),
@@ -120,7 +118,7 @@ class _MoreScreenState extends State<MoreScreen> {
 
     final height = MediaQuery.of(context).size.height;
     final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
-    final String? profilePhotoUrl = currentUser?.photoURL;
+    // final String? profilePhotoUrl = currentUser?.photoURL;
 
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
@@ -142,17 +140,18 @@ class _MoreScreenState extends State<MoreScreen> {
                     child: Container(
                       width: 340,
                       height: 210,
-                      decoration: border(
-                          context,
-                          colorbg: Theme.of(context).scaffoldBackgroundColor.withOpacity(0.1),
-                          borderColor: Theme.of(context).hintColor.withOpacity(0.8)
-                      ),
+                      decoration: border(context,
+                          colorbg: Theme.of(context)
+                              .scaffoldBackgroundColor
+                              .withOpacity(0.1),
+                          borderColor:
+                              Theme.of(context).hintColor.withOpacity(0.8)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
                           const SizedBox(height: 60.0),
-                           Text(
-                             currentUser?.displayName ?? 'Auro User',
+                          Text(
+                            currentUser?.displayName ?? 'Auro User',
                             style: TextStyle(
                               fontSize: 26,
                               fontFamily: 'SF-Pro-Display',
@@ -161,7 +160,7 @@ class _MoreScreenState extends State<MoreScreen> {
                             ),
                           ),
                           const SizedBox(height: 10.0),
-                           Text(
+                          Text(
                             'FCW-675325',
                             style: TextStyle(
                               fontSize: 16,
@@ -202,7 +201,7 @@ class _MoreScreenState extends State<MoreScreen> {
                                 context,
                                 'assets/images/icons/logout.svg',
                                 onPressed: () {
-                                  _showLogoutConfirmationBottomSheet(context);
+                                  showLogoutConfirmationBottomSheet(context);
                                 },
                                 iconSize: 18,
                                 color: Theme.of(context).primaryColor,
@@ -214,24 +213,35 @@ class _MoreScreenState extends State<MoreScreen> {
                       ),
                     ),
                   ),
-                  Center(
-                    child: Container(
-                      width: 100,
-                      height: 100,
-                      decoration: BoxDecoration(
-                        shape: BoxShape.circle,
-                        color: Theme.of(context).hintColor.withOpacity(0.8),
-                        border: Border.all(
-                          color: Theme.of(context).hintColor,
-                          width: 2,
-                        ),
-                      ),
-                      child:  CircleAvatar(
-                        radius: 20,
-                          backgroundImage: NetworkImage(currentUser?.photoURL ?? ''),
-                      ),
-                    ),
-                  ),
+                  FutureBuilder<UserModel>(
+                      future: _fetchUser(),
+                      builder: (BuildContext context,
+                          AsyncSnapshot<UserModel> snapshot) {
+                          return Center(
+                            child: Container(
+                              width: 100,
+                              height: 100,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: Theme.of(context)
+                                    .hintColor
+                                    .withOpacity(0.8),
+                                border: Border.all(
+                                  color: Theme.of(context).hintColor,
+                                  width: 2,
+                                ),
+                              ),
+
+                              child: CircleAvatar(
+                                radius: 20,
+                                backgroundImage: AuthService.currentUser?.photoURL != null
+                                    ? NetworkImage(AuthService.currentUser!.photoURL!)
+                                    : const AssetImage('assets/images/avtar.png')
+                                as ImageProvider<Object>?,
+                              ),
+                            ),
+                          );
+                      }),
                 ],
               ),
               SizedBox(
@@ -246,7 +256,8 @@ class _MoreScreenState extends State<MoreScreen> {
                         context,
                         'Dark Mode',
                         'assets/images/icons/dark.svg',
-                        valueDefault: themeProvider.getThemeMode() == ThemeMode.dark,
+                        valueDefault:
+                            themeProvider.getThemeMode() == ThemeMode.dark,
                         changedValue: (valueDefault) {
                           themeProvider.toggleTheme();
                         },

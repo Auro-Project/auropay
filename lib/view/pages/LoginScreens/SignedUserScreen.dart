@@ -1,5 +1,4 @@
-import 'package:auropay/services/local_auth_api.dart';
-import 'package:auropay/view/widgets/CustomError.dart';
+import '../../../view/widgets/CustomError.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:provider/provider.dart';
@@ -24,7 +23,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
     for (int i = 0; i < 4; i++) {
       passcodeControllers.add(TextEditingController());
     }
-    Future.delayed(Duration(seconds: 1), () {
+    Future.delayed(const Duration(seconds: 1), () {
       authenticateUser();
     });
   }
@@ -106,7 +105,7 @@ class _SignedUserScreenState extends State<SignedUserScreen> {
                       ),
                       const SizedBox(height: 30),
                       Text(
-                        'Hello, Sneha!',
+                        'Hi, ${(AuthService.currentUser?.displayName ?? 'Auro User').split(' ')[0]}',
                         style: TextStyle(
                           fontSize: 28,
                           fontWeight: FontWeight.bold,

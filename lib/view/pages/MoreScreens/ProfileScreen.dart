@@ -1,9 +1,9 @@
 import 'dart:io';
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
-import 'package:auropay/view/widgets/CustomAppBar.dart';
-import 'package:auropay/view/widgets/CustomError.dart';
-import 'package:auropay/view/widgets/CustomField.dart';
+import '../../../view/widgets/AppButtons.dart';
+import '../../../view/widgets/Constants.dart';
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomError.dart';
+import '../../../view/widgets/CustomField.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import 'package:firebase_storage/firebase_storage.dart' as firebase_storage;
@@ -87,7 +87,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   //   }
   // }
 
-  void _saveProfilePhoto() async {
+  Future<String?> _saveProfilePhoto() async {
     final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
     if (userId != null && _profilePhoto != null) {
       final storageRef = firebase_storage.FirebaseStorage.instance
@@ -112,16 +112,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
         print('Profile photo updated successfully');
         showGlobalSnackBar(context, 'Profile photo updated successfully!');
+        return downloadUrl;
       } else {
         print('Error uploading profile photo: ');
         showGlobalSnackBar(context, 'Failed to upload profile photo.');
       }
     }
+    return null;
   }
 
   void _saveProfile() async {
     // Save the profile data to Firestore
-    _saveProfilePhoto();
+    final profilePhotoUrl = await _saveProfilePhoto();
     final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
     if (userId != null) {
       try {
@@ -132,14 +134,13 @@ class _ProfileScreenState extends State<ProfileScreen> {
           'fullName': _fullNameController.text,
           'phoneNumber': _phoneNumberController.text,
           // Add profile photo url
-          'profilePhotoUrl': _profilePhoto?.path,
+          'profilePhotoUrl': profilePhotoUrl,
         });
 
         // Update the display name and photoURL of the Firebase user
         final firebaseUser = firebase_auth.FirebaseAuth.instance.currentUser;
         if (firebaseUser != null) {
           await firebaseUser.updateDisplayName(_fullNameController.text);
-          await firebaseUser.updatePhotoURL(_profilePhoto?.path);
         }
 
         showGlobalSnackBar(context, 'Profile updated successfully!');
@@ -150,37 +151,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // void _saveProfile() async {
-  //   // Save profile photo
-  //   _saveProfilePhoto();
-  //
-  //   // Save the profile data to Firestore
-  //   final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
-  //   if (userId != null) {
-  //     try {
-  //       await FirebaseFirestore.instance
-  //           .collection('users')
-  //           .doc(userId)
-  //           .update({
-  //         'fullName': _fullNameController.text,
-  //         'phoneNumber': _phoneNumberController.text,
-  //       });
-  //
-  //       showGlobalSnackBar(context, 'Profile updated successfully!');
-  //     } catch (e) {
-  //       print('Error updating profile: $e');
-  //       showGlobalSnackBar(context, 'Failed to update profile.');
-  //     }
-  //   }
-  // }
-
-
 
   @override
   Widget build(BuildContext context) {
     final profilePhotoUrl =
         firebase_auth.FirebaseAuth.instance.currentUser?.photoURL;
-    final email = _emailController.text;
 
     return Scaffold(
       appBar: myAppBar(context, 'Edit Profile'),

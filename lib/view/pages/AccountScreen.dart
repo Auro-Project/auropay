@@ -1,4 +1,4 @@
-import 'package:auropay/view/Theme/appColors.dart';
+
 import 'package:flutter_svg/flutter_svg.dart';
 
 import '../widgets/AppButtons.dart';
@@ -11,7 +11,7 @@ class AccountScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      backgroundColor: Colors.white,
       body: Stack(
         children: [
           Image.asset("assets/images/shapes/gradAC.png",
@@ -42,12 +42,12 @@ class AccountScreen extends StatelessWidget {
                           //   color: Theme.of(context).primaryColor,
                         ),
                         const SizedBox(height: 10.0),
-                         Text(
+                         const Text(
                           textAlign: TextAlign.center,
                           ' Start your financial \nactivity at Auro with\n Convenience',
                           style: TextStyle(
                             fontSize: 16,
-                            color: Theme.of(context).primaryColor,
+                            color: Color(0xff1d2e56),
                           ),
                         ),
                         const SizedBox(height: 10.0),

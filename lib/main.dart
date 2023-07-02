@@ -1,5 +1,5 @@
-import 'package:auropay/services/auth_service.dart';
-import 'package:auropay/view/Theme/appColors.dart';
+import '../../../services/auth_service.dart';
+import '../../../view/Theme/appColors.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import '../../../view/pages/Routes.dart';
 import 'view/Theme/theme_provider.dart';
@@ -70,7 +70,6 @@ class _MyAppState extends State<MyApp> {
       theme: AppColors.lightTheme, // Use the current theme from the provider
       darkTheme: AppColors.darkTheme,
       themeMode: themeProvider.getThemeMode(), // Use the current theme mode from the provider
-      // home: HelpScreen(),
       initialRoute: _user != null ? '/signedUser' : '/splashScreen',
       routes: routes,
     );

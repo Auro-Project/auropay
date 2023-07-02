@@ -1,5 +1,4 @@
-import 'package:auropay/view/pages/LoginScreens/passcode/PasscodeScreen.dart';
-import 'package:provider/provider.dart';
+import '../../../view/pages/LoginScreens/passcode/PasscodeScreen.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
 import '../../../view/widgets/CustomAppBar.dart';
@@ -8,7 +7,6 @@ import '../../../view/widgets/CustomField.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 import 'package:firebase_auth/firebase_auth.dart';
-import '../../Theme/theme_provider.dart';
 import '../../../services/auth_service.dart'; // Import the AuthService
 
 class LoginScreen extends StatefulWidget {
@@ -61,7 +59,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final themeProvider = Provider.of<ThemeProvider>(context);
 
     return Scaffold(
       key: _scaffoldKey,

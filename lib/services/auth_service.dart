@@ -10,6 +10,9 @@ class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   final FirebaseFirestore _firestore = FirebaseFirestore.instance;
 
+  static final currentUser = FirebaseAuth.instance.currentUser;
+
+
   Future<bool> confirmPasscode(List<String> passcode) async {
     String? savedPasscode = await storage.read(key: 'passcode');
     return passcode.join() == savedPasscode;

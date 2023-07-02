@@ -1,17 +1,17 @@
-import 'package:auropay/view/widgets/CustomAppBar.dart';
+
+import '../../../view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-
 import '../../Theme/appColors.dart';
 
-class NotifScreen extends StatefulWidget {
-  const NotifScreen({Key? key}) : super(key: key);
+class NotificationsScreen extends StatefulWidget {
+  const NotificationsScreen({super.key});
 
   @override
-  _NotifScreenState createState() => _NotifScreenState();
+  _NotificationsScreenState createState() => _NotificationsScreenState();
 }
 
-class _NotifScreenState extends State<NotifScreen> {
+class _NotificationsScreenState extends State<NotificationsScreen> {
   late List<NotificationItem> notifications;
 
   @override
@@ -102,7 +102,7 @@ class NotificationItem {
 class NotificationItemRow extends StatelessWidget {
   final NotificationItem notification;
 
-  const NotificationItemRow({required this.notification});
+  const NotificationItemRow({super.key, required this.notification});
 
   @override
   Widget build(BuildContext context) {
@@ -167,7 +167,7 @@ class NotificationItemRow extends StatelessWidget {
 void main() {
   runApp(
     const MaterialApp(
-      home: NotifScreen(),
+      home: NotificationsScreen(),
     ),
   );
 }

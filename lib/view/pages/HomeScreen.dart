@@ -1,20 +1,18 @@
+
 import 'dart:convert';
 import 'package:auropay/model/Transaction.dart';
-import 'package:auropay/view/Theme/appColors.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
-import 'package:cloud_firestore/cloud_firestore.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import '../../model/UserData.dart';
 import '../../model/UserModel.dart';
+import '../../services/auth_service.dart';
 import 'FutureEnhancements/AnalyticsScreen.dart';
 import 'MoreScreens/MoreScreen.dart';
 import '../widgets/BottomNavBar.dart';
 import '../../view/pages/TransactionScreen.dart';
-import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({Key? key}) : super(key: key);
@@ -45,12 +43,9 @@ class _HomeScreenState extends State<HomeScreen> {
     final height = MediaQuery.of(context).size.height;
     final width = MediaQuery.of(context).size.width;
 
-    final currentUser = firebase_auth.FirebaseAuth.instance.currentUser;
-    final String? profilePhotoUrl = currentUser?.photoURL;
-
     return Scaffold(
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Container(
+      body: SizedBox(
         height: height,
         width: width,
         child: Stack(
@@ -73,15 +68,14 @@ class _HomeScreenState extends State<HomeScreen> {
                             padding: const EdgeInsets.only(left: 30),
                             child: CircleAvatar(
                               radius: 20,
-                              backgroundImage: profilePhotoUrl != null
-                                  ? NetworkImage(profilePhotoUrl)
-                                  : const AssetImage("assets/images/avatar.png")
+                              backgroundImage: AuthService.currentUser?.photoURL != null
+                                  ? NetworkImage(AuthService.currentUser!.photoURL!)
+                                  : const AssetImage('assets/images/avtar.png')
                                       as ImageProvider<Object>?,
-                              //AssetImage("assets/images/avatar.png"),
                             ),
                           ),
                           Text(
-                              'Hi, ' + (currentUser?.displayName ?? 'Auro User').split(' ')[0],
+                            'Hi, ${(AuthService.currentUser?.displayName ?? 'Auro User').split(' ')[0]}',
                             style: TextStyle(
                              color: Theme.of(context).primaryColor,
                               fontSize: 20,

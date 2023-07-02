@@ -1,13 +1,14 @@
-import 'package:auropay/view/widgets/CustomError.dart';
 
 import 'package:flutter/material.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
 import '../../widgets/CustomAppBar.dart';
 import '../../widgets/CustomField.dart';
-import 'SignUpPhone.dart'; // Import AuthService
+import '../../../view/pages/LoginScreens/SignUpPhone.dart'; // Import AuthService
 
 class SignupInfoScreen extends StatefulWidget {
+  const SignupInfoScreen({super.key});
+
   @override
   _SignupInfoScreenState createState() => _SignupInfoScreenState();
 }

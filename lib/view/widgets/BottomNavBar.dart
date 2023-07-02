@@ -1,9 +1,9 @@
 import 'dart:ui';
 
-import 'package:auropay/view/Theme/appColors.dart';
-import 'package:auropay/view/pages/QR%20Code/QRCodeScreen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+
+import '../pages/QR Code/QRCodeScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   final int currentIndex; // Add this property
@@ -115,10 +115,10 @@ class _BottomNavBarState extends State<BottomNavBar> {
                           ),
                         ),
                         builder: (context) => SingleChildScrollView(
-                          child: Container(
+                          child: SizedBox(
                             width: MediaQuery.of(context).size.width,
                             height: MediaQuery.of(context).size.height,
-                            child: ScannerView(),
+                            child: const ScannerView(),
                           ),
                         ),
                       ),

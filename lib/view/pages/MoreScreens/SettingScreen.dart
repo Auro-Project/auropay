@@ -1,10 +1,6 @@
-import 'package:auropay/view/widgets/CustomAppBar.dart';
-import 'package:auropay/view/widgets/CustomTile.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter/cupertino.dart';
+import '../../../view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomTile.dart';
 import 'package:flutter/material.dart';
-
-import '../../Theme/appColors.dart';
 
 class SettingScreen extends StatefulWidget {
   const SettingScreen({Key? key}) : super(key: key);

@@ -1,11 +1,11 @@
 import 'dart:convert';
-import 'package:auropay/view/widgets/CustomAppBar.dart';
+import '../../../view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../../model/Transaction.dart';
 
 class TransactionScreen extends StatefulWidget {
-  const TransactionScreen({Key? key});
+  const TransactionScreen({super.key});
 
   @override
   _TransactionScreenState createState() => _TransactionScreenState();
@@ -73,7 +73,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                               color: Theme.of(context).primaryColor,
                             ),
                             border: InputBorder.none,
-                            contentPadding: EdgeInsets.all(10.0),
+                            contentPadding: const EdgeInsets.all(10.0),
                           ),
                         ),
                       ),
