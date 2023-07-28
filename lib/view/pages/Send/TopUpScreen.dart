@@ -1,8 +1,9 @@
-import 'package:auropay/view/Theme/appColors.dart';
-import 'package:auropay/view/widgets/AppButtons.dart';
-import 'package:auropay/view/widgets/Constants.dart';
-import 'package:auropay/view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
+
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
+import '../../widgets/CustomAppBar.dart';
+import 'ProgressScreen.dart';
 
 class PaymentTopUpScreen extends StatefulWidget {
   @override
@@ -19,127 +20,113 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   }
 
   void _performTopUp() {
-    // Implement your payment top-up logic here
-    // You can use the value from _amountController.text to get the top-up amount
-    // For demonstration purposes, let's print the top-up amount to the console
     print('Performing top-up with amount: ${_amountController.text}');
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: myAppBar(context, 'Add Money'),
-      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-      body: Container(
-        width: MediaQuery.of(context).size.width,
-        decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(30.0),
-          color: Theme.of(context).primaryColor
-        ),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          children: [
-            SizedBox(height: 40.0),
-            Text(
-              'Enter the amount you want to top-up',
-              style: TextStyle(
-                fontSize: 16.0,
-                fontWeight: FontWeight.w500,
-               color: Theme.of(context).primaryColor,
-              ),
-            ),
-            SizedBox(height: 30.0),
-            Container(
-              margin: EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+    final height = MediaQuery.of(context).size.height;
+    final width = MediaQuery.of(context).size.width;
 
-              width: MediaQuery.of(context).size.width *0.3,
-              height: 70,
-              child: TextField(
-                controller: _amountController,
-                keyboardType: TextInputType.number,
-                decoration: InputDecoration(
-                  hintStyle: TextStyle(
-                    fontSize: 36.0,
-                    fontWeight: FontWeight.w500,
-                   color: Theme.of(context).primaryColor,
+    return Scaffold(
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+      appBar: myAppBar(context, "Add Money"),
+      body: SingleChildScrollView(
+        child: Container(
+          width: MediaQuery.of(context).size.width,
+          decoration: BoxDecoration(
+            borderRadius: BorderRadius.circular(30.0),
+            color: Colors.grey[300],
+          ),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.start,
+            children: [
+              const SizedBox(height: 40.0),
+              Text(
+                'Enter amount',
+                style: TextStyle(
+                  fontSize: 20.0,
+                  fontFamily: 'SF-Pro-Display',
+                  fontWeight: FontWeight.w500,
+                  color: Theme.of(context).primaryColor,
+                ),
+              ),
+              //const SizedBox(height: 30.0),
+              Container(
+                margin: const EdgeInsets.symmetric(horizontal: 20.0, vertical: 10.0),
+                width: MediaQuery.of(context).size.width * 0.3,
+                height: 70,
+                child: DecoratedBox(
+                  decoration: BoxDecoration(
+                    //color: Theme.of(context).primaryColor, // This is the desired color
+                    color: Theme.of(context).scaffoldBackgroundColor,
+                    borderRadius: BorderRadius.circular(14.0),
                   ),
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(8.0),
-                    borderSide: BorderSide.none,
-                  ),
-                  // filled: true,
-                  fillColor: Colors.white,
-                  contentPadding: EdgeInsets.symmetric(
-                    vertical: 40.0,
-                    horizontal: 20.0,
+                  child: TextField(
+                    controller: _amountController,
+                    keyboardType: TextInputType.number,
+                    decoration: const InputDecoration(
+                      hintStyle: TextStyle(
+                        fontSize: 40.0,
+                        fontWeight: FontWeight.w500,
+                      ),
+                      contentPadding: EdgeInsets.symmetric(
+                        vertical: 40.0,
+                        horizontal: 20.0,
+                      ),
+                      border: InputBorder.none, // Removes underline from TextField
+                    ),
                   ),
                 ),
               ),
-            ),
-            Text(
-              'Amount (INR)',
-              style: TextStyle(
-                fontSize: 16.0,
-                // fontWeight: FontWeight.w500,
-               color: Theme.of(context).primaryColor,
-              ),
-            ),
-            SizedBox(height: 150.0),
-            //write me 6 containers with 2 rows and 3 columns each having random amount of 100's
-            //and a button to add the amount to the text field
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                amountContainer('100'),
-                amountContainer('200'),
-                amountContainer('500'),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                amountContainer('100'),
-                amountContainer('200'),
-                amountContainer('500'),
-              ],
-            ),
-            SizedBox(height: 16.0),
-            Expanded(
-              child: Align(
-                alignment: Alignment.bottomCenter,
-                  child: appButtonFunc(context,
-                      margin: EdgeInsets.only(bottom: 30.0) ,
-                      gradient(context), 'Add Money', _performTopUp)),
-            ),
 
-          ],
+
+              const SizedBox(height: 80.0),
+              Container(
+                padding: const EdgeInsets.all(16),
+                child: GridView.count(
+                  shrinkWrap: true,
+                  crossAxisCount: 3,
+                  childAspectRatio: 2,
+                  children: [
+                    '1', '2', '3',
+                    '4', '5', '6',
+                    '7', '8', '9',
+                    '.', '0'
+                  ].map((text) => numberButton(context, text)).toList(),
+                ),
+              ),
+              const SizedBox(height: 150.0),
+              appButton(context, gradient(context),'Add', '/progress'),
+            ],
+          ),
         ),
       ),
     );
   }
 
-  Container amountContainer(String text) {
+  Widget numberButton(BuildContext context, String text) {
     return Container(
-      width: MediaQuery.of(context).size.width *0.3,
-      height: 100,
+      margin: const EdgeInsets.all(4),
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(20),
+      ),
       child: ElevatedButton(
+        style: ElevatedButton.styleFrom(
+          //backgroundColor: Theme.of(context).primaryColor,
+          backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+        ),
         onPressed: () {
-          _amountController.text = text;
+          _amountController.text = _amountController.text + text;
         },
         child: Text(
           text,
           style: TextStyle(
-              fontSize: 22.0,
-              fontWeight: FontWeight.w700,
-          ),
-        ),
-        style: ElevatedButton.styleFrom(
-          elevation: 0,
-          foregroundColor: Colors.white,
-          backgroundColor: Theme.of(context).primaryColor, // Customize the text color
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(15.0),
+            fontSize: 24.0,
+            fontFamily: 'SF-Pro-Display',
+            fontWeight: FontWeight.w500,
+            // color: Theme.of(context).scaffoldBackgroundColor,
+            color: Theme.of(context).primaryColor,
           ),
         ),
       ),

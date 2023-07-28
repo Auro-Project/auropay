@@ -12,12 +12,12 @@ class ProgressScreen extends StatelessWidget {
     });
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
           Container(
-            width: 400,
-            height: 300,
+            width: 450,
+            height: 200,
             decoration: const BoxDecoration(
               gradient: LinearGradient(
                 begin: Alignment.topLeft,
@@ -32,62 +32,46 @@ class ProgressScreen extends StatelessWidget {
           Column(
             mainAxisAlignment: MainAxisAlignment.end,
             children: [
-              const Center(
-                child: Text(
-                  "Transaction in progress",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 24,
-                    fontFamily: 'SF Pro Display',
-                    fontWeight: FontWeight.w600,
-                  ),
-                ),
-              ),
-              const SizedBox(
-                height: 20,
-              ),
-              const Center(
-                child: Text(
-                  "Please wait a few seconds the\ntransaction in process",
-                  textAlign: TextAlign.center,
-                  style: TextStyle(
-                    color: Colors.white38,
-                    fontFamily: 'SF Pro Display',
-                    fontSize: 20,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height:height*0.1,
-              ),
-              const Center(
-                child: CircularProgressIndicator(
-                  color: Colors.white,
-                ),
-              ),
-              //  cancel button
-               SizedBox(
-                height:height*0.2,
-              ),
-              const Center(
-                child: Text(
-                  "Processing...",
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontFamily: 'SF Pro Display',
-                    fontWeight: FontWeight.normal,
-                    fontSize: 22,
-                  ),
-                ),
-              ),
-              SizedBox(
-                height:height*0.05,
-              ),
+              _buildText(context, "Transaction in progress", 24, FontWeight.w600),
+              const SizedBox(height: 20),
+              _buildCenteredText(context, "Please wait a few seconds the\ntransaction in process", 20),
+              SizedBox(height: height * 0.1),
+              Center(child: CircularProgressIndicator(color: Theme.of(context).primaryColor)),
+              SizedBox(height: height * 0.2),
+              _buildText(context, "Processing...", 22, FontWeight.normal),
+              SizedBox(height: height * 0.05),
             ],
           ),
         ],
       ),
     );
   }
-}
 
+  Widget _buildText(BuildContext context, String text, double size, FontWeight weight) {
+    return Center(
+      child: Text(
+        text,
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontFamily: 'SF Pro Display',
+          fontWeight: weight,
+          fontSize: size,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildCenteredText(BuildContext context, String text, double size) {
+    return Center(
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontFamily: 'SF Pro Display',
+          fontSize: size,
+        ),
+      ),
+    );
+  }
+}

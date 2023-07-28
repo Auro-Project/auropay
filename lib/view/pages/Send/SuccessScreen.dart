@@ -1,315 +1,109 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/AppButtons.dart';
+import '../../widgets/Constants.dart';
+
 class SuccessScreen extends StatelessWidget {
   const SuccessScreen({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final height = MediaQuery.of(context).size.height;
-    final width = MediaQuery.of(context).size.width;
-
-    // Delayed function to navigate to the SuccessScreen after 3 seconds
 
     return Scaffold(
-      backgroundColor: Colors.black,
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       body: Stack(
         children: [
-          Column(
-            children: [
-              Container(
-                width: 400,
-                height: 162,
-                decoration: const BoxDecoration(
-                  gradient: LinearGradient(
-                    begin: Alignment.topLeft,
-                    end: Alignment.bottomRight,
-                    colors: [
-                      Color(0xFFD6E1FF),
-                      Color(0xFFC3E6FF),
-                    ],
-                  ),
-                ),
+          Container(
+            width: 450,
+            height: 200,
+            decoration: const BoxDecoration(
+              gradient: LinearGradient(
+                begin: Alignment.topLeft,
+                end: Alignment.bottomRight,
+                colors: [
+                  Color(0xFFD6E1FF),
+                  Color(0xFFC3E6FF),
+                ],
               ),
-            ],
+            ),
           ),
           Center(
-            child: Column(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: [
-                //rectangle containing text completed successfully
-                Container(
-                  height: 56,
-                  width: 300,
-                  decoration: BoxDecoration(
-                    gradient: const LinearGradient(
-                      colors: [
-                        Color(0xFF9CA2E8),
-                        Color(0xFF7CABEC),
-                      ],
-                    ),
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Center(
-                    child: Text(
-                      "Transaction completed",
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 17,
-                        fontFamily: 'SF Pro Display',
-                        fontWeight: FontWeight.w600,
-                      ),
-                    ),
-                  ),
-                ),
-                //text amount white and bold text
-                SizedBox(height: height * 0.05),
-                const Center(
-                  child: Text(
-                    "- ₹ 5000",
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontFamily: 'SF Pro Display',
-                      fontWeight: FontWeight.bold,
-                      fontSize: 24,
-                    ),
-                  ),
-                ),
-                //now 4 columns containing from , to , date , remaining balance
-                SizedBox(height: height * 0.05),
-                Padding(
-                  padding: const EdgeInsets.symmetric(horizontal: 30),
-                  child: Column(
-                    children: [
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xFF9CA2E8),
-                                        Color(0xFF7CABEC),
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.account_circle_sharp,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                "From",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'SF Pro Display',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Text(
-                            "Zahar Palaznik",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'SF Pro Display',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height * 0.02),
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xFF9CA2E8),
-                                        Color(0xFF7CABEC),
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.account_circle_sharp,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                "To",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'SF Pro Display',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const Text(
-                            "Irin Machahen",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'SF Pro Display',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height * 0.02),
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xFF9CA2E8),
-                                        Color(0xFF7CABEC),
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.calendar_today_sharp,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                "Date",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'SF Pro Display',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "12 April,2023",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'SF Pro Display',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: height * 0.02),
-                       Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Row(
-                            children: [
-                              CircleAvatar(
-                                backgroundColor: Colors.white,
-                                child: Container(
-                                  decoration: const BoxDecoration(
-                                    shape: BoxShape.circle,
-                                    gradient: LinearGradient(
-                                      begin: Alignment.topLeft,
-                                      end: Alignment.bottomRight,
-                                      colors: [
-                                        Color(0xFF9CA2E8),
-                                        Color(0xFF7CABEC),
-                                      ],
-                                    ),
-                                  ),
-                                  child: const Icon(
-                                    Icons.attach_money_sharp,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              const SizedBox(width: 10),
-                              const Text(
-                                "Remaining",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontFamily: 'SF Pro Display',
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w600,
-                                ),
-                              ),
-                            ],
-                          ),
-                          const SizedBox(width: 10),
-                          const Text(
-                            "₹ 2896",
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontFamily: 'SF Pro Display',
-                              fontSize: 17,
-                              fontWeight: FontWeight.w600,
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-                SizedBox(height: height * 0.1),
-                ElevatedButton(
-                  onPressed: () {
-                    Navigator.pop(context); // Go back to the previous screen
-                  },
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.white,
-                    minimumSize: Size(width * 0.9, height * 0.06),
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(10),
-                    ),
-                  ),
-                  child: const Text(
-                    "Done",
-                    style: TextStyle(
-                      color: Colors.black87,
-                      fontFamily: 'SF Pro Display',
-                      fontSize: 17,
-                      fontWeight: FontWeight.normal,
-                    ),
-                  ),
-                ),
-                SizedBox(height: height * 0.1),
-              ],
+            child: Padding(
+              padding: const EdgeInsets.symmetric(horizontal: 30),
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.end,
+                children: [
+                  appButton(context, gradient(context),'Transaction Complete', '/progress'),
+                  SizedBox(height: height * 0.05),
+                  _buildText(context, "- ₹ 5000", 24, FontWeight.bold),
+                  SizedBox(height: height * 0.05),
+                  _buildRow(context, "From", "Zahar Palaznik", Icons.account_circle_sharp),
+                  SizedBox(height: height * 0.02),
+                  _buildRow(context, "To", "Irin Machahen", Icons.account_circle_sharp),
+                  SizedBox(height: height * 0.02),
+                  _buildRow(context, "Date", "12 April,2023", Icons.calendar_today_sharp),
+                  SizedBox(height: height * 0.02),
+                  _buildRow(context, "Remaining", "₹ 2896", Icons.attach_money_sharp),
+                  SizedBox(height: height * 0.1),
+                  appButton(context, border(context, colorbg: Colors.black.withOpacity(0.8)), 'Done', '/home'),
+                  SizedBox(height: height * 0.1),
+                ],
+              ),
             ),
           ),
         ],
       ),
+    );
+  }
+
+  Widget _buildText(BuildContext context, String text, double size, FontWeight weight) {
+    return Center(
+      child: Text(
+        text,
+        textAlign: TextAlign.center,
+        style: TextStyle(
+          color: Theme.of(context).primaryColor,
+          fontFamily: 'SF Pro Display',
+          fontWeight: weight,
+          fontSize: size,
+        ),
+      ),
+    );
+  }
+
+  Widget _buildRow(BuildContext context, String leading, String trailing, IconData icon) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+      children: [
+        Row(
+          children: [
+            CircleAvatar(
+              backgroundColor: Colors.white,
+              child: Container(
+                decoration: const BoxDecoration(
+                  shape: BoxShape.circle,
+                  gradient: LinearGradient(
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                    colors: [
+                      Color(0xFF9CA2E8),
+                      Color(0xFF7CABEC),
+                    ],
+                  ),
+                ),
+                child: Icon(
+                  icon,
+                  color: Colors.black,
+                ),
+              ),
+            ),
+            const SizedBox(width: 10),
+            _buildText(context, leading, 18, FontWeight.w500),
+          ],
+        ),
+        _buildText(context, trailing, 18, FontWeight.w500),
+      ],
     );
   }
 }
