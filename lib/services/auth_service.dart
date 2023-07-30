@@ -74,6 +74,7 @@ class AuthService {
         'fullName': fullName,
         'email': email,
         'phoneNumber': phoneNumber,
+        'balance': 0,
       });
     } catch (e) {
       if (kDebugMode) {
