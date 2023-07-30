@@ -8,6 +8,7 @@ class UserModel {
   final String? fullName;
   final String? phoneNumber;
   final String? profilePhotoUrl;
+  final int? balance;
 
   UserModel({
     this.uid,
@@ -15,6 +16,7 @@ class UserModel {
     this.fullName,
     this.phoneNumber,
     this.profilePhotoUrl,
+    this.balance,
   });
 
   factory UserModel.fromDocument(DocumentSnapshot doc) {
@@ -23,6 +25,7 @@ class UserModel {
       email: doc['email'] as String?,
       fullName: doc['fullName'] as String?,
       phoneNumber: doc['phoneNumber'] as String?,
+      balance: doc['balance'] as int?,
       profilePhotoUrl: doc['profilePhotoUrl'] as String?,
     );
   }
