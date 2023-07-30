@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
@@ -28,6 +29,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _fetchUser();
+    // print(AuthService.currentUser?.uid);
   }
 
   Future<UserModel> _fetchUser() async {
@@ -37,6 +39,12 @@ class _HomeScreenState extends State<HomeScreen> {
     String jsonData = await rootBundle.loadString('lib/data/user.json');
     Map<String, dynamic> jsonMap = json.decode(jsonData);
     return UserData.fromJson(jsonMap);
+  }
+
+  static Future<int> _fetchBalance() async {
+    var userDocument = FirebaseFirestore.instance.collection('users').doc(AuthService.currentUser!.uid);
+    var documentSnapshot = await userDocument.get();
+    return documentSnapshot.get('balance');
   }
 
   static Widget _homepage(BuildContext context, UserData userData) {
@@ -119,14 +127,34 @@ class _HomeScreenState extends State<HomeScreen> {
                               ),
                             ),
                             SizedBox(height: height * 0.005),
-                            Text(
-                              userData.balance,
-                              style: TextStyle(
-                               color: Theme.of(context).primaryColor,
-                                fontSize: 36,
-                                fontWeight: FontWeight.bold,
-                              ),
+                            // Text(
+                            //   '',
+                            //   style: TextStyle(
+                            //    color: Theme.of(context).primaryColor,
+                            //     fontSize: 36,
+                            //     fontWeight: FontWeight.bold,
+                            //   ),
+                            // ),
+                            FutureBuilder<int>(
+                              future: _fetchBalance(),
+                              builder: (context, snapshot) {
+                                if (snapshot.hasData) {
+                                  return Text(
+                                    snapshot.data.toString(),
+                                    style: TextStyle(
+                                      color: Theme.of(context).primaryColor,
+                                      fontSize: 36,
+                                      fontWeight: FontWeight.bold,
+                                    ),
+                                  );
+                                } else if (snapshot.hasError) {
+                                  return Text("Error: ${snapshot.error}");
+                                } else {
+                                  return const CircularProgressIndicator();
+                                }
+                              },
                             ),
+
                             SizedBox(height: height * 0.03),
                             Row(
                               mainAxisAlignment: MainAxisAlignment.spaceBetween,
