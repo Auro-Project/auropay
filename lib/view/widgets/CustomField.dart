@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-
 import '../../../view/widgets/Constants.dart';
 
 Column myField(
-  BuildContext context,
-  String label,
-  TextEditingController controller,
-  bool obscure, {
-  String? truePhrase,
-  String? falsePhrase,
-  bool isNumber = false,
-}) {
+    BuildContext context,
+    String label,
+    TextEditingController controller,
+    bool obscure, {
+      String? subLabel,
+      String? Function(String?)? validator,
+      bool isNumber = false,
+    }) {
   return Column(
     crossAxisAlignment: CrossAxisAlignment.start,
     children: [
@@ -20,9 +19,19 @@ Column myField(
           fontSize: 18,
           fontFamily: 'SF-Pro-Display',
           fontWeight: FontWeight.w500,
-         color: Theme.of(context).primaryColor,
+          color: Theme.of(context).primaryColor,
         ),
       ),
+      Text(
+        subLabel ?? '',
+        style: TextStyle(
+          fontSize: 14,
+          fontFamily: 'SF-Pro-Display',
+          fontWeight: FontWeight.w300,
+          color: Theme.of(context).primaryColor,
+        ),
+      ),
+
       const SizedBox(height: 10),
       Container(
         width: 360,
@@ -32,20 +41,18 @@ Column myField(
             borderColor: Colors.transparent,
             borderRadius: 10),
         child: TextFormField(
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           controller: controller,
           obscureText: obscure,
           keyboardType: isNumber ? TextInputType.number : TextInputType.text,
-          style: TextStyle(color: Theme.of(context).primaryColor,),
+          style: TextStyle(
+            color: Theme.of(context).primaryColor,
+          ),
           decoration: const InputDecoration(
             border: InputBorder.none,
             contentPadding: EdgeInsets.symmetric(horizontal: 15),
           ),
-          validator: (value) {
-            if (value!.isEmpty) {
-              return truePhrase;
-            }
-            return falsePhrase;
-          },
+          validator: validator,
         ),
       ),
       const SizedBox(height: 20),
@@ -87,9 +94,11 @@ Column ValidateField(
           alignment: Alignment.center,
           children: [
             TextFormField(
+              autovalidateMode: AutovalidateMode.onUserInteraction,
               controller: controller,
               obscureText: obscure,
-              keyboardType: isNumber ? TextInputType.number : TextInputType.text,
+              keyboardType:
+              isNumber ? TextInputType.number : TextInputType.text,
               style: TextStyle(
                 color: Theme.of(context).primaryColor,
               ),
@@ -100,7 +109,8 @@ Column ValidateField(
               validator: (value) {
                 if (value == null || value.isEmpty) {
                   return truePhrase;
-                } else if (regexPattern != null && !RegExp(regexPattern!).hasMatch(value)) {
+                } else if (regexPattern != null &&
+                    !RegExp(regexPattern!).hasMatch(value)) {
                   return falsePhrase;
                 } else {
                   return null;
@@ -121,7 +131,6 @@ Column ValidateField(
               ),
           ],
         ),
-
       ),
       const SizedBox(height: 20),
     ],

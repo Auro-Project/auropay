@@ -8,7 +8,7 @@ class UserModel {
   final String? fullName;
   final String? phoneNumber;
   final String? profilePhotoUrl;
-  final int? balance;
+  int? balance;
 
   UserModel({
     this.uid,
