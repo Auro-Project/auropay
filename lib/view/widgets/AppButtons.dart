@@ -47,22 +47,24 @@ Container appButton(
 }
 
 Container appButtonFunc(
-  BuildContext context,
-  BoxDecoration styleButton,
-  String title,
-  Function() onPressed, {
-  String? iconPath,
-  EdgeInsets? margin,
-}) {
+    BuildContext context,
+    BoxDecoration styleButton,
+    String title,
+    Function() onPressed, {
+      String? iconPath,
+      EdgeInsets? margin,
+      bool isEnabled = true, // default value is true, so it won't affect other parts of the app
+      Color? disabledColor,
+    }) {
   return Container(
     width: MediaQuery.of(context).size.width * 0.88,
     height: MediaQuery.of(context).size.height * 0.065,
-    decoration: styleButton,
+    decoration: isEnabled ? styleButton : styleButton.copyWith(color: disabledColor ?? Colors.grey),
     margin: margin,
     child: Material(
       color: Colors.transparent,
       child: InkWell(
-        onTap: onPressed,
+        onTap: isEnabled ? onPressed : null, // if the button is not enabled, onTap will be null
         borderRadius: BorderRadius.circular(20),
         child: Center(
           child: Row(
@@ -92,3 +94,4 @@ Container appButtonFunc(
     ),
   );
 }
+

@@ -27,10 +27,10 @@ class SignupPhoneScreen extends StatefulWidget {
 class _SignupPhoneScreenState extends State<SignupPhoneScreen> {
   final TextEditingController _phoneNumberController = TextEditingController();
   final AuthService _authService = AuthService();
-  final _formKey = GlobalKey<FormState>();  // Add FormKey
+  final _formKey = GlobalKey<FormState>();
 
   void _sendOtp(BuildContext context) async {
-    if (_formKey.currentState!.validate()) {  // Validate form fields before sending OTP
+    if (_formKey.currentState!.validate()) {
       final String phoneNumber = '+91${_phoneNumberController.text.trim()}';
       try {
         await _authService.sendOtp(
@@ -68,13 +68,21 @@ class _SignupPhoneScreenState extends State<SignupPhoneScreen> {
         key: _formKey,
         child: Column(
           children: [
-            const SizedBox(height: 30,),
-            ValidateField(context, 'Phone Number',
+            const SizedBox(height: 30),
+            myField(
+                context,
+                'Phone Number',
                 _phoneNumberController,
                 false,
-                truePhrase: 'Please enter a phone number',
-                falsePhrase: 'Please enter a valid 10-digit phone number',
-                regexPattern:  r'^\d{10}$'),
+                validator: (value) {
+                  if (value == null || value.isEmpty) {
+                    return 'Please enter a phone number';
+                  } else if (!RegExp(r'^\d{10}$').hasMatch(value)) {
+                    return 'Please enter a valid 10-digit phone number';
+                  }
+                  return null;
+                }
+            ),
             Expanded(
               child: Align(
                 alignment: Alignment.bottomCenter,
@@ -98,4 +106,3 @@ class _SignupPhoneScreenState extends State<SignupPhoneScreen> {
     );
   }
 }
-

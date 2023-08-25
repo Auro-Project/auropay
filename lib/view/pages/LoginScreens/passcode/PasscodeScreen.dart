@@ -14,7 +14,7 @@ class CreatePasscodeScreen extends StatefulWidget {
 
 class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
   List<TextEditingController> passcodeControllers = [];
-  int currentPasscodeIndex = 0;
+  List<FocusNode> passcodeFocusNodes = List.generate(4, (_) => FocusNode());
   PasscodeService passcodeService = PasscodeService();
 
   @override
@@ -23,6 +23,15 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
     for (int i = 0; i < 4; i++) {
       passcodeControllers.add(TextEditingController());
     }
+
+    for (int i = 0; i < passcodeFocusNodes.length; i++) {
+      passcodeFocusNodes[i].addListener(() {
+        if (passcodeFocusNodes[i].hasFocus && passcodeControllers[i].text.isNotEmpty) {
+          passcodeFocusNodes[i].unfocus();
+          if (i < passcodeFocusNodes.length - 1) passcodeFocusNodes[i + 1].requestFocus();
+        }
+      });
+    }
   }
 
   @override
@@ -30,13 +39,15 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
     for (var controller in passcodeControllers) {
       controller.dispose();
     }
+    for (var focusNode in passcodeFocusNodes) {
+      focusNode.dispose();
+    }
     super.dispose();
   }
 
-  void focusNextPasscodeField() {
-    if (currentPasscodeIndex < passcodeControllers.length - 1) {
-      currentPasscodeIndex++;
-      FocusScope.of(context).nextFocus();
+  void focusNextPasscodeField(int currentIndex) {
+    if (currentIndex < passcodeControllers.length - 1) {
+      passcodeFocusNodes[currentIndex + 1].requestFocus();
     }
   }
 
@@ -77,6 +88,7 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           borderRadius: BorderRadius.circular(8),
                         ),
                         child: TextField(
+                          focusNode: passcodeFocusNodes[i],
                           controller: passcodeControllers[i],
                           keyboardType: TextInputType.number,
                           maxLength: 1,
@@ -89,7 +101,9 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                           textAlign: TextAlign.center,
                           onChanged: (value) {
                             if (value.isNotEmpty) {
-                              focusNextPasscodeField();
+                              focusNextPasscodeField(i);
+                            } else if (value.isEmpty && i > 0) {
+                              passcodeFocusNodes[i - 1].requestFocus();
                             }
                           },
                           decoration: const InputDecoration(
@@ -115,9 +129,9 @@ class _CreatePasscodeScreenState extends State<CreatePasscodeScreen> {
                     gradient(context),
                     'Proceed',
                         () async {
-                          await passcodeService.savePasscode(
-                              passcodeControllers.map((controller) => controller.text).toList()
-                          );
+                      await passcodeService.savePasscode(
+                          passcodeControllers.map((controller) => controller.text).toList()
+                      );
                       Navigator.pushNamed(context, '/confirmPasscode');
                     }),
               ),

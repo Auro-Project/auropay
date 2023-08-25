@@ -33,8 +33,30 @@ class ConfirmOTP extends StatefulWidget {
 
 class _ConfirmOTPState extends State<ConfirmOTP> {
   List<String> enteredCode = List.filled(6, '');
+  List<FocusNode> _focusNodes = List.generate(6, (_) => FocusNode());
   String errorMessage = '';
   final AuthService _authService = AuthService();
+
+  @override
+  void initState() {
+    super.initState();
+    for (int i = 0; i < _focusNodes.length; i++) {
+      _focusNodes[i].addListener(() {
+        if (_focusNodes[i].hasFocus && enteredCode[i].isNotEmpty) {
+          _focusNodes[i].unfocus();
+          if (i < _focusNodes.length - 1) _focusNodes[i + 1].requestFocus();
+        }
+      });
+    }
+  }
+
+  @override
+  void dispose() {
+    for (var focusNode in _focusNodes) {
+      focusNode.dispose();
+    }
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -78,6 +100,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                     child: TextFormField(
+                      focusNode: _focusNodes[index],
                       textAlignVertical: TextAlignVertical.center,
                       keyboardType: TextInputType.number,
                       maxLength: 1,
@@ -85,6 +108,13 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                         setState(() {
                           enteredCode[index] = value;
                         });
+                        if (value.isNotEmpty && index < _focusNodes.length - 1) {
+                          _focusNodes[index].unfocus();
+                          _focusNodes[index + 1].requestFocus();
+                        } else if (value.isEmpty && index > 0) {
+                          _focusNodes[index].unfocus();
+                          _focusNodes[index - 1].requestFocus();
+                        }
                       },
                       style: const TextStyle(
                         fontSize: 20,
@@ -165,6 +195,7 @@ class _ConfirmOTPState extends State<ConfirmOTP> {
                 ),
               ),
             ),
+
           ],
         ),
       ),

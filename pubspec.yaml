@@ -26,6 +26,7 @@ dependencies:
   image_picker: ^0.8.7+5
   local_auth: ^2.1.6
   mobile_scanner: ^3.2.1
+  http: ^1.1.0
 
 
 dev_dependencies:

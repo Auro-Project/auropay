@@ -46,39 +46,26 @@ class AnalyticsScreen extends StatelessWidget {
           Center(
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 const SizedBox(height: 20),
-                 Text(
+                Text(
                   'Upcoming Screen',
                   style: TextStyle(
-                    fontSize: 24,
-                    fontWeight: FontWeight.w600,
-                   color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                 Text(
-                  'Rs.5,000',
-                  style: TextStyle(
-                    fontSize: 32,
+                    fontSize: 28,
                     fontWeight: FontWeight.w600,
                    color: Theme.of(context).primaryColor,
                   ),
                 ),
                 const SizedBox(height: 20),
-                 Text(
-                  'Payment Overview',
+                Text(
+                  'Here you will see your payment analytics \nand expense in depth with charts and visualizations ',
+                  maxLines: 5,
+                  textAlign: TextAlign.center,
                   style: TextStyle(
-                    fontSize: 20,
-                    fontWeight: FontWeight.normal,
-                   color: Theme.of(context).primaryColor,
-                  ),
-                ),
-                const SizedBox(height: 20),
-                Padding(
-                  padding: const EdgeInsets.all(30.0),
-                  child: SizedBox(
-                    height: 300,
-                    child: charts.LineChart(data),
+                    fontSize: 18,
+                    fontWeight: FontWeight.w300,
+                    color: Theme.of(context).primaryColor,
                   ),
                 ),
               ],
