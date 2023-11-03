@@ -90,13 +90,21 @@ class _ScannerViewState extends State<ScannerView>
                     bottom: 10,
                     left: 10,
                   ),
-                  child: Text(
-                    'Scan AuroPay\nPayment QR Code',
-                    textAlign: TextAlign.center,
-                    style: TextStyle(
-                        fontSize: 16,
-                        color: Theme.of(context).scaffoldBackgroundColor,
-                        fontWeight: FontWeight.w500),
+                  child: Container(
+                    width: MediaQuery.of(context).size.width * 0.8,
+                    height: MediaQuery.of(context).size.height * 0.1,
+                    decoration: BoxDecoration(
+                        color: Theme.of(context).primaryColor.withOpacity(0.25),
+                        borderRadius: BorderRadius.circular(20)),
+                    padding: const EdgeInsets.all(20),
+                    child: Text(
+                      'Scan AuroPay\nPayment QR Code',
+                      textAlign: TextAlign.center,
+                      style: TextStyle(
+                          fontSize: 16,
+                          color: Theme.of(context).scaffoldBackgroundColor,
+                          fontWeight: FontWeight.w500),
+                    ),
                   )),
             ),
           ),

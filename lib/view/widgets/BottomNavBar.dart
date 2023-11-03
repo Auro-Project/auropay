@@ -87,40 +87,31 @@ class _BottomNavBarState extends State<BottomNavBar> {
                 ),
                 Center(
                   heightFactor: 0.2,
-                  child: Container(
-                    decoration: BoxDecoration(
-                      shape: BoxShape.circle,
-                      color: Theme.of(context).hintColor,
-                      // gradient: LinearGradient(
-                      //   begin: Alignment(0.00, -1.00),
-                      //   end: Alignment(1.00, 1.00),
-                      //   colors: [
-                      //     Color(0xFFBBB9FF),
-                      //     Color(0xFFDCE5FC),
-                      //   ],
-                      //   stops: [0.00, 0.60],
-                      // ),
+                  child: FloatingActionButton(
+                    backgroundColor:  Theme.of(context).hintColor,
+                    elevation: 0.1,
+                    onPressed: ()=> showModalBottomSheet(
+                      context: context,
+                      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                      isScrollControlled: true,
+                      shape: const RoundedRectangleBorder(
+                        borderRadius: BorderRadius.only(
+                          topLeft: Radius.circular(25.0),
+                          topRight: Radius.circular(25.0),
+                        ),
+                      ),
+                      builder: (context) => SingleChildScrollView(
+                        child: SizedBox(
+                          width: MediaQuery.of(context).size.width,
+                          height: MediaQuery.of(context).size.height,
+                          child: const ScannerView(),
+                        ),
+                      ),
                     ),
-                    child: FloatingActionButton(
-                      backgroundColor:  Theme.of(context).hintColor,
-                      elevation: 0.1,
-                      onPressed: ()=> showModalBottomSheet(
-                        context: context,
-                        backgroundColor: Theme.of(context).scaffoldBackgroundColor,
-                        isScrollControlled: true,
-                        shape: const RoundedRectangleBorder(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(25.0),
-                            topRight: Radius.circular(25.0),
-                          ),
-                        ),
-                        builder: (context) => SingleChildScrollView(
-                          child: SizedBox(
-                            width: MediaQuery.of(context).size.width,
-                            height: MediaQuery.of(context).size.height,
-                            child: const ScannerView(),
-                          ),
-                        ),
+                    child: Container(
+                      decoration: BoxDecoration(
+                        shape: BoxShape.circle,
+                        color: Theme.of(context).hintColor,
                       ),
                       child: SvgPicture.asset(
                         'assets/images/icons/Scan.svg',
