@@ -20,13 +20,17 @@ class UserModel {
   });
 
   factory UserModel.fromDocument(DocumentSnapshot doc) {
+    var data = doc.data() as Map<String, dynamic>?; // Cast the data to a Map.
+    if (data == null) {
+      throw Exception("Document data is null");
+    }
     return UserModel(
       uid: doc.id,
-      email: doc['email'] as String?,
-      fullName: doc['fullName'] as String?,
-      phoneNumber: doc['phoneNumber'] as String?,
-      balance: doc['balance'] as int?,
-      profilePhotoUrl: doc['profilePhotoUrl'] as String?,
+      email: data['email'] as String?,
+      fullName: data['fullName'] as String?,
+      phoneNumber: data['phoneNumber'] as String?,
+      profilePhotoUrl: data['profilePhotoUrl'] as String?,
+      balance: data.containsKey('balance') ? (data['balance'] as num?)?.toInt() : 0, // Default to 0 if not present
     );
   }
 

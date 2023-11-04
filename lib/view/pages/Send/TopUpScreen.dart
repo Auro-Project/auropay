@@ -1,11 +1,11 @@
-import 'package:auropay/view/widgets/CustomError.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
 import '../../../model/UserModel.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
 import '../../widgets/CustomAppBar.dart';
+import '../../widgets/CustomError.dart';
 
 class PaymentTopUpScreen extends StatefulWidget {
   @override
@@ -14,48 +14,95 @@ class PaymentTopUpScreen extends StatefulWidget {
 
 class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   TextEditingController _amountController = TextEditingController();
-  UserModel? currentUser;
   bool isLoading = false;
+  UserModel? currentUser;
 
   @override
   void initState() {
     super.initState();
-    _loadCurrentUserDetails();
+    // _loadCurrentUserDetails();
   }
 
-  Future<void> _loadCurrentUserDetails() async {
-    try {
-      UserModel user = await UserModel.fetchCurrentUserDetails();
+  // Future<void> _loadCurrentUserDetails() async {
+  //   try {
+  //     UserModel user = await UserModel.fetchCurrentUserDetails();
+  //     if (user.uid != null) {
+  //       setState(() {
+  //         currentUser = user;
+  //       });
+  //     } else {
+  //       // Handle the scenario where the uid is null.
+  //       showGlobalSnackBar(context, 'Failed to load user details.');
+  //     }
+  //   } catch (e) {
+  //     print('Error loading user details: $e');
+  //     showGlobalSnackBar(context, 'Failed to load user details.');
+  //   }
+  // }
+
+  Future<void> _performTopUp() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) {
       setState(() {
-        currentUser = user;
+        isLoading = false;
       });
-    } catch (e) {
-      print('Error loading user details: $e');
+      showGlobalSnackBar(context, 'You are not logged in.');
+      return;
     }
-  }
 
-  void _performTopUp() async {
-    if (currentUser != null) {
-      try {
-        int topUpAmount = int.parse(_amountController.text);
-        int newBalance = (currentUser!.balance ?? 0) + topUpAmount;
+    if (_amountController.text.trim().isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      showGlobalSnackBar(context, 'Please enter an amount to top up.');
+      return;
+    }
 
-        await FirebaseFirestore.instance
-            .collection('users')
-            .doc(currentUser!.uid)
-            .update({'balance': newBalance});
+    try {
+      int topUpAmount = int.parse(_amountController.text.trim());
 
+      // Fetching the current user's balance from Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
+
+      if (!userDoc.exists) {
         setState(() {
-          currentUser!.balance = newBalance;
           isLoading = false;
         });
-
-        Navigator.pop(context); // Return to HomeScreen after top-up
-      } catch (e) {
-        showGlobalSnackBar(context, 'Error updating balance: $e');
+        showGlobalSnackBar(context, 'User document does not exist.');
+        return;
       }
+
+      int currentBalance = userDoc['balance'];
+
+      // Updating the balance in Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'balance': currentBalance + topUpAmount});
+
+      setState(() {
+        isLoading = false;
+      });
+
+      showGlobalSnackBar(context, 'Balance updated successfully!');
+      await Future.delayed(Duration(seconds: 1)); // Wait for 2 seconds
+      Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/')); // Return to HomeScreen after top-up
+
+    } catch (e) {
+      setState(() {
+        isLoading = false;
+      });
+      showGlobalSnackBar(context, 'Error updating balance: $e');
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -120,4 +167,3 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
     );
   }
 }
-

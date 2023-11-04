@@ -7,6 +7,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:intl/intl.dart';
 import '../../model/UserData.dart';
 import '../../model/UserModel.dart';
 import '../../services/auth_service.dart';
@@ -35,17 +36,39 @@ class _HomeScreenState extends State<HomeScreen> {
   Future<UserModel> _fetchUser() async {
     return await UserModel.fetchCurrentUserDetails();
   }
-  static Future<UserData> loadJsonData() async {
-    String jsonData = await rootBundle.loadString('lib/data/user.json');
-    Map<String, dynamic> jsonMap = json.decode(jsonData);
-    return UserData.fromJson(jsonMap);
-  }
 
   static Future<int> _fetchBalance() async {
-    var userDocument = FirebaseFirestore.instance.collection('users').doc(AuthService.currentUser!.uid);
+    var userDocument = FirebaseFirestore.instance.collection('users').doc(AuthService.currentUser?.uid);
+
+    if (AuthService.currentUser?.uid == null) {
+      throw Exception("User ID is null, user might not be logged in.");
+    }
+
     var documentSnapshot = await userDocument.get();
-    return documentSnapshot.get('balance');
+
+    if (!documentSnapshot.exists) {
+      throw Exception("User document does not exist.");
+    }
+
+    var data = documentSnapshot.data();
+
+    if (data == null) {
+      throw Exception("User document is null.");
+    }
+
+    if (!data.containsKey('balance')) {
+      throw Exception("Balance field does not exist.");
+    }
+
+    int balance = data['balance'];
+
+    if (balance is int) {
+      return balance;
+    } else {
+      throw Exception("Balance is not an integer.");
+    }
   }
+
 
   static Widget _homepage(BuildContext context, UserData userData) {
     final height = MediaQuery.of(context).size.height;
@@ -74,12 +97,18 @@ class _HomeScreenState extends State<HomeScreen> {
                         children: [
                           Padding(
                             padding: const EdgeInsets.only(left: 30),
-                            child: CircleAvatar(
-                              radius: 20,
-                              backgroundImage: AuthService.currentUser?.photoURL != null
-                                  ? NetworkImage(AuthService.currentUser!.photoURL!)
-                                  : const AssetImage('assets/images/avtar.png')
-                                      as ImageProvider<Object>?,
+                            child: IconButton(
+                              onPressed:
+                              () {
+                                Navigator.pushNamed(context, '/profile');
+                              },
+                              icon: CircleAvatar(
+                                radius: 30,
+                                backgroundImage: AuthService.currentUser?.photoURL != null
+                                    ? NetworkImage(AuthService.currentUser!.photoURL!)
+                                    : const AssetImage('assets/images/avtar.png')
+                                        as ImageProvider<Object>?,
+                              ),
                             ),
                           ),
                           Text(
@@ -140,7 +169,7 @@ class _HomeScreenState extends State<HomeScreen> {
                               builder: (context, snapshot) {
                                 if (snapshot.hasData) {
                                   return Text(
-                                    snapshot.data.toString(),
+                                    '₳'+snapshot.data.toString(),
                                     style: TextStyle(
                                       color: Theme.of(context).primaryColor,
                                       fontSize: 36,
@@ -255,36 +284,50 @@ class _HomeScreenState extends State<HomeScreen> {
                             ),
                             SizedBox(height: height * 0.01),
                             Expanded(
-                              child: ListView.builder(
+                              child: userData.transactions.isEmpty
+                                  ? Center(child: Text('No transactions yet'))
+                                  : ListView.builder(
                                 padding: EdgeInsets.zero,
                                 itemCount: userData.transactions.length,
                                 itemBuilder: (context, index) {
-                                  ListItem item = userData.transactions[index];
+                                  // Assuming Transaction is your updated model with the relevant fields
+                                  myTransaction transaction = userData.transactions[index];
+
+                                  // Logic to determine transaction type icon
+                                  IconData transactionIconData = transaction.type == TransactionType.credit
+                                      ? Icons.arrow_downward // example icon for credit
+                                      : Icons.arrow_upward; // example icon for debit
+
+                                  // Format the date and amount properly here
+                                  String formattedDate = DateFormat.yMMMd().format(transaction.timestamp); // make sure to import 'package:intl/intl.dart';
+                                  String formattedAmount = '\$${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
+
                                   return ListTile(
                                     leading: CircleAvatar(
                                       radius: 20,
-                                      backgroundImage: AssetImage(item.userImage),
+                                      // Here we use an icon instead of an image
+                                      child: Icon(transactionIconData),
                                     ),
                                     title: Text(
-                                      item.name,
+                                      transaction.fromUserId, // Use the transaction's description
                                       style: TextStyle(
-                                       color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     subtitle: Text(
-                                      item.date,
+                                      formattedDate, // Use the formatted transaction date
                                       style: TextStyle(
-                                       color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context).primaryColor,
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
                                     ),
                                     trailing: Text(
-                                      item.amount,
+                                      formattedAmount, // Use the formatted amount
                                       style: TextStyle(
-                                       color: Theme.of(context).primaryColor,
+                                        color: transaction.type == TransactionType.credit ? Colors.green : Colors.red,
                                         fontSize: 16,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -292,7 +335,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                   );
                                 },
                               ),
-                            ),
+                            )
+
                           ],
                         ),
                       ),
@@ -357,33 +401,44 @@ class _HomeScreenState extends State<HomeScreen> {
 
   @override
   Widget build(BuildContext context) {
+
     final List<Widget> screens = [
-      FutureBuilder<UserData>(
-        future: loadJsonData(),
-        builder: (context, snapshot) {
-          if (snapshot.hasData) {
-            return _homepage(context, snapshot.data!);
-          } else if (snapshot.hasError) {
-            return Text("Error: ${snapshot.error}");
-          } else {
-            return const CircularProgressIndicator();
-          }
-        },
-      ),
+
+      _homepage(context, UserData(
+        name: AuthService.currentUser!.displayName ?? 'Auro User',
+        balance: 0.0,
+        expireDate: '01/01/22',
+        transactions: [
+          myTransaction(
+            type: TransactionType.credit,
+            fromUserId: 'John Doe',
+            amount: 100.0,
+            timestamp: DateTime.now(), toUserId: 'Jane Max',
+          ),
+          myTransaction(
+            type: TransactionType.debit,
+            fromUserId: 'Jane Doe',
+            amount: 50.0,
+            timestamp: DateTime.now(), toUserId: 'Jane Max',
+          ),
+        ],
+      )),
       AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),
     ];
 
-    return Scaffold(
-      extendBody: true,
-      bottomNavigationBar: BottomNavBar(
-        currentIndex: _currentIndex,
-        onTap: (index) => setState(() => _currentIndex = index),
-      ),
-      body: IndexedStack(
-        index: _currentIndex,
-        children: screens,
+    return ScaffoldMessenger(
+      child: Scaffold(
+        extendBody: true,
+        bottomNavigationBar: BottomNavBar(
+          currentIndex: _currentIndex,
+          onTap: (index) => setState(() => _currentIndex = index),
+        ),
+        body: IndexedStack(
+          index: _currentIndex,
+          children: screens,
+        ),
       ),
     );
   }
