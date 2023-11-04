@@ -1,4 +1,6 @@
 import 'dart:io';
+import 'package:flutter_svg/svg.dart';
+
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
 import '../../../view/widgets/CustomAppBar.dart';
@@ -146,9 +148,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
             ElevatedButton(
               onPressed: () {
                 showModalBottomSheet(
+                  backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+                  shape: const RoundedRectangleBorder(
+                    borderRadius: BorderRadius.vertical(
+                      top: Radius.circular(20),
+                    ),
+                  ),
                   context: context,
                   builder: (BuildContext context) {
-                    return SafeArea(
+                    return Container(
+                      //padding horizontal 20 vertical 40
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 10, vertical: 30),
                       child: Column(
                         mainAxisSize: MainAxisSize.min,
                         children: <Widget>[
@@ -183,14 +194,29 @@ class _ProfileScreenState extends State<ProfileScreen> {
                   )),
               child: Stack(
                 children: [
-                  CircleAvatar(
-                    radius: 80,
-                    backgroundImage: _profilePhoto != null
-                        ? FileImage(_profilePhoto!)
-                        : (profilePhotoUrl != null
-                            ? NetworkImage(profilePhotoUrl)
-                                as ImageProvider<Object>?
-                            : null),
+                  Container(
+                    width: 160.0, // The width and height of the Container should be double the radius to simulate a CircleAvatar
+                    height: 160.0,
+                    decoration: BoxDecoration(
+                      shape: BoxShape.circle,
+                      image: _profilePhoto != null
+                          ? DecorationImage(
+                        image: FileImage(_profilePhoto!),
+                        fit: BoxFit.cover,
+                      )
+                          : (profilePhotoUrl != null
+                          ? DecorationImage(
+                        image: NetworkImage(profilePhotoUrl),
+                        fit: BoxFit.cover,
+                      )
+                          : null),
+                    ),
+                    child: _profilePhoto == null && profilePhotoUrl == null
+                        ? SvgPicture.asset(
+                      'assets/images/icons/avtar.svg',
+                      fit: BoxFit.cover, // This will cover the circle area
+                    )
+                        : null,
                   ),
                   Positioned(
                     bottom: 0,

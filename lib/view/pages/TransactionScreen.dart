@@ -175,6 +175,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                         String formattedAmount = '\$${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
 
                         return ListTile(
+                          contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
                           leading: CircleAvatar(
                             radius: 20,
                             // You might want to display a default image or an icon here
