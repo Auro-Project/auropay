@@ -1,11 +1,35 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import '../../../services/database.dart';
+import '../../../services/payments_service.dart';
 
-class ConfirmPayScreen extends StatelessWidget {
+class ConfirmPayScreen extends StatefulWidget {
   const ConfirmPayScreen({Key? key}) : super(key: key);
 
+  @override
+  State<ConfirmPayScreen> createState() => _ConfirmPayScreenState();
+}
+
+class _ConfirmPayScreenState extends State<ConfirmPayScreen> {
+  late TextEditingController amountController;
+  final DatabaseService _databaseService = DatabaseService();
+
+  @override
+  void initState() {
+    super.initState();
+    amountController = TextEditingController(); // Initialize the controller here
+  }
+
+  @override
+  void dispose() {
+    amountController.dispose(); // Dispose the controller here
+    super.dispose();
+  }
+
   //create a widget which is showModalBottomSheet
-  void showConfirmPay(BuildContext context) {
+  void showConfirmPay(BuildContext context, String userId, String storeName, String productName, double amount) {
+    amountController.text = amount.toString(); // Pre-fill the amount if you have it, or leave it empty for the user to enter
+
     showModalBottomSheet(
       useSafeArea: true,
       backgroundColor: const Color(0xFF232323),
@@ -57,7 +81,8 @@ class ConfirmPayScreen extends StatelessWidget {
                   const SizedBox(
                     height: 20,
                   ),
-                  const TextField(
+                  TextField(
+                    controller: amountController,
                     textAlign: TextAlign.center,
                     style: TextStyle(
                       color: Colors.white,
@@ -244,9 +269,7 @@ class ConfirmPayScreen extends StatelessWidget {
                   ),
                 ),
                 child: ElevatedButton(
-                  onPressed: () {
-                    Navigator.pushNamed(context, '/receipt');
-                  },
+                  onPressed: () {},
                   style: ElevatedButton.styleFrom(
                     backgroundColor: Colors.transparent,
                     elevation: 0,
@@ -293,7 +316,7 @@ class ConfirmPayScreen extends StatelessWidget {
           ),
           child: ElevatedButton(
             onPressed: () {
-              showConfirmPay(context);
+              showConfirmPay(context, '1234567890', 'Tuck Shop', 'Book', 100.0);
             },
             style: ElevatedButton.styleFrom(
               backgroundColor: Colors.transparent,

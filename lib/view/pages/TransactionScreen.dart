@@ -1,11 +1,9 @@
-import 'dart:convert';
-import 'package:auropay/view/widgets/Constants.dart';
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:intl/intl.dart';
 
 import '../../../view/widgets/CustomAppBar.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import '../../model/Transaction.dart';
 import '../../services/auth_service.dart';
 
@@ -29,30 +27,17 @@ class _TransactionScreenState extends State<TransactionScreen> {
     var userTransactionsCollection = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
-        .collection('transactions');
+        .collection('transactions').orderBy('timestamp', descending: true);
 
     // Get the snapshot of the data in Firestore
     var snapshot = await userTransactionsCollection.get();
 
     // Convert each document into a `myTransaction` object and add it to the list
     for (var doc in snapshot.docs) {
-      userSpecificTransactions.add(myTransaction.fromMap(doc.data() as Map<String, dynamic>));
+      userSpecificTransactions.add(myTransaction.fromMap(doc.data()));
     }
 
     return userSpecificTransactions;
-  }
-
-
-  Future<List<myTransaction>> fetchTransactions() async {
-    List<myTransaction> transactions = await fetchTransactionsFromFirebase();
-
-    if (filter != 'all') {
-      transactions = transactions.where((transaction) {
-        return transaction.type.toString().split('.').last == filter;
-      }).toList();
-    }
-
-    return transactions;
   }
 
   @override
@@ -151,7 +136,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                 const SizedBox(height: 16.0),
                 Expanded(
               child: FutureBuilder<List<myTransaction>>(
-                future: fetchTransactions(), // Call the new fetchTransactions method
+                future: fetchTransactionsFromFirebase(), // Call the new fetchTransactions method
                 builder: (context, snapshot) {
                   if (snapshot.connectionState == ConnectionState.waiting) {
                     return const Center(child: CircularProgressIndicator());
@@ -171,8 +156,8 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             : Icons.arrow_upward; // example icon for debit
 
                         // Format the date and amount properly here
-                        String formattedDate = DateFormat.yMMMd().format(transaction.timestamp); // make sure to import 'package:intl/intl.dart';
-                        String formattedAmount = '\$${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
+                        String formattedDate = DateFormat.Hms().add_yMMMd().format(transaction.timestamp); // make sure to import 'package:intl/intl.dart';
+                        String formattedAmount = ' ₳${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
 
                         return ListTile(
                           contentPadding: const EdgeInsets.symmetric(horizontal: 0, vertical: 0),
@@ -184,7 +169,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                             child: Icon(transactionIconData),
                           ),
                           title: Text(
-                            transaction.fromUserId, // Use the transaction's description
+                            transaction.description, // Use the transaction's description
                             style: TextStyle(
                               color: Theme.of(context).primaryColor,
                               fontSize: 16,
@@ -194,7 +179,7 @@ class _TransactionScreenState extends State<TransactionScreen> {
                           subtitle: Text(
                             formattedDate, // Use the formatted transaction date
                             style: TextStyle(
-                              color: Theme.of(context).primaryColor,
+                              color: Theme.of(context).primaryColor.withOpacity(0.6),
                               fontSize: 14,
                               fontWeight: FontWeight.w400,
                             ),

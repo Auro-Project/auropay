@@ -1,11 +1,9 @@
 
-import 'dart:convert';
 import 'package:auropay/model/Transaction.dart';
 import 'package:auropay/view/widgets/Constants.dart';
 import 'package:auropay/view/widgets/CustomShape.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/services.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:intl/intl.dart';
 import '../../model/UserData.dart';
@@ -299,8 +297,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       : Icons.arrow_upward; // example icon for debit
 
                                   // Format the date and amount properly here
-                                  String formattedDate = DateFormat.yMMMd().format(transaction.timestamp); // make sure to import 'package:intl/intl.dart';
-                                  String formattedAmount = '\$${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
+                                  String formattedDate = DateFormat.Hms().add_yMMMd().format(transaction.timestamp); // make sure to import 'package:intl/intl.dart';
+                                  String formattedAmount = ' ₳${transaction.amount.toStringAsFixed(2)}'; // Assuming amount is a double
 
                                   return ListTile(
                                     leading: CircleAvatar(
@@ -311,7 +309,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                       foregroundColor: Theme.of(context).scaffoldBackgroundColor,
                                     ),
                                     title: Text(
-                                      transaction.fromUserId, // Use the transaction's description
+                                      transaction.description, // Use the transaction's description
                                       style: TextStyle(
                                         color: Theme.of(context).primaryColor,
                                         fontSize: 16,
@@ -321,7 +319,7 @@ class _HomeScreenState extends State<HomeScreen> {
                                     subtitle: Text(
                                       formattedDate, // Use the formatted transaction date
                                       style: TextStyle(
-                                        color: Theme.of(context).primaryColor,
+                                        color: Theme.of(context).primaryColor.withOpacity(0.6),
                                         fontSize: 14,
                                         fontWeight: FontWeight.w400,
                                       ),
@@ -411,14 +409,15 @@ class _HomeScreenState extends State<HomeScreen> {
     var userTransactionsCollection = FirebaseFirestore.instance
         .collection('users')
         .doc(userId)
-        .collection('transactions');
+        .collection('transactions').orderBy('timestamp', descending: true) // This sorts the transactions by timestamp in descending order
+        ;
 
     // Get the snapshot of the data in Firestore
     var snapshot = await userTransactionsCollection.get();
 
     // Convert each document into a `myTransaction` object and add it to the list
     for (var doc in snapshot.docs) {
-      userSpecificTransactions.add(myTransaction.fromMap(doc.data() as Map<String, dynamic>));
+      userSpecificTransactions.add(myTransaction.fromMap(doc.data()));
     }
 
     return userSpecificTransactions;
@@ -429,12 +428,12 @@ class _HomeScreenState extends State<HomeScreen> {
     return FutureBuilder<List<myTransaction>>(
       future: fetchTransactionsFromFirebase(),
       builder: (context, snapshot) {
-        if (snapshot.connectionState == ConnectionState.waiting) {
-          return CircularProgressIndicator(); // or some other loading indicator
-        }
-        if (snapshot.hasError) {
-          return Text("Error: ${snapshot.error}");
-        }
+        // if (snapshot.connectionState == ConnectionState.waiting) {
+        //   return _homepage(context, UserData as UserData); // or some other loading indicator
+        // }
+        // if (snapshot.hasError) {
+        //   return Text("Error: ${snapshot.error}");
+        // }
         if (!snapshot.hasData || snapshot.data!.isEmpty) {
           return _homepage(context, UserData(
             name: AuthService.currentUser!.displayName ?? 'Auro User',

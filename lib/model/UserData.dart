@@ -13,15 +13,6 @@ class UserData {
     required this.transactions,
   });
 
-  // Method to update balance for credit transactions
-  void credit(double amount) {
-    balance += amount;
-  }
-
-  // Method to update balance for debit transactions
-  void debit(double amount) {
-    balance -= amount;
-  }
 
   // Convert UserData to a Map. Useful for serialization
   Map<String, dynamic> toMap() {

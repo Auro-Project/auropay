@@ -1,91 +1,98 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+
 import '../model/Transaction.dart';
-import '../model/UserData.dart';
 import 'database.dart';
 
 class PaymentsService {
   final DatabaseService _databaseService;
-
   PaymentsService(this._databaseService);
 
-  // Simulate a user top-up (credit)
-  Future<bool> topUpBalance(String userId, int amount) async {
+  Future<String> performTopUp({required int topUpAmount, required String userId}) async {
     try {
-      UserData user = await _databaseService.getUserData(userId);
-      user.credit(amount as double);
+      // Fetching the current user's balance from Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
 
-      myTransaction transaction = myTransaction(
-        fromUserId: 'system', // assuming 'system' represents the source of credit
-        toUserId: userId,
-        amount: amount,
-        type: TransactionType.credit,
-      );
-
-      await _databaseService.updateUserBalance(userId, user.balance);
-      await _databaseService.recordTransaction(transaction);
-
-      return true;
-    } catch (e) {
-      print('Error topping up balance: $e');
-      return false;
-    }
-  }
-
-  // Simulate sending money from one user to another (debit)
-  Future<bool> sendMoney(String fromUserId, String toUserId, int amount) async {
-    try {
-      UserData sender = await _databaseService.getUserData(fromUserId);
-      UserData receiver = await _databaseService.getUserData(toUserId);
-
-      if (sender.balance < amount) {
-        print('Insufficient funds');
-        return false;
+      if (!userDoc.exists) {
+        return 'User document does not exist.';
       }
 
-      // Debit from sender and credit to receiver
-      sender.debit(amount as double);
-      receiver.credit(amount as double);
+      int currentBalance = userDoc['balance'].toInt();
 
-      myTransaction debitTransaction = myTransaction(
-        fromUserId: fromUserId,
-        toUserId: toUserId,
-        amount: amount,
-        type: TransactionType.debit,
-      );
+      // Updating the balance in Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'balance': currentBalance + topUpAmount});
 
-      myTransaction creditTransaction = myTransaction(
-        fromUserId: fromUserId,
-        toUserId: toUserId,
-        amount: amount,
+      // Creating a transaction
+      myTransaction transaction = myTransaction(
+        fromUserId: userId,
+        toUserId: userId, // In this case, it's a top-up so from and to would be the same user
+        amount: topUpAmount,
         type: TransactionType.credit,
+        description: 'Added to Wallet', // since it's a top-up
       );
 
-      // Update balances and record transactions atomically
-      await _databaseService.updateUserBalance(fromUserId, sender.balance);
-      await _databaseService.updateUserBalance(toUserId, receiver.balance);
-      await _databaseService.recordTransaction(debitTransaction);
-      await _databaseService.recordTransaction(creditTransaction);
+      // Recording the transaction
+      await FirebaseFirestore.instance
+          .collection('users') // Accessing the users collection
+          .doc(userId) // Using the specific user's ID
+          .collection('transactions') // Accessing the transactions subcollection
+          .doc(transaction.id) // Creating a document with the transaction's ID
+          .set(transaction.toMap()); // Setting the transaction data
 
-      return true;
+      return 'Balance updated successfully!';
     } catch (e) {
-      print('Error sending money: $e');
-      return false;
+      return 'Error updating balance: $e';
     }
   }
 
-  // Method to simulate topping up the user's balance
-  // Future<void> topUpBalance(String userId, int amount) async {
-  //   // Here you would interface with your backend or payment processor
-  //   // For this example, we're just waiting for a bit to simulate a network call
-  //   await Future.delayed(Duration(seconds: 2));
-  //   // TODO: Implement actual logic to update the user's balance on the backend
-  // }
+  Future<String> performDebit({required int debitAmount, required String userId, required String spentOn}) async {
+    try {
+      // Fetching the current user's balance from Firestore
+      DocumentSnapshot userDoc = await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .get();
 
-  // Method to get the user's current balance
-  // Replace with your method of retrieving the user's balance from the backend
-  Future<int> getUserBalance(String userId) async {
-    // TODO: Replace with actual logic to retrieve the user's balance
-    return 100; // This is just a placeholder value
+      if (!userDoc.exists) {
+        return 'User document does not exist.';
+      }
+
+      int currentBalance = userDoc['balance'].toInt();
+      if (debitAmount > currentBalance) {
+        return 'Insufficient funds for debit.';
+      }
+
+      // Updating the balance in Firestore
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .update({'balance': currentBalance - debitAmount});
+
+      // Creating a transaction
+      myTransaction transaction = myTransaction(
+        fromUserId: userId,
+        toUserId: 'recipient_user_id', // Replace with the recipient's user ID
+        amount: debitAmount,
+        type: TransactionType.debit,
+        description: 'Spent $spentOn', // since it's a debit
+      );
+
+      // Recording the transaction
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(userId)
+          .collection('transactions')
+          .doc(transaction.id)
+          .set(transaction.toMap());
+
+      return 'Balance debited successfully!';
+    } catch (e) {
+      return 'Error debiting balance: $e';
+    }
   }
-
-// Further methods such as refund, withdraw, etc., would also be implemented here.
 }

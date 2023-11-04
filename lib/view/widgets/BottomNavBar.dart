@@ -2,8 +2,7 @@ import 'dart:ui';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
-
-import '../pages/QR Code/QRCodeScreen.dart';
+import '../pages/QR Pay/QRPayScreen.dart';
 
 class BottomNavBar extends StatefulWidget {
   final int currentIndex; // Add this property

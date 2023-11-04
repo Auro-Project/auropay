@@ -10,7 +10,7 @@ import '../../../view/pages/MoreScreens/NotificationsScreen.dart';
 import '../../../view/pages/MoreScreens/ProfileScreen.dart';
 import '../../../view/pages/MoreScreens/SettingScreen.dart';
 import '../../../view/pages/MoreScreens/SupportScreen.dart';
-import '../../../view/pages/QR%20Code/QRCodeScreen.dart';
+import '../../../view/pages/QR%20Pay/QRPayScreen.dart';
 import '../../../view/pages/ReceiptScreen.dart';
 import '../../../view/pages/Send/SendScreen.dart';
 import '../../../view/pages/Send/TopUpScreen.dart';

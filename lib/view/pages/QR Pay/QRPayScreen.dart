@@ -1,4 +1,6 @@
-
+import '../../../model/UserModel.dart';
+import '../../../services/database.dart';
+import '../../../services/payments_service.dart';
 import '../../../view/widgets/CustomError.dart';
 import '../../../view/widgets/AppButtons.dart';
 import '../../../view/widgets/Constants.dart';
@@ -8,6 +10,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:mobile_scanner/mobile_scanner.dart';
+import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+
 
 class ScannerView extends StatefulWidget {
   const ScannerView({Key? key}) : super(key: key);
@@ -21,6 +25,12 @@ class _ScannerViewState extends State<ScannerView>
   static const flashLightOn = CupertinoIcons.bolt;
   static const flashLightOff = CupertinoIcons.bolt_slash_fill;
   static const frontCamera = 'open Camera';
+  TextEditingController _amountController = TextEditingController();
+  late String? _spenton;
+  bool isLoading = false;
+  UserModel? currentUser;
+  final DatabaseService _databaseService = DatabaseService();
+
 
   var flashState = flashLightOff;
   var cameraState = frontCamera;
@@ -29,6 +39,46 @@ class _ScannerViewState extends State<ScannerView>
 
   bool _isFlashOn(IconData current) {
     return flashLightOn == current;
+  }
+
+  Future<void> _performDebit() async {
+    setState(() {
+      isLoading = true;
+    });
+
+    final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+    if (userId == null) {
+      setState(() {
+        isLoading = false;
+      });
+      showGlobalSnackBar(context, 'You are not logged in.');
+      return;
+    }
+
+    if (_amountController.text.trim().isEmpty) {
+      setState(() {
+        isLoading = false;
+      });
+      showGlobalSnackBar(context, 'Please enter an amount to debit.');
+      return;
+    }
+
+    int debitAmount = int.parse(_amountController.text.trim());
+    String result = await PaymentsService(_databaseService).performDebit(
+        debitAmount: debitAmount,
+        userId: userId,
+        spentOn: _spenton! // Assuming _spentOn is a String variable with the description of the spending
+    );
+
+    setState(() {
+      isLoading = false;
+    });
+
+    showGlobalSnackBar(context, result);
+    if (result == 'Balance debited successfully!') {
+      await Future.delayed(Duration(seconds: 1));
+      Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/'));
+    }
   }
 
   @override
@@ -183,7 +233,7 @@ class _ScannerViewState extends State<ScannerView>
                         const SizedBox(
                           height: 10,
                         ),
-                        result == null ? const SizedBox() : openLink(context),
+                        result == null ? const SizedBox() : payNow(context, 'Regular Journal'),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
@@ -315,8 +365,8 @@ class _ScannerViewState extends State<ScannerView>
     );
   }
 
-
-  openLink(BuildContext context) {
+  payNow(BuildContext context, String spenton) {
+    _spenton = spenton;
     Future.delayed(const Duration(seconds: 1), () {
       showModalBottomSheet(
         useSafeArea: true,
@@ -371,6 +421,7 @@ class _ScannerViewState extends State<ScannerView>
                       height: 40,
                     ),
                     TextField(
+                      controller: _amountController,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
@@ -459,7 +510,7 @@ class _ScannerViewState extends State<ScannerView>
                       height: 10,
                     ),
                     Text(
-                      "Book",
+                      spenton,
                       textAlign: TextAlign.center,
                       style: TextStyle(
                         color: Theme.of(context).primaryColor,
@@ -483,8 +534,8 @@ class _ScannerViewState extends State<ScannerView>
                 child: Align(
                   alignment: Alignment.bottomCenter,
                   child: appButtonFunc(context, gradient(context), 'Pay Now',
-                      margin: const EdgeInsets.only(bottom: 40), () {
-                    Navigator.pushNamed(context, '/receipt');
+                      margin: const EdgeInsets.only(bottom: 40),() {
+                        _performDebit();
                   }),
                 ),
               )
