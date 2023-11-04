@@ -17,7 +17,7 @@ class _WithdrawalScreenState extends State<WithdrawalScreen> {
     return Scaffold(
       extendBodyBehindAppBar: true,
       appBar: myAppBar(context, 'Withdraw'),
-      backgroundColor: Colors.grey[200],  // Changed background color to give a "disabled" feel.
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,  // Changed background color to give a "disabled" feel.
       body: Stack(
         children: [
           Image.asset(
