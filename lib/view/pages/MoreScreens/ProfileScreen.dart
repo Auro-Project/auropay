@@ -66,27 +66,6 @@ class _ProfileScreenState extends State<ProfileScreen> {
     }
   }
 
-  // void _saveProfile() async {
-  //   // Save the profile data to Firestore
-  //   final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
-  //   if (userId != null) {
-  //     try {
-  //       await FirebaseFirestore.instance
-  //           .collection('users')
-  //           .doc(userId)
-  //           .update({
-  //         'fullName': _fullNameController.text,
-  //         'phoneNumber': _phoneNumberController.text,
-  //       });
-  //
-  //       showGlobalSnackBar(context, 'Profile updated successfully!');
-  //     } catch (e) {
-  //       print('Error updating profile: $e');
-  //       showGlobalSnackBar(context, 'Failed to update profile.');
-  //     }
-  //   }
-  // }
-
   Future<String?> _saveProfilePhoto() async {
     final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
     if (userId != null && _profilePhoto != null) {
@@ -225,6 +204,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                       ),
                       child: const Icon(
                         Icons.camera_alt,
+                        size: 32,
                         color: Colors.black,
                       ),
                     ),
