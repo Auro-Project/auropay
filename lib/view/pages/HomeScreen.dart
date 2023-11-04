@@ -307,6 +307,8 @@ class _HomeScreenState extends State<HomeScreen> {
                                       radius: 20,
                                       // Here we use an icon instead of an image
                                       child: Icon(transactionIconData),
+                                      backgroundColor: Theme.of(context).hintColor,
+                                      foregroundColor: Theme.of(context).scaffoldBackgroundColor,
                                     ),
                                     title: Text(
                                       transaction.fromUserId, // Use the transaction's description
@@ -399,30 +401,64 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
+  Future<List<myTransaction>> fetchTransactionsFromFirebase() async {
+    List<myTransaction> userSpecificTransactions = [];
+
+    // Assuming you have a method to get the current user's ID
+    String userId = AuthService.currentUser!.uid; // Make sure this matches how you retrieve the user's ID
+
+    // Reference to the user's transactions subcollection in Firestore
+    var userTransactionsCollection = FirebaseFirestore.instance
+        .collection('users')
+        .doc(userId)
+        .collection('transactions');
+
+    // Get the snapshot of the data in Firestore
+    var snapshot = await userTransactionsCollection.get();
+
+    // Convert each document into a `myTransaction` object and add it to the list
+    for (var doc in snapshot.docs) {
+      userSpecificTransactions.add(myTransaction.fromMap(doc.data() as Map<String, dynamic>));
+    }
+
+    return userSpecificTransactions;
+  }
+
+
+  Widget TrxCard(BuildContext context) {
+    return FutureBuilder<List<myTransaction>>(
+      future: fetchTransactionsFromFirebase(),
+      builder: (context, snapshot) {
+        if (snapshot.connectionState == ConnectionState.waiting) {
+          return CircularProgressIndicator(); // or some other loading indicator
+        }
+        if (snapshot.hasError) {
+          return Text("Error: ${snapshot.error}");
+        }
+        if (!snapshot.hasData || snapshot.data!.isEmpty) {
+          return _homepage(context, UserData(
+            name: AuthService.currentUser!.displayName ?? 'Auro User',
+            balance: 0.0, // You might want to calculate this based on the transactions
+            expireDate: '01/01/22', // Update this as necessary
+            transactions: [], // Here you pass the fetched transactions
+          ));
+        }
+        return _homepage(context, UserData(
+          name: AuthService.currentUser!.displayName ?? 'Auro User',
+          balance: 0.0, // You might want to calculate this based on the transactions
+          expireDate: '01/01/22', // Update this as necessary
+          transactions: snapshot.data!, // Here you pass the fetched transactions
+        ));
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
 
     final List<Widget> screens = [
 
-      _homepage(context, UserData(
-        name: AuthService.currentUser!.displayName ?? 'Auro User',
-        balance: 0.0,
-        expireDate: '01/01/22',
-        transactions: [
-          myTransaction(
-            type: TransactionType.credit,
-            fromUserId: 'John Doe',
-            amount: 100.0,
-            timestamp: DateTime.now(), toUserId: 'Jane Max',
-          ),
-          myTransaction(
-            type: TransactionType.debit,
-            fromUserId: 'Jane Doe',
-            amount: 50.0,
-            timestamp: DateTime.now(), toUserId: 'Jane Max',
-          ),
-        ],
-      )),
+      TrxCard(context),
       AnalyticsScreen(),
       const TransactionScreen(),
       const MoreScreen(),
