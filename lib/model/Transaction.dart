@@ -6,7 +6,7 @@ class myTransaction {
   final String id;
   final String fromUserId;
   final String toUserId;
-  final double amount;
+  final int amount;
   final DateTime timestamp;
   final TransactionType type;
 

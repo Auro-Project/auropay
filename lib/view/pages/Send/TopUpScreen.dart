@@ -1,6 +1,7 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_auth/firebase_auth.dart' as firebase_auth;
+import '../../../model/Transaction.dart';
 import '../../../model/UserModel.dart';
 import '../../widgets/AppButtons.dart';
 import '../../widgets/Constants.dart';
@@ -37,6 +38,69 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
   //   } catch (e) {
   //     print('Error loading user details: $e');
   //     showGlobalSnackBar(context, 'Failed to load user details.');
+  //   }
+  // }
+
+  // Future<void> _performTopUp() async {
+  //   setState(() {
+  //     isLoading = true;
+  //   });
+  //
+  //   final userId = firebase_auth.FirebaseAuth.instance.currentUser?.uid;
+  //   if (userId == null) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     showGlobalSnackBar(context, 'You are not logged in.');
+  //     return;
+  //   }
+  //
+  //   if (_amountController.text.trim().isEmpty) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     showGlobalSnackBar(context, 'Please enter an amount to top up.');
+  //     return;
+  //   }
+  //
+  //   try {
+  //     int topUpAmount = int.parse(_amountController.text.trim());
+  //
+  //     // Fetching the current user's balance from Firestore
+  //     DocumentSnapshot userDoc = await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(userId)
+  //         .get();
+  //
+  //     if (!userDoc.exists) {
+  //       setState(() {
+  //         isLoading = false;
+  //       });
+  //       showGlobalSnackBar(context, 'User document does not exist.');
+  //       return;
+  //     }
+  //
+  //     int currentBalance = userDoc['balance'];
+  //
+  //     // Updating the balance in Firestore
+  //     await FirebaseFirestore.instance
+  //         .collection('users')
+  //         .doc(userId)
+  //         .update({'balance': currentBalance + topUpAmount});
+  //
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //
+  //     showGlobalSnackBar(context, 'Balance updated successfully!');
+  //     await Future.delayed(Duration(seconds: 1)); // Wait for 2 seconds
+  //     Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/')); // Return to HomeScreen after top-up
+  //
+  //   } catch (e) {
+  //     setState(() {
+  //       isLoading = false;
+  //     });
+  //     showGlobalSnackBar(context, 'Error updating balance: $e');
   //   }
   // }
 
@@ -79,7 +143,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
         return;
       }
 
-      int currentBalance = userDoc['balance'];
+      int currentBalance = userDoc['balance'].toInt();
 
       // Updating the balance in Firestore
       await FirebaseFirestore.instance
@@ -87,12 +151,28 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
           .doc(userId)
           .update({'balance': currentBalance + topUpAmount});
 
+      // Creating a transaction
+      myTransaction transaction = myTransaction(
+        fromUserId: userId,
+        toUserId: userId, // In this case, it's a top-up so from and to would be the same user
+        amount: topUpAmount,
+        type: TransactionType.credit, // since it's a top-up
+      );
+
+      // Recording the transaction
+      await FirebaseFirestore.instance
+          .collection('users') // Accessing the users collection
+          .doc(userId) // Using the specific user's ID
+          .collection('transactions') // Accessing the transactions subcollection
+          .doc(transaction.id) // Creating a document with the transaction's ID
+          .set(transaction.toMap()); // Setting the transaction data
+
       setState(() {
         isLoading = false;
       });
 
       showGlobalSnackBar(context, 'Balance updated successfully!');
-      await Future.delayed(Duration(seconds: 1)); // Wait for 2 seconds
+      await Future.delayed(Duration(seconds: 1)); // Wait for 1 second
       Navigator.pushNamedAndRemoveUntil(context, '/home', ModalRoute.withName('/')); // Return to HomeScreen after top-up
 
     } catch (e) {
@@ -102,6 +182,7 @@ class _PaymentTopUpScreenState extends State<PaymentTopUpScreen> {
       showGlobalSnackBar(context, 'Error updating balance: $e');
     }
   }
+
 
 
   @override

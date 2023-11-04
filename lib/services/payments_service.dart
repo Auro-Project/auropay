@@ -8,10 +8,10 @@ class PaymentsService {
   PaymentsService(this._databaseService);
 
   // Simulate a user top-up (credit)
-  Future<bool> topUpBalance(String userId, double amount) async {
+  Future<bool> topUpBalance(String userId, int amount) async {
     try {
       UserData user = await _databaseService.getUserData(userId);
-      user.credit(amount);
+      user.credit(amount as double);
 
       myTransaction transaction = myTransaction(
         fromUserId: 'system', // assuming 'system' represents the source of credit
@@ -31,7 +31,7 @@ class PaymentsService {
   }
 
   // Simulate sending money from one user to another (debit)
-  Future<bool> sendMoney(String fromUserId, String toUserId, double amount) async {
+  Future<bool> sendMoney(String fromUserId, String toUserId, int amount) async {
     try {
       UserData sender = await _databaseService.getUserData(fromUserId);
       UserData receiver = await _databaseService.getUserData(toUserId);
@@ -42,8 +42,8 @@ class PaymentsService {
       }
 
       // Debit from sender and credit to receiver
-      sender.debit(amount);
-      receiver.credit(amount);
+      sender.debit(amount as double);
+      receiver.credit(amount as double);
 
       myTransaction debitTransaction = myTransaction(
         fromUserId: fromUserId,
